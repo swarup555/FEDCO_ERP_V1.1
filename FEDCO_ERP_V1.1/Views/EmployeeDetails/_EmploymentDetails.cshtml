@@ -1,0 +1,494 @@
+﻿
+<script>
+    $(document).ready(function () {
+
+    var lastSel;
+          
+        jQuery("#jqGrid02").jqGrid({
+            url:" @Url.Action("employmentdetails", "EmployeeDetails")",
+            type: "GET",
+            datatype: "Json",
+            height: 222,
+            width: 840,
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            colNames: ['Employee Code', 'Organisation Name', 'Joining Date', 'Leaving Date', 'Last Designation', 'Joining Emoluments', 'Leaving Emoluments', 'Reason For Leaving'],
+            colModel: [
+                { name: 'ID', index: 'ID', editable: true, sorttype: "int", search: true, key: true, hidden: true },
+                { name: 'ORGANISATION_NAME', index: 'ORGANISATION_NAME', editable: true, search: true },
+                { name: 'JOINING_DATE', index: 'JOINING_DATE', formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
+                 { name: 'RELIEVING_DATE', index: 'RELIEVING_DATE', formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
+                { name: 'LAST_DESIGNATION', index: 'LAST_DESIGNATION', editable: true, },
+                { name: 'JOINING_EMOLUMENTS', index: 'JOINING_EMOLUMENTS', editable: true },
+                { name: 'LEAVING_EMOLUMENTS', index: 'LEAVING_EMOLUMENTS', editable: true },
+                 { name: 'REASON_FOR_LEAVING', index: 'REASON_FOR_LEAVING', editable: true }
+
+            ],
+
+
+            pager: "#jqGridPager02",
+            viewrecords: true,
+            multiselect: true,
+
+            hidegrid: false,
+            jsonReader: {
+                repeatitems: false,
+                id: "Id",
+                root: function (obj) { return obj; },
+                page: function (obj) { return 1; },
+                total: function (obj) { return 1; },
+                records: function (obj) { return obj.length; }
+            },
+            onSelectRow: function (rowId, status, e) {
+                if (rowId == lastSel) {
+                    $(this).jqGrid("resetSelection");
+                    lastSel = undefined;
+                    status = false;
+                } else {
+                    lastSel = rowId;
+                }
+            },
+            beforeSelectRow: function (rowId, e) {
+                $(this).jqGrid("resetSelection");
+                return true;
+            }
+        });
+        $("#cb_jqGrid02").hide();
+        // Setup buttons
+
+        // Setup filters
+        //jQuery("#jqGrid01").jqGrid('filterToolbar', { defaultSearch: true, stringResult: true });
+        jQuery("#jqGrid02").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+   
+        $("#btnEmploymentsaveclr").click(function () {
+            $('#txtOrganisationname').val("");
+            $('#txtJoiningdate').val("");
+            $('#txtLeavingdate').val("");
+            $('#lastDesignation').val("");
+            $('#txtJoiningemoulments').val("");
+            $('#txtEmolmentsonleaving').val("");
+            $('#txtReason').val("");
+        });
+   
+
+        $("#btnEmploymentsave").click(function () {
+            //var test = $('#fn').val();
+            // alert(test);
+            $('#employmentpopup').modal("hide");
+            HideModal();
+            $.ajax({
+                url: '@Url.Action("Employmentcreate", "EmployeeDetails")',
+
+                data: {
+                    ORGANISATION_NAME: $('#txtOrganisationname').val(),
+
+                    JOININGDATE: $('#txtJoiningdate').val(),
+                    RELIEVINGDATE: $('#txtLeavingdate').val(),
+                    LAST_DESIGNATION: $('#lastDesignation').val(),
+                    JOINING_EMOLUMENTS: $('#txtJoiningemoulments').val(),
+                    LEAVING_EMOLUMENTS: $('#txtEmolmentsonleaving').val(),
+
+
+                    REASON_FOR_LEAVING: $('#txtReason').val(),
+                   
+
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#Employmentdtls').html(data);
+                    new PNotify({
+                        title: 'Message',
+                        text: 'Data Saved successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+                }
+            });
+        });
+        $("#btnEditemployment").click(function () {
+            var grid = $("#jqGrid02");
+            var rowKey = grid.getGridParam("selrow");
+
+            if (!rowKey)
+                new PNotify({
+                    title: 'Warning',
+                    text: 'Please select a row to Update',
+
+                    styling: 'bootstrap3'
+                });
+            else {
+                var selectedIDs = grid.getGridParam("selarrrow");
+                var index = selectedIDs + 1; // zero-based index of row so it means the 3rd row
+                var rowId = jQuery('#jqGrid02 tr:eq(' + selectedIDs + ')').attr('id');
+                //(here I suppose that the <table> element of your jqGrid has id="list"). After you know the id of the row you can get the row data with respect of getRowData method or the data from one cell only with respect of getCell method:
+                var dataFromTheRow = jQuery('#jqGrid02').jqGrid('getRowData', rowId);
+                //alert(dataFromTheRow.hirarchy_id);
+                // var dataFromCellByColumnIndex = jQuery('#jqGrid').jqGrid('getCell', rowId, 7);
+                // var dataFromCellByColumnName = jQuery('#jqGrid').jqGrid('getCell', rowId, 'Tax');
+                var result = "";
+                for (var i = 0; i < selectedIDs.length; i++) {
+                    result += selectedIDs[0];
+                }
+                //ORGANISATION_NAME: $('#txtOrganisationname').val(),
+
+                //JOINING_DATE: $('#txtJoiningdate').val(),
+                //RELIEVING_DATE: $('#txtLeavingdate').val(),
+                //LAST_DESIGNATION: $('#lastDesignation').val(),
+                //JOINING_EMOLUMENTS: $('#txtJoiningemoulments').val(),
+                //LEAVING_EMOLUMENTS: $('#txtEmolmentsonleaving').val(),
+
+
+                //REASON_FOR_LEAVING: $('#txtReason').val(),
+                var ORGANISATION_NAME1 = grid.jqGrid('getCell', result, 'ORGANISATION_NAME');
+                var JOINING_DATE1 = grid.jqGrid('getCell', result, 'JOINING_DATE');
+                var RELIEVING_DATE1 = grid.jqGrid('getCell', result, 'RELIEVING_DATE');
+                var LAST_DESIGNATION1 = grid.jqGrid('getCell', result, 'LAST_DESIGNATION');
+                var JOINING_EMOLUMENTS1 = grid.jqGrid('getCell', result, 'JOINING_EMOLUMENTS');
+                var LEAVING_EMOLUMENTS1 = grid.jqGrid('getCell', result, 'LEAVING_EMOLUMENTS');
+                var REASON_FOR_LEAVING1 = grid.jqGrid('getCell', result, 'REASON_FOR_LEAVING');
+             
+                $('#txtupOrganisationname').val(ORGANISATION_NAME1);
+                $('#txtupJoiningdate').val(JOINING_DATE1);
+                $('#txtupLeavingdate').val(RELIEVING_DATE1);
+                $('#uplastDesignation').val(LAST_DESIGNATION1);
+                $('#txtupJoiningemoulments').val(JOINING_EMOLUMENTS1);
+                $('#txtupEmolmentsonleaving').val(LEAVING_EMOLUMENTS1);
+                $('#txtupReason').val(REASON_FOR_LEAVING1);
+                //$("#edit_project_name").val(Project_Name1);
+                $("#rowid").val(result);
+                $("#employmentuppopup").modal("show");
+                //$("#employmentuppopup").show();
+
+            }
+
+        });
+        function HideModal() {
+            $('.modal-backdrop').remove();
+            //location.reload();
+        }
+
+        $("#btncommunicationUpdateclr").click(function () {
+            $('#txtupOrganisationname').val("");
+            $('#txtupJoiningdate').val("");
+            $('#txtupLeavingdate').val("");
+            $('#uplastDesignation').val("");
+            $('#txtupJoiningemoulments').val("");
+            $('#txtupEmolmentsonleaving').val("");
+            $('#txtupReason').val("");
+        });
+        $("#btncommunicationUpdate").click(function () {
+            //var test = $('#fn').val();
+            // alert(test);
+            $('#employmentuppopup').modal("hide");
+            HideModal();
+            var ID = $("#rowid").val();
+            $.ajax({
+                url: '/EmployeeDetails/employmentdetailsedit/' + ID,
+
+                data: {
+                    ORGANISATION_NAME: $('#txtupOrganisationname').val(),
+
+                    JOININGDATE: $('#txtupJoiningdate').val(),
+                    RELIEVINGDATE: $('#txtupLeavingdate').val(),
+                    LAST_DESIGNATION: $('#uplastDesignation').val(),
+                    JOINING_EMOLUMENTS: $('#txtupJoiningemoulments').val(),
+                    LEAVING_EMOLUMENTS: $('#txtupEmolmentsonleaving').val(),
+
+
+                    REASON_FOR_LEAVING: $('#txtupReason').val(),
+
+
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#Employmentdtls').html(data);
+                    new PNotify({
+                        title: ' Message',
+                        text: 'Data Updated successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+                }
+            });
+        });
+    });
+$(function () {
+    $('#datetimepicker15').datepicker(
+          {
+              autoclose: true,
+              format: 'dd/mm/yyyy',
+          });
+
+});
+$(function () {
+    $('#datetimepicker11').datepicker(
+          {
+              autoclose: true,
+              format: 'dd/mm/yyyy',
+          });
+
+});
+$(function () {
+    $('#datetimepicker12').datepicker(
+          {
+              autoclose: true,
+              format: 'dd/mm/yyyy',
+          });
+
+});
+$(function () {
+    $('#datetimepicker18').datepicker(
+          {
+              autoclose: true,
+              format: 'dd/mm/yyyy',
+          });
+
+});
+
+</script>
+
+
+            <div class="form-group">
+                <div class="col-md-6 col-sm-8 col-xs-12 ">
+                    <button type="submit" class="btn btn-success" data-toggle="modal" data-target=".fs-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                    <button id="btnEditemployment" type="submit" class="btn btn-success act_edit1" data-toggle="modal"><i class="fa fa-edit "></i>EDIT</button>
+                    @*<button id="upload_btn" type="submit" class="btn btn-success"><i class="fa fa-remove "></i>DELETE</button>*@
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12 ">
+                    <table id="jqGrid02"></table>
+                    <div id="jqGridPager02"></div>
+                </div>
+            </div>
+            @*<button type="submit" class="btn btn-success" data-toggle="modal" data-target=".fs-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>*@
+            @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>*@
+            <div class="modal fade fs-example-modal-md" id="employmentpopup" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel2">Employment Details</h4>
+                        </div>
+                        @*@using (Html.BeginForm("create", "Home", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+                        {*@
+                        <div class="form-horizontal form-label-left">
+                            <div class="modal-body">
+
+
+                                @*<form class="form-horizontal form-label-left">*@
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Organization Name</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtOrganisationname" name="txtOrganisationname" class="form-control" placeholder="Organization Name">
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Joining Date</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <div class='input-group date' id='datetimepicker15'>
+                                            <input type='text' id="txtJoiningdate" name="txtJoiningdate" class="form-control dp" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Releaving Date</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <div class='input-group date' id='datetimepicker11'>
+                                            <input type='text' id="txtLeavingdate" name="txtLeavingdate" class="form-control dp" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                       
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Last Designation</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="lastDesignation" name="lastDesignation"  class="form-control" placeholder="Last Designation">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Total Emoluments at Joining</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtJoiningemoulments" name="txtJoiningemoulments" class="form-control" placeholder="Total Emoluments at Joining">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Total Emoluments at Releaving</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtEmolmentsonleaving" name="txtEmolmentsonleaving" class="form-control" placeholder="Total Emoluments at Releaving">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Reason for Leaving</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtReason" name="txtReason" class="form-control"  placeholder="Reason for Leaving">
+
+                                    </div>
+
+                                </div>
+                                @*</form>*@
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" id="btnEmploymentsaveclr" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                <button id="btnEmploymentsave" type="submit" class="btn btn-success"  ><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                            </div>
+                        </div>
+                        @*}*@
+                    </div>
+                </div>
+            </div>
+  <div class="modal fade efs-example-modal-md" tabindex="-1" role="dialog" id="employmentuppopup" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">Employment Details</h4>
+            </div>
+            @*@using (Html.BeginForm("create", "Home", FormMethod.Post, new
+                {
+                    @class = "form-horizontal form-label-left",
+                    enctype = "multipart/form-data"
+                }))
+                                        {*@
+            <div class="form-horizontal form-label-left">
+                <div class="modal-body">
+
+
+                    @*<form class="form-horizontal form-label-left">*@
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Organization Name</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtupOrganisationname" name="txtupOrganisationname" class="form-control" placeholder="Organization Name">
+                            <input type="hidden" name="rowid" id="rowid">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Joining Date</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <div class='input-group date' id='datetimepicker12'>
+                                <input type='text' id="txtupJoiningdate" name="txtupJoiningdate" class="form-control dp" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Releaving Date</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <div class='input-group date' id='datetimepicker18'>
+                                <input type='text' id="txtupLeavingdate" name="txtupLeavingdate" class="form-control dp" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Last Designation</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="uplastDesignation" name="uplastDesignation" class="form-control" placeholder="Last Designation">
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Total Emoluments at Joining</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtupJoiningemoulments" name="txtupJoiningemoulments" class="form-control" placeholder="Total Emoluments at Joining">
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Total Emoluments at Releaving</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtupEmolmentsonleaving" name="txtupEmolmentsonleaving" class="form-control" placeholder="Total Emoluments at Releaving">
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Reason for Leaving</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtupReason" name="txtupReason" class="form-control"  placeholder="Reason for Leaving">
+
+                        </div>
+
+                    </div>
+                    @*</form>*@
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btncommunicationUpdateclr" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                    <button id="btncommunicationUpdate" type="submit" class="btn btn-success" ><i class="fa fa-edit" aria-hidden="true"></i>Update</button>
+                </div>
+            </div>
+            @*}*@
+        </div>
+    </div>
+</div>
+       
+

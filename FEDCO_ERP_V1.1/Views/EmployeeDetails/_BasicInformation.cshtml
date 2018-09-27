@@ -1,0 +1,967 @@
+﻿@*@model DATA_LAYER.TBL_EMP_BASICINFO*@
+
+
+<script>
+
+    $(document).ready(function () {
+        var gender;
+        $('input:radio[name=gender]').on('ifChecked', function (event) {
+            gender = $(this).val();
+        })
+        var desig;
+        var div;
+        var subdiv;
+        var section;
+        var dept;
+        var rptperson;
+        var fnf;
+        var exittype;
+        var grade;
+        var bloodtype;
+        var workloc;
+        var exitcat;
+        var CVtype;
+        var Hiringtype;
+        // headingOne
+        // $("#headingOne").click();
+        $.ajax({
+            url: " @Url.Action("basicinformation", "EmployeeDetails")",
+            async: false,
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $.each(result, function (i) {
+                    desig = result[i].DESIGNATION;
+                    div = result[i].DIVISION;
+                    subdiv = result[i].SUBDIVISION;
+                    section = result[i].SECTION;
+                    dept = result[i].DEPARTMENT;
+                    rptperson = result[i].REPORTING_TO;
+                    fnf = result[i].FULL_N_FINAL_STATUS;
+                    exittype = result[i].EXIT_TYPE;
+                    grade = result[i].GRADE;
+                    bloodtype = result[i].BLOOD_GROUP;
+                    workloc = result[i].WORKLOCATION;
+                    exitcat = result[i].EXITCATAGORY;
+                    $('#txtbasjoiningdate').val(result[i].JOININGDATE);
+                    $('#txtbasFirstname').val(result[i].EMPLOYEE_FIRSTNAME);
+                    $('#txtbasMiddlename').val(result[i].EMPLOYEE_MIDDLENAME);
+                    $('#txtbasLastname').val(result[i].EMPLOYEE_LASTNAME);
+                    $('#txtbasDOB').val(result[i].DOB);
+                    $('#txtbasAge').val(result[i].AGE);
+                    $('#txtbasDomStatus').val(result[i].DOMICILE_STATUS);
+                    $('#txtbasWeddingannv').val(result[i].WEDDING);
+                    if (result[i].SEX == "Male") {
+                        $('#genderM').iCheck('check');
+                        $("#genderM").addClass("flat");
+                    }
+                    else if (result[i].SEX == "Female") {
+                        $('#genderF').iCheck('check');
+                        $("#genderF").addClass("flat");
+                    }
+                    if (result[i].MATERIAL_STATUS == "Married") {
+                        $('#genderFf').iCheck('check');
+                    }
+                    else {
+                        $('#genderMm').iCheck('check');
+                    }
+                    $('#txtbasHeight').val(result[i].HEIGHT);
+                    $('#txtbasWeight').val(result[i].WEIGHT);
+                    $('#txtbasESIC').val(result[i].ESIC_NO);
+                    $('#txtbasUAN').val(result[i].PF_UNID_NUMBER);
+                    $('#txtbasMedno').val(result[i].MEDICLAIM_NUMBER);
+                    $('#txtbasinduction').val(result[i].INDUCTION);
+                    $('#txtbasidfmarks').val(result[i].IDENTIFICATION_MARK);
+                    $('#txtbasillness').val(result[i].LAST_MAJOR_ILLNESS_SURGERY);
+                    $('#txtbasPhysical').val(result[i].PHYSICAL_DISABILITY);
+                    $('#reportingto').val(result[i].REPORTING_TO);
+                    //$('#txtbasHiringtype').val(result[i].HIRING_TYPE);
+                    //$('#reportingto').val(result[i].CV_TYPE);
+                    CVtype = result[i].CV_TYPE;
+                    Hiringtype = result[i].HIRING_TYPE;
+                    $('#txtbasExp').val(result[i].YEAR_OF_EXPERIENCE);
+                    $('#txtbasExitdate').val(result[i].EXITDATE);
+                    $('#txtbasReference').val(result[i].REFERENCE);
+                    $('#txtbasMothertounge').val(result[i].MOTHERTOUNGE);
+                    $('#txtbasReligion').val(result[i].RELIGION);
+                    $('#txtbasResignationDate').val(result[i].RESIGNATIONDATE);
+                    $('#txtbasLeave').val(result[i].LEAVEENCASHMENT);
+                });
+
+            }
+        }); 
+        $("#btnBasicinfosaveclr").click(function () {
+            $('#txtbasFirstname').val("");
+            $('#txtbasMiddlename').val("");
+            $('#txtbasLastname').val("");
+            $('#txtbasjoiningdate').val("");
+            $('#designation').val("");
+            $('#txtbasDOB').val("");
+            $('#txtbasAge').val("");
+             $('#txtbasDomStatus').val("");
+             $('#txtbasWeddingannv').val("");
+             $('#worklocation').val(0);
+            $('#department').val(0);
+             $('#reportingto').val("");
+           $('#division').val(0);
+              $('#subdivision').val(0);
+             $('#section').val(0);
+             $('#grades').val(0);
+              $('#bloodgroup').val(0);
+              $('#txtbasHeight').val("");
+              $('#txtbasWeight').val("");
+              $('#txtbasESIC').val("");
+              $('#txtbasUAN').val("");
+              $('#txtbasMedno').val("");
+              $('#txtbasinduction').val("");
+              $('#txtbasidfmarks').val("");
+              $('#txtbasillness').val("");
+              $('#txtbasPhysical').val("");
+              $('#txtbasHiringtype').val(0);
+              $('#txtbasCVtype').val(0);
+              $('#txtbasExp').val("");
+              $('#txtbasExitdate').val("");
+              $('#exittypes').val(0);
+              $('#txtbasReference').val("");
+             $('#txtbasMothertounge').val("");
+              $('#txtbasReligion').val("");
+              $('#fnf').val("");
+              $('#exittypecategory').val(0);
+              $('#txtbasResignationDate').val("");
+              $('#txtbasLeave').val("");
+        });
+        $("#btnBasicinfosave").click(function () {
+            //$(".se-pre-con").fadeIn();
+           
+            $.ajax({
+                url: '@Url.Action("BICreate", "EmployeeDetails")',
+                data: {
+                    EMPLOYEE_FIRSTNAME: $('#txtbasFirstname').val(),
+                    EMPLOYEE_MIDDLENAME: $('#txtbasMiddlename').val(),
+                    EMPLOYEE_LASTNAME: $('#txtbasLastname').val(),
+                    JOININGDATE: $('#txtbasjoiningdate').val(),
+                    DESIGNATION: $('#designation').val(),
+                    DOB: $('#txtbasDOB').val(),
+                    AGE: $('#txtbasAge').val(),
+                    SEX: $("input[name='gender']:checked").val(),
+                    DOMICILE_STATUS: $('#txtbasDomStatus').val(),
+                    MATERIAL_STATUS: $("input[name='mat']:checked").val(),
+                    WEDDING: $('#txtbasWeddingannv').val(),
+                    WORKLOCATION: $('#worklocation').val(),
+                    DEPARTMENT: $('#department').val(),
+                    REPORTING_TO: $('#reportingto').val(),
+                    DIVISION: $('#division').val(),
+                    SUBDIVISION: $('#subdivision').val(),
+                    SECTION: $('#section').val(),
+                    GRADE: $('#grades').val(),
+                    BLOOD_GROUP: $('#bloodgroup').val(),
+                    HEIGHT: $('#txtbasHeight').val(),
+                    WEIGHT: $('#txtbasWeight').val(),
+                    ESIC_NO: $('#txtbasESIC').val(),
+                    PF_UNID_NUMBER: $('#txtbasUAN').val(),
+                    MEDICLAIM_NUMBER: $('#txtbasMedno').val(),
+                    INDUCTION: $('#txtbasinduction').val(),
+                    IDENTIFICATION_MARK: $('#txtbasidfmarks').val(),
+                    LAST_MAJOR_ILLNESS_SURGERY: $('#txtbasillness').val(),
+                    PHYSICAL_DISABILITY: $('#txtbasPhysical').val(),
+                    HIRING_TYPE: $('#txtbasHiringtype').val(),
+                    CV_TYPE: $('#txtbasCVtype').val(),
+                    YEAR_OF_EXPERIENCE: $('#txtbasExp').val(),
+                    EXITDATE: $('#txtbasExitdate').val(),
+                    EXIT_TYPE: $('#exittypes').val(),
+                    REFERENCE: $('#txtbasReference').val(),
+                    MOTHERTOUNGE: $('#txtbasMothertounge').val(),
+                    RELIGION: $('#txtbasReligion').val(),
+                    FULL_N_FINAL_STATUS: $('#fnf').val(),
+                    EXITCATAGORY: $('#exittypecategory').val(),
+                    RESIGNATIONDATE:$('#txtbasResignationDate').val(),
+                    LEAVEENCASHMENT: $('#txtbasLeave').val()
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#basicinfo').html(data);
+                    //new PNotify({
+                    //    title: 'Message',
+                    //    text: 'Data Updated successfully',
+                    //    type: "success",
+                    //    styling: 'bootstrap3'
+                    //});
+                  
+   //                 setTimeout(
+   //function () {
+   //    location.reload();
+      
+   //}, 1000);
+                  
+   //                 $(document).ready(function () {
+   //                     $("#headingOne").click();
+   //                 }).delay(2000);
+                      
+                   
+                }
+            });
+            $("body").scrollTop(0);
+            //$(".se-pre-con").fadeOut("fast");
+            new PNotify({
+                title: 'Message',
+                text: 'Data Updated successfully',
+                type: "success",
+                styling: 'bootstrap3'
+            });
+        });
+
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Transferlocation", "EmployeeDetails")",
+            async: false,
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#worklocation').empty();
+                $('#worklocation').append($('<option></option>').html("SELECT Location"));
+                $.each(result, function (i) {
+                    $('#worklocation').append($('<option></option>').val(result[i].ID).html(result[i].LOCATION_NAME));
+                });
+                if (workloc != null) {
+                    $("#worklocation").val(workloc);
+                }
+            }
+        });
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("ExitTypes", "EmployeeDetails")",
+            async: false,
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#exittypes').empty();
+                $('#exittypes').append($('<option></option>').val("0").html("SELECT EXITTYPES"));
+                $('#exittypecategory').empty();
+                $('#exittypecategory').append($('<option></option>').val("0").html("SELECT"));
+                $.each(result, function (i) {
+                    $('#exittypes').append($('<option></option>').val(result[i].ID).html(result[i].EXITTYPE_NAME));
+                });
+                if (exittype != null) {
+
+                    $("#exittypes").val(exittype);
+                    $.ajax({
+                        url: " @Url.Action("exitTypecategory", "EmployeeDetails")/" + exittype,
+                        type: "GET",
+                    datatype: "Json",
+                    success:
+                    function (result) {
+                        $('#exittypecategory').empty();
+                        $('#exittypecategory').append($('<option></option>').val("0").html("SELECT"));
+                        $.each(result, function (i) {
+                            $('#exittypecategory').append($('<option></option>').val(result[i].ID).html(result[i].SUBCATAGORYNAME));
+                        });
+                        if (exitcat != null) {
+                            $("#exittypecategory").val(exitcat);
+                        }
+                    }
+                });
+                }
+            }
+        });
+
+        $('#exittypes').on('change', function () {
+            var divisionid = $('#exittypes').val();
+            $.ajax({
+                url: " @Url.Action("exitTypecategory", "EmployeeDetails")/" + divisionid,
+                async: false,
+                type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#exittypecategory').empty();
+                $('#exittypecategory').append($('<option></option>').val("0").html("SELECT"));
+                $.each(result, function (i) {
+                    $('#exittypecategory').append($('<option></option>').val(result[i].ID).html(result[i].SUBCATAGORYNAME));
+                });
+            }
+        });
+    });
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("FnFStatus", "EmployeeDetails")",
+            async: false,
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#fnf').empty();
+                $('#fnf').append($('<option></option>').val("0").html("SELECT FNF"));
+                $.each(result, function (i) {
+                    $('#fnf').append($('<option></option>').val(result[i]).html(result[i]));
+                });
+                if (fnf != null) {
+                    $('#fnf option').map(function () {
+                        if ($(this).text() == fnf) return this;
+                    }).attr('selected', 'selected');
+                }
+            }
+        });
+        $.ajax({
+           @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("CVType", "EmployeeDetails")",
+            async: false,
+        type: "GET",
+        datatype: "Json",
+        success:
+        function (result) {
+            $('#txtbasCVtype').empty();
+            $('#txtbasCVtype').append($('<option></option>').val("0").html("SELECT CV Type"));
+            $.each(result, function (i) {
+                $('#txtbasCVtype').append($('<option></option>').val(result[i]).html(result[i]));
+            });
+            if (CVtype != null) {
+                $('#txtbasCVtype option').map(function () {
+                    if ($(this).text() == CVtype) return this;
+                }).attr('selected', 'selected');
+            }
+        }
+        });
+        $.ajax({
+          @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("HiringType", "EmployeeDetails")",
+            async: false,
+        type: "GET",
+        datatype: "Json",
+        success:
+        function (result) {
+            $('#txtbasHiringtype').empty();
+            $('#txtbasHiringtype').append($('<option></option>').val("0").html("SELECT Hiring Type"));
+            $.each(result, function (i) {
+                $('#txtbasHiringtype').append($('<option></option>').val(result[i]).html(result[i]));
+            });
+            if (Hiringtype != null) {
+                $('#txtbasHiringtype option').map(function () {
+                    if ($(this).text() == Hiringtype) return this;
+                }).attr('selected', 'selected');
+            }
+        }
+    });
+
+        $.ajax({
+            url: " @Url.Action("Grades", "EmployeeDetails")",
+            async: false,
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#grades').empty();
+                $('#grades').append($('<option></option>').val("0").html("SELECT GRADE"));
+                $.each(result, function (i) {
+                    $('#grades').append($('<option></option>').val(result[i].ID).html(result[i].GRADE_NAME));
+                });
+
+                if (grade != null) {
+                    $("#grades").val(grade);
+                }
+            }
+        });
+
+        $.ajax({
+            url: " @Url.Action("BloodGroups", "EmployeeDetails")",
+            async: false,
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#bloodgroup').empty();
+                $('#bloodgroup').append($('<option></option>').val("0").html("SELECT BLOODGROUP"));
+                $.each(result, function (i) {
+                    $('#bloodgroup').append($('<option></option>').val(result[i].ID).html(result[i].BLOODGROUP_NAME));
+                });
+                if (bloodtype != null) {
+                    $("#bloodgroup").val(bloodtype);
+                }
+            }
+        });
+
+        $.ajax({
+            url: " @Url.Action("Divisions", "EmployeeDetails")",
+            async: false,
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#division').append($('<option></option>').val("0").html("SELECT DIVISION"));
+                $('#subdivision').append($('<option></option>').val("0").html("SUB-DIVISION"));
+                $('#section').append($('<option></option>').val("0").html("SECTION"));
+                $.each(result, function (i) {
+                    $('#division').append($('<option></option>').val(result[i].DIVISION_CODE).html(result[i].DIV_NAME));
+                });
+                if (div != null) {
+                    $("#division").val(div);
+                    $.ajax({
+                        url: " @Url.Action("SubDivisions", "EmployeeDetails")/" + div,
+                        type: "GET",
+                        datatype: "Json",
+                        success:
+                        function (result) {
+                            $('#subdivision').empty();
+                            $('#section').empty();
+                            $('#subdivision').append($('<option></option>').val("0").html("SUB-DIVISION"));
+                            $('#section').append($('<option></option>').val("0").html("SECTION"));
+                            $.each(result, function (i) {
+                                $('#subdivision').append($('<option></option>').val(result[i].SUB_DIV_CODE).html(result[i].SUB_DIV_NAME));
+                            });
+                            if (subdiv != null) {
+                                $("#subdivision").val(subdiv);
+                                $.ajax({
+                                    url: " @Url.Action("Sections", "EmployeeDetails")/" + subdiv,
+                                    type: "GET",
+                                    datatype: "Json",
+                                    success:
+                                    function (result) {
+                                        $('#section').empty();
+                                        $('#section').append($('<option></option>').val("0").html("SECTION"));
+                                        $.each(result, function (i) {
+                                            $('#section').append($('<option></option>').val(result[i].SEC_CODE).html(result[i].SEC_NAME));
+                                        });
+                                        if (section != null) {
+                                            $("#section").val(section);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        $('#division').on('change', function () {
+            var divisionid = $('#division').val();
+            $.ajax({
+                url: " @Url.Action("SubDivisions", "EmployeeDetails")/" + divisionid,
+                async: false,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+                    $('#subdivision').empty();
+                    $('#section').empty();
+                    $('#subdivision').append($('<option></option>').val("0").html("SUB-DIVISION"));
+                    $('#section').append($('<option></option>').val("0").html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#subdivision').append($('<option></option>').val(result[i].SUB_DIV_CODE).html(result[i].SUB_DIV_NAME));
+                    });
+                }
+            });
+        });
+
+
+        $('#subdivision').on('change', function () {
+            var subdivisionid = $('#subdivision').val();
+            $.ajax({
+                url: " @Url.Action("Sections", "EmployeeDetails")/" + subdivisionid,
+                async: false,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+                    $('#section').empty();
+                    $('#section').append($('<option></option>').val("0").html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#section').append($('<option></option>').val(result[i].SEC_CODE).html(result[i].SEC_NAME));
+                    });
+                }
+            });
+        });
+
+        $.ajax({
+            url: " @Url.Action("Departments", "EmployeeDetails")",
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#department').empty();
+                $('#department').append($('<option></option>').val("0").html("SELECT DEPARTMENT"));
+                //$('#reportingto').append($('<option></option>').val("0").html("SELECT REPOTING TO"));
+                $.each(result, function (i) {
+                    $('#department').append($('<option></option>').val(result[i].ID).html(result[i].DEPARTMENT_NAME));
+                });
+                if (dept != null) {
+                    $("#department").val(dept);
+                    @*$.ajax({
+                        url: " @Url.Action("ReporingTo", "EmployeeDetails")/" + dept,
+                        type: "GET",
+                        datatype: "Json",
+                        success:
+                        function (result) {
+                            $('#reportingto').empty();
+                            $('#reportingto').append($('<option></option>').val("0").html("SELECT REPOTING TO"));
+                            $.each(result, function (i) {
+                                $('#reportingto').append($('<option></option>').val(result[i].ID).html(result[i].REPORTING_PERSON_NAME));
+                            });
+                            if (rptperson != null) {
+                                $("#reportingto").val(rptperson);
+                            }
+
+
+                        }
+                    });*@
+                }
+            }
+        });
+
+
+        @*$('#department').on('change', function () {
+            $('#reportingto').empty();
+            var deptid = $('#department').val();
+            $.ajax({
+                url: " @Url.Action("ReporingTo", "EmployeeDetails")/" + deptid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                      function (result) {
+                          $('#reportingto').empty();
+                          $('#reportingto').append($('<option></option>').val("0").html("SELECT REPOTING TO"));
+                          $.each(result, function (i) {
+                              $('#reportingto').append($('<option></option>').val(result[i].ID).html(result[i].REPORTING_PERSON_NAME));
+                          });
+                      }
+            });
+        });*@
+
+        $.ajax({
+            url: " @Url.Action("Designations", "EmployeeDetails")",
+            async: false,
+            type: "GET",
+            datatype: "Json",
+            success:
+                  function (result) {
+                      $('#designation').empty();
+                      $('#designation').append($('<option></option>').val("0").html("SELECT DESIGNATION"));
+                      $.each(result, function (i) {
+                          $('#designation').append($('<option></option>').val(result[i].ID).html(result[i].DESIGNATION_NAME));
+                      });
+                      if (desig != null) {
+                          $("#designation").val(desig);
+                      }
+                  }
+        });
+        $('#worklocation').change(
+          function () {
+              var val2 = $('#worklocation option:selected').val();
+              if (val2 == 1 || val2 == 0 || val2 == 5 || val2 == 6 || val2 == 7 || val2 == 8 || val2 == 9 || val2 == 10 || val2 == 11 || val2 == 12 || val2 == 13 || val2 == 14 || val2 == 15) {
+                  $("#division").attr("disabled", "disabled");
+                  $("#subdivision").attr("disabled", "disabled");
+                  $("#section").attr("disabled", "disabled");
+                  $("#division").val(0);
+                  $("#subdivision").val(0);
+                  $("#section").val(0);
+              }
+              if (val2 == 2) {
+                  $("#division").removeAttr("disabled");
+                  $("#subdivision").removeAttr("disabled");
+                  $("#section").removeAttr("disabled");
+                  $("#subdivision").attr("disabled", "disabled");
+                  $("#section").attr("disabled", "disabled");
+                  $("#subdivision").val(0);
+                  $("#section").val(0);
+              }
+              if (val2 == 3) {
+                  $("#division").removeAttr("disabled");
+                  $("#subdivision").removeAttr("disabled");
+                  $("#section").removeAttr("disabled");
+                  $("#section").attr("disabled", "disabled");
+                  $("#section").val(0);
+              }
+              if (val2 == 4) {
+                  $("#division").removeAttr("disabled");
+                  $("#subdivision").removeAttr("disabled");
+                  $("#section").removeAttr("disabled");
+              }
+              // Do something with val1 and val2 ...
+          }
+         );
+    });
+</script>
+<script>
+    $(function () {
+        $('#datetimepicker1').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+
+    });
+    $(function () {
+        $('#datetimepicker2').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+
+    });
+    $(function () {
+        $('#datetimepicker3').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+
+    });
+    $(function () {
+        $('#datetimepicker41').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+
+    });
+    $(function () {
+        $('#datetimepicker81').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+
+    });
+   
+</script>
+<div class="form-horizontal form-label-left">
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Designation</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <select class="form-control" id="designation" name="designation"></select>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Joining Date</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12 ">
+            <div class='input-group date' id='datetimepicker1'>
+                <input type='text' id="txtbasjoiningdate" name="txtbasjoiningdate" class="form-control dp" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">First Name</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasFirstname" name="txtbasFirstname" required="required" class="form-control" placeholder="First Name">
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Middle Name</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasMiddlename" name="txtbasMiddlename" class="form-control" placeholder="Middle Name">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Last Name</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasLastname" name="txtbasLastname" class="form-control" placeholder="Last Name">
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Date Of Birth</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class='input-group date' id='datetimepicker3'>
+                <input id="txtbasDOB" name="txtbasDOB" type='text' class="form-control dp" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Age</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input id="txtbasAge" name="txtbasAge" type="text" class="form-control" placeholder="Age">
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Gender</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="radio" class="flat" name="gender" id="genderM" value="Male" /><label style=" margin-top: 5px;"><i class="fa fa-male" aria-hidden="true"></i>Male</label>
+            <input type="radio" class="flat" name="gender" id="genderF" value="Female" /><label style=" margin-top: 5px;"><i class="fa fa-female" aria-hidden="true"></i>Female</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Domicile Status</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasDomStatus" name="txtbasDomStatus" class="form-control" placeholder="Domicile Status">
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Religion</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasReligion" name="txtbasReligion" class="form-control" placeholder="Religion">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Martital Status</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="radio" class="flat" name="mat" id="genderMm" value="Unmarried" /><label style=" margin-top: 5px;"><i class="fa fa-user" aria-hidden="true"></i>UnMarried</label>
+            <input type="radio" class="flat" name="mat" id="genderFf" value="Married" /><label style=" margin-top: 5px;"><i class="fa fa-user-plus" aria-hidden="true"></i>Married</label>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Wedding Anniverssary</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class='input-group date' id='datetimepicker2'>
+                <input type='text' id="txtbasWeddingannv" name="txtbasWeddingannv" class="form-control dp" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Department</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <select class="form-control" id="department" name="DEPARTMENT"></select>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Reporting To</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @*<select class="form-control" id="reportingto" name="REPORTING_TO"></select>*@
+            <input type="text" id="reportingto" name="reportingto" class="form-control" placeholder="Reporting Person">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Work Location</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+
+            <select class="form-control" id="worklocation" name="division"></select>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Division</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+
+            <select class="form-control" id="division" name="division" disabled="disabled"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">SubDivision</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <select class="form-control" id="subdivision" name="subdivision" disabled="disabled"></select>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Section</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <select class="form-control" id="section" name="section" disabled="disabled"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Grade</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <select class="form-control" id="grades" name="GRADES"></select>
+
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Blood Group</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <select class="form-control" id="bloodgroup" name="BLOOD_GROUP"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Height (in ft.)</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasHeight" name="txtbasHeight" class="form-control" placeholder="Height (in ft.)">
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Weight (Kgs.)</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasWeight" name="txtbasWeight" class="form-control" placeholder="Weight (Kgs.)">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">ESIC No</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasESIC" name="txtbasESIC" class="form-control" placeholder="ESIC No">
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">PF / UNID No.</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasUAN" name="txtbasUAN" class="form-control" placeholder="PF / UNID No.">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Mediclaim No.</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasMedno" name="txtbasMedno" class="form-control" placeholder="Mediclaim No.">
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Mother Tounge</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasMothertounge" name="txtbasMothertounge" class="form-control" placeholder="Mother Tounge">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Induction</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <textarea id="txtbasinduction" name="txtbasinduction" class="form-control"
+                      placeholder="Induction "></textarea>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Identification Marks </label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <textarea id="txtbasidfmarks" name="txtbasidfmarks" class="form-control"
+                      placeholder="Identification Marks "></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Last major illness/surgery</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <textarea id="txtbasillness" name="txtbasillness" class="form-control"
+                      placeholder="Last major illness/surgery "></textarea>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Physical Disability,if any </label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+
+            <textarea id="txtbasPhysical" name="txtbasPhysical" class="form-control"
+                      placeholder="Physical Disability,if any "></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Hiring Type</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @*<input type="text" id="txtbasHiringtype" name="txtbasHiringtype" class="form-control" placeholder="Hiring Type">*@
+            <select class="form-control" id="txtbasHiringtype" name="txtbasHiringtype"></select>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">CV Type </label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            @*<input type="text" id="txtbasCVtype" name="txtbasCVtype" class="form-control" placeholder="CV Type">*@
+            <select class="form-control" id="txtbasCVtype" name="txtbasCVtype"></select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Refered By </label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasReference" name="txtbasReference" class="form-control" placeholder="Refered By">
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Years of Exp.</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <input type="text" id="txtbasExp" name="txtbasExp" class="form-control" placeholder="Years of Exp.">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Resignation Date </label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class='input-group date' id='datetimepicker81'>
+                <input type='text' id="txtbasResignationDate" name="txtbasResignationDate" class="form-control dp" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Exit Date </label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class='input-group date' id='datetimepicker41'>
+                <input type='text' id="txtbasExitdate" name="txtbasExitdate" class="form-control dp" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Exit Type</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+
+            <select class="form-control" id="exittypes" name="exittypes"></select>
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <select id="exittypecategory" name="exittypecategory" class="form-control"></select>
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">Leave Encashment(In days)</label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+
+            <input type="text" id="txtbasLeave" name="txtbasLeave" class="form-control" placeholder="Leave Encashment(In days)">
+        </div>
+        <div class="col-md-2 col-sm-6 col-xs-12">
+            <label style=" margin-top: 5px;">F&F Status </label>
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <select class="form-control" id="fnf" name="FNF"></select>
+        </div>
+    </div>
+    <div class="ln_solid"></div>
+    <div class="form-group">
+        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2">
+            <button type="button" id="btnBasicinfosaveclr" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+            <button type="button" class="btn btn-success" id="btnBasicinfosave"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+        </div>
+    </div>
+</div>
+

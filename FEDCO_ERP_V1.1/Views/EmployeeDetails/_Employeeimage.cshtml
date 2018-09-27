@@ -1,0 +1,91 @@
+﻿<script>
+    $(document).ready(function () {
+        $.ajax({
+           @*@Url.Action("Action","Controller")*@
+        url: " @Url.Action("basicinformation", "EmployeeDetails")",
+
+        type: "GET",
+        datatype: "Json",
+
+        success:
+        function (result) {
+
+        $.each(result, function (j) {
+        $('#empimg').attr('src', result[j].EMPLOYEE_IMAGE);
+        $("label[for='Empbasname']").text(result[j].EMPLOYEE_FULLNAME);
+        $("label[for='EmpbasPlace']").text("Fortune Towers,Bhubaneswar");
+        $("label[for='Empbasdesig']").text(result[j].designationname);
+
+        });
+
+        }
+        });
+
+        });
+</script>
+<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+    @*@Html.Partial("_Employeeimage")*@
+    <div class="profile_img">
+        <div id="crop-avatar">
+            <!-- Current avatar -->
+            <img id="empimg" class="img-responsive avatar-view" src="~/images/picture.jpg" alt="Avatar">
+        </div>
+    </div>
+    <h4><label for="Empbasname"></label></h4>
+    <ul class="list-unstyled user_data">
+        <li>
+            <i class="fa fa-map-marker user-profile-icon"></i>  <label for="EmpbasPlace"></label>
+
+        </li>
+        <li>
+            <i class="fa fa-briefcase user-profile-icon"></i> 	<label for="Empbasdesig"></label>
+        </li>
+        <li>
+            <button id="uploadimage_btn" type="submit" class="btn btn-success" data-toggle="modal" data-target=".cs-example-modal-sm"><i class="fa fa-camera "></i>CHANGE IMAGE</button>
+            @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>*@
+            <div class="modal fade cs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+
+                        </div>
+                        @using (Html.BeginForm("BICreate", "EmployeeDetails", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+                        {
+                            <div class="modal-body">
+
+
+                                @*<form class="form-horizontal form-label-left">*@
+                                <div class="form-group">
+                                    <div class="profile_img">
+                                        <div id="crop-avatar">
+                                            <!-- Current avatar -->
+                                            <img id="blah" class="img-responsive avatar-view" src="~/images/picture.jpg" alt="Avatar">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="file" name="file1" id="fileupload1" style="display: none;" />
+                                    <button id="up_btn1" type="submit" class="btn btn-success"><i class="fa fa-camera "></i>BROWSE</button>
+                                </div>
+                                @*</form>*@
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+

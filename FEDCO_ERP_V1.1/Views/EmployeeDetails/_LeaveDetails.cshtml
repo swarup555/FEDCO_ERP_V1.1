@@ -1,0 +1,113 @@
+﻿
+<div class="panel">
+    <a class="panel-heading collapsed" role="tab" id="headingfive" data-toggle="collapse" data-parent="#accordion" href="#collapsefive" aria-expanded="false" aria-controls="collapsefive">
+        <h4 class="panel-title"><i class="fa fa-calculator"></i>Leave Details</h4>
+    </a>
+    <div id="collapsefive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingfive">
+        <div class="panel-body" style="overflow-x:scroll">
+            <div class="form-group">
+                <div class="col-md-6 col-sm-8 col-xs-12 ">
+                    <button type="submit" class="btn btn-success" data-toggle="modal" data-target=".ks-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                    <button id="upload_btn" type="submit" class="btn btn-success"><i class="fa fa-edit "></i>EDIT</button>
+                    <button id="upload_btn" type="submit" class="btn btn-success"><i class="fa fa-remove "></i>DELETE</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12 ">
+                    <table id="jqGrid05"></table>
+                    <div id="jqGridPager05"></div>
+                </div>
+            </div>
+
+            @*<button type="submit" class="btn btn-success" data-toggle="modal" data-target=".ks-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>*@
+            <div class="modal fade ks-example-modal-md" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel2">Leave Details</h4>
+                        </div>
+                        @using (Html.BeginForm("create", "Home", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+                        {
+                            <div class="modal-body">
+
+
+                                @*<form class="form-horizontal form-label-left">*@
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Employee ID</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Employee ID">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Employee Name</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Employee Name">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Leave Type</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <select class="form-control">
+                                            <option>Choose option</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Leave Allocated</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Leave Allocated">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Leave Availed</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Leave Availed">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Leave Balance</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Leave Balance">
+                                    </div>
+
+                                </div>
+
+                                @*</form>*@
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

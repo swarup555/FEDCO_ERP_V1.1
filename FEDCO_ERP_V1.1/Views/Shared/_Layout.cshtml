@@ -1,0 +1,336 @@
+﻿
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @*<link rel="shortcut icon" type="image/ico" href="favicon.ico" />*@
+    <link rel="apple-touch-icon" sizes="57x57" href="~/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/images/icon//apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/images/icon/favicon-16x16.png">
+    @*<link rel="manifest" href="/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">*@
+    <meta name="msapplication-TileImage" content="~/images/icon/ms-icon-144x144.png">
+    @*<meta name="theme-color" content="#ffffff">*@
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>FEDCO | </title>
+    <!-- Bootstrap -->
+    <link href="~/Content/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+ 
+    <!-- Font Awesome -->
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- NProgress -->
+    <link href="~/Content/nprogress/nprogress.css" rel="stylesheet" />
+    <!-- iCheck -->
+    <link href="~/Content/iCheck/skins/flat/green.css" rel="stylesheet" />
+
+    <!-- bootstrap-progressbar -->
+
+    <link href="~/Content/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
+    <!-- JQVMap -->
+    <!-- Custom Theme Style -->
+    <link href="~/Content/custom.min.css" rel="stylesheet" />
+    <link href="~/Content/pnotify/dist/pnotify.css" rel="stylesheet" />
+    <link href="~/Content/pnotify/dist/pnotify.buttons.css" rel="stylesheet" />
+    <link href="~/Content/pnotify/dist/pnotify.nonblock.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    @*<script src="~/Content/select2/vendor/jquery-2.1.0.js"></script>*@
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+    <link href="https://fonts.googleapis.com/css?family=Cairo|Orbitron|Oswald|Play|Ubuntu" rel="stylesheet" />
+    <!-- Bootstrap -->
+    <script src="~/Content/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</head>
+<body class="nav-md">
+    <div class="se-pre-con"></div>
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="#" class="site_title"><i class="fa fa-paw"></i> <span>FEDCO-HRMS</span></a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- menu profile quick info -->
+                    <div class="profile"> 
+                        <div class="profile_pic">
+                            @if (Session["userimg"] != null)
+                            {
+                                <img src=@Convert.ToString(HttpContext.Current.Session["userimg"]) alt="..." class="img-circle profile_img">
+                            }
+                            else
+                            {
+                                 <img src="~/images/user.png" alt="..." class="img-circle profile_img">
+                            }
+                           
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            @if (Session["username"] != null)
+                            {
+                                 <h2>@Convert.ToString(HttpContext.Current.Session["username"])</h2>
+                            }
+                            else
+
+                            { Response.Redirect("http://172.18.0.21/"); }  
+                           
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+                    <br />
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            @*<h3>General</h3>*@
+                            <div class="clearfix"></div>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a href="@Url.Action("Index", "Dashboard")"><i class="fa fa-dashboard"></i> Dashboard</a>
+                                    @*<ul class="nav child_menu">
+                                            <li><a href="index.html">Dashboard</a></li>
+                                            <li><a href="index2.html">Dashboard2</a></li>
+                                            <li><a href="index3.html">Dashboard3</a></li>
+                                        </ul>*@
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-gear"></i> Configuration <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="@Url.Action("Index", "Department")">Department</a></li>
+                                        @*<li><a href="@Url.Action("Index", "ReportingPerson")">Reporting Persons</a></li>*@
+                                        @*<li><a href="@Url.Action("Index", "Board")">Board/University</a></li>*@
+                                        @*<li><a href="@Url.Action("Index", "Degree")">Degre/Exam</a></li>*@
+                                        <li><a href="@Url.Action("Index", "Designation")">Designation</a></li>
+                                        @*<li><a href="@Url.Action("Index", "Shift")">Shift</a></li>*@
+                                        <li><a href="@Url.Action("Index", "Grade")">Grade</a></li>
+                                        <li><a href="@Url.Action("Index", "AssetType")">Asset Type</a></li>
+                                        <li><a href="@Url.Action("Index", "Asset")">Asset</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-user"></i> Employee Corner <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="@Url.Action("Index", "home")">Employee Details</a></li>
+                                        @*<li><a href="media_gallery.html">Media Gallery</a></li>
+                                            <li><a href="typography.html">Typography</a></li>
+                                            <li><a href="icons.html">Icons</a></li>
+                                            <li><a href="glyphicons.html">Glyphicons</a></li>
+                                            <li><a href="widgets.html">Widgets</a></li>
+                                            <li><a href="invoice.html">Invoice</a></li>
+                                            <li><a href="inbox.html">Inbox</a></li>
+                                            <li><a href="calendar.html">Calendar</a></li>*@
+                                    </ul>
+                                </li>
+                                @*<li>
+                                    <a><i class="fa fa-history"></i> Employee History <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                      
+                                    </ul>
+                                </li>*@
+                                <li>
+                                    <a href="@Url.Action("Index", "EmployeeActivity")"><i class="fa fa fa-list-alt"></i> Employee Activities </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Utility")"><i class="fa fa fa-wrench"></i> Utility </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Index", "Report")"><i class="fa fa fa-file-text-o"></i> Reports </a>
+                                </li>
+                                @*<li>
+                                        <a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="chartjs.html">Chart JS</a></li>
+                                            <li><a href="chartjs2.html">Chart JS2</a></li>
+                                            <li><a href="morisjs.html">Moris JS</a></li>
+                                            <li><a href="echarts.html">ECharts</a></li>
+                                            <li><a href="other_charts.html">Other Charts</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="nav child_menu">
+                                            <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
+                                            <li><a href="fixed_footer.html">Fixed Footer</a></li>
+                                        </ul>
+                                    </li>*@
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+            <!-- top navigation -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+
+                        </div>
+                       
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    @if (Session["userimg"] != null)
+                                    {
+                                        <img src=@Convert.ToString(HttpContext.Current.Session["userimg"]) alt="..." > @Convert.ToString(HttpContext.Current.Session["username"])
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/user.png" alt=""> @Convert.ToString(HttpContext.Current.Session["username"])
+                                    }
+                                   
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+
+                                    <li><a href="@Url.Action("LogOut", "Dashboard")"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                </ul>
+                            </li>
+                            <li role="presentation" class="dropdown">
+                                @if (TempData["birthday"]!=null)
+                                {
+                                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-bell-o"></i>
+                                        <span class="badge bg-green">@TempData["birthday"] </span>
+                                    </a> 
+                                }
+                                @*else
+                                {
+                                     <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-bell-o"></i>
+                                        <span class="badge bg-green">0</span>
+                                    </a> 
+                                }*@
+                                   
+                                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                                        @{ Html.RenderAction("_notification", "Dashboard");}
+                                        @*@Html.Partial("_notification")*@
+                                    </ul>
+                                </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main" style="min-height:1694px;">
+                @RenderBody()
+            </div>
+
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer>
+                <div class="pull-right">
+                    Feedback Energy Distribution Company Ltd.<a href="http://fedco.co.in">FEDCO</a>
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+    <!-- jQuery -->
+    <!-- Flot -->
+    <!-- /gauge.js -->
+</body>
+
+
+
+@*<body>
+        <div>
+            @RenderBody()
+        </div>
+    </body>*@
+</html>
+<script>
+    function HideModal() {
+     
+        //location.reload();
+    }
+    $(document).ready(function () {
+       
+        $("body").removeClass("modal-open");
+        //window.onhashchange = function () {
+        //    if (window.innerDocClick) {
+        //        window.innerDocClick = false;
+        //    } else {
+        //        if (window.location.hash != '#undefined') {
+        //            goBack();
+        //        } else {
+        //            history.pushState("", document.title, window.location.pathname);
+        //            location.reload();
+        //            alert("test");
+        //        }
+        //    }
+        //}
+        $(document).on('focus', ':input', function () {
+            $(this).attr('autocomplete', 'off');
+        });
+    $(window).load(function () {
+        // Animate loader off screen
+        if (typeof history.pushState === "function") {
+            history.pushState("jibberish", null, null);
+            window.onpopstate = function () {
+                history.pushState('newjibberish', null, null);
+                //alert("test");
+                // Handle the back (or forward) buttons here
+                // Will NOT handle refresh, use onbeforeunload for this.
+            };
+        }
+        else {
+            var ignoreHashChange = true;
+            window.onhashchange = function () {
+                if (!ignoreHashChange) {
+                    ignoreHashChange = true;
+                    //alert("test1");
+                    //window.location.hash = Math.random();
+                    // Detect and redirect change here
+                    // Works in older FF and IE9
+                    // * it does mess with your hash symbol (anchor?) pound sign
+                    // delimiter on the end of the URL
+                }
+                else {
+                    //ignoreHashChange = false;
+                    alert("test2");
+                }
+            };
+        }
+        $(".se-pre-con").fadeOut("fast");
+    });
+    });
+</script>
+<!-- FastClick -->
+<!-- NProgress -->
+<script src="~/Content/nprogress/nprogress.js"></script>
+@*<script src="~/Scripts/bootstrap.min.js"></script>*@
+<!-- Chart.js -->
+<!-- bootstrap-progressbar -->
+<script src="~/Content/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<script src="~/Content/iCheck/icheck.min.js"></script>
+<!-- iCheck -->
+<!-- Custom Theme Scripts -->
+<script src="~/Scripts/custom.min.js"></script>
+<script src="~/Content/pnotify/dist/pnotify.js"></script>
+<script src="~/Content/pnotify/dist/pnotify.buttons.js"></script>
+<script src="~/Content/pnotify/dist/pnotify.nonblock.js"></script>

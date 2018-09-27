@@ -1,0 +1,398 @@
+﻿<script>
+    $(document).ready(function () {
+        $("body").removeClass("modal-open");
+        $("body").removeAttr("style");
+        var lastSel;
+ jQuery("#jqGrid03").jqGrid({
+            url:" @Url.Action("relationshipdtls", "EmployeeDetails")",
+            type: "GET",
+            datatype: "Json",
+            height: 222,
+            width: 840,
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            colNames: ['Employee Code', 'RELATIONSHIP', 'RELATIVE NAME', 'DATE OF BIRTH', 'OCCUPATION', 'DEPENDENT'],
+            colModel: [
+                { name: 'ID', index: 'ID', editable: true, sorttype: "int", search: true, key: true, hidden: true },
+                 { name: 'RELATIONSHIP', index: 'RELATIONSHIP', editable: true },
+                { name: 'RELATIVE_NAME', index: 'RELATIVE_NAME', editable: true },
+                { name: 'DATE_OF_BIRTH', index: 'DATE_OF_BIRTH', editable: true, formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
+                { name: 'OCCUPATION', index: 'OCCUPATION', editable: true },
+                 { name: 'DEPENDENT', index: 'DEPENDENT', editable: true }
+
+            ],
+
+
+            pager: "#jqGridPager03",
+            viewrecords: true,
+            multiselect: true,
+
+            hidegrid: false,
+            jsonReader: {
+                repeatitems: false,
+                id: "Id",
+                root: function (obj) { return obj; },
+                page: function (obj) { return 1; },
+                total: function (obj) { return 1; },
+                records: function (obj) { return obj.length; }
+            },
+            onSelectRow: function (rowId, status, e) {
+                if (rowId == lastSel) {
+                    $(this).jqGrid("resetSelection");
+                    lastSel = undefined;
+                    status = false;
+                } else {
+                    lastSel = rowId;
+                }
+            },
+            beforeSelectRow: function (rowId, e) {
+                $(this).jqGrid("resetSelection");
+                return true;
+            }
+        });
+        $("#cb_jqGrid03").hide();
+        // Setup buttons
+
+        // Setup filters
+        //jQuery("#jqGrid01").jqGrid('filterToolbar', { defaultSearch: true, stringResult: true });
+        jQuery("#jqGrid03").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+
+
+
+
+        $("#btnRelsave").click(function () {
+            //var test = $('#fn').val();
+            // alert(test);
+            $('#ralationpopup').modal("hide");
+            HideModal();
+            $.ajax({
+                url: '@Url.Action("relationcreate", "EmployeeDetails")',
+
+                data: {
+                    RELATIONSHIP: $('#txtRelatioship').val(),
+
+                    RELATIVE_NAME: $('#txtrelName').val(),
+                    DATEOFBIRTH: $('#txtrelDob').val(),
+                    OCCUPATION: $('#txtrelOccupation').val(),
+                    DEPENDENT: $('#txtrelDependent').val(),
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#relationshipdtls').html(data);
+                    new PNotify({
+                        title: 'Message',
+                        text: 'Data Saved successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+                }
+            });
+        });
+    $("#btnEditrelation").click(function () {
+        var grid = $("#jqGrid03");
+        var rowKey = grid.getGridParam("selrow");
+
+        if (!rowKey)
+            new PNotify({
+                title: 'Warning',
+                text: 'Please select a row to Update',
+
+                styling: 'bootstrap3'
+            });
+        else {
+            var selectedIDs = grid.getGridParam("selarrrow");
+            var index = selectedIDs + 1; // zero-based index of row so it means the 3rd row
+            var rowId = jQuery('#jqGrid03 tr:eq(' + selectedIDs + ')').attr('id');
+            //(here I suppose that the <table> element of your jqGrid has id="list"). After you know the id of the row you can get the row data with respect of getRowData method or the data from one cell only with respect of getCell method:
+            var dataFromTheRow = jQuery('#jqGrid03').jqGrid('getRowData', rowId);
+            //alert(dataFromTheRow.hirarchy_id);
+            // var dataFromCellByColumnIndex = jQuery('#jqGrid').jqGrid('getCell', rowId, 7);
+            // var dataFromCellByColumnName = jQuery('#jqGrid').jqGrid('getCell', rowId, 'Tax');
+            var result = "";
+            for (var i = 0; i < selectedIDs.length; i++) {
+                result += selectedIDs[0];
+            }
+            //RELATIONSHIP: $('#txtupRelatioship').val(),
+
+            //RELATIVE_NAME: $('#txtuprelName').val(),
+            //DATE_OF_BIRTH: $('#txtuprelDob').val(),
+            //OCCUPATION: $('#txtuprelOccupation').val(),
+            //DEPENDENT: $('#txtuprelDependent').val(),
+            var RELATIONSHIP1 = grid.jqGrid('getCell', result, 'RELATIONSHIP');
+            var RELATIVE_NAME1 = grid.jqGrid('getCell', result, 'RELATIVE_NAME');
+            var DATE_OF_BIRTH1 = grid.jqGrid('getCell', result, 'DATE_OF_BIRTH');
+            var OCCUPATION1 = grid.jqGrid('getCell', result, 'OCCUPATION');
+            var DEPENDENT1 = grid.jqGrid('getCell', result, 'DEPENDENT');
+
+            $('#txtupRelatioship').val(RELATIONSHIP1);
+            $('#txtuprelName').val(RELATIVE_NAME1);
+            $('#txtuprelDob').val(DATE_OF_BIRTH1);
+            $('#txtuprelOccupation').val(OCCUPATION1);
+            $('#txtuprelDependent').val(DEPENDENT1);
+
+            //$("#edit_project_name").val(Project_Name1);
+            $("#rowid1").val(result);
+            $("#ralationuppopup").modal("show");
+            //$("#employmentuppopup").show();
+
+        }
+
+    });
+    function HideModal() {
+        $('.modal-backdrop').remove();
+        //location.reload();
+    }
+    $("#btnrelclear").click(function () {
+        $('#txtRelatioship').val("");
+
+        $('#txtrelName').val("");
+        $('#txtrelDob').val("");
+        $('#txtrelOccupation').val("");
+        $('#txtrelDependent').val("");
+    });
+    $("#btnrelupclear").click(function () {
+        $('#txtupRelatioship').val("");
+
+        $('#txtuprelName').val("");
+        $('#txtuprelDob').val("");
+        $('#txtuprelOccupation').val("");
+        $('#txtuprelDependent').val("");
+    });
+    $("#btnRelationUpdate").click(function () {
+        //var test = $('#fn').val();
+        // alert(test);
+        $('#ralationuppopup').modal("hide");
+        HideModal();
+        var ID1 = $("#rowid1").val();
+        $.ajax({
+            url: '/EmployeeDetails/relationdetailsedit/' + ID1,
+
+            data: {
+                RELATIONSHIP: $('#txtupRelatioship').val(),
+
+                RELATIVE_NAME: $('#txtuprelName').val(),
+                DATEOFBIRTH: $('#txtuprelDob').val(),
+                OCCUPATION: $('#txtuprelOccupation').val(),
+                DEPENDENT: $('#txtuprelDependent').val(),
+            },
+            //Passes the content of an input up
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#relationshipdtls').html(data);
+                new PNotify({
+                    title: 'Message',
+                    text: 'Data Updated successfully',
+                    type: "success",
+                    styling: 'bootstrap3'
+                });
+            }
+        });
+    });
+    });
+    $(function () {
+        $('#datetimepicker19').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+
+    $(function () {
+        $('#datetimepicker20').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+</script>
+            <div class="form-group">
+                <div class="col-md-6 col-sm-8 col-xs-12 ">
+                    <button type="submit" class="btn btn-success" data-toggle="modal" data-target=".ns-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                    <button id="btnEditrelation" type="submit" class="btn btn-success" ><i class="fa fa-edit "></i>EDIT</button>
+                    @*<button id="btndeleterelation" type="submit" class="btn btn-success"><i class="fa fa-remove "></i>DELETE</button>*@
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12 ">
+                    <table id="jqGrid03"></table>
+                    <div id="jqGridPager03"></div>
+                </div>
+            </div>
+            @*<button type="submit" class="btn btn-success" data-toggle="modal" data-target=".ns-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>*@
+            <div class="modal fade ns-example-modal-md" tabindex="-1" role="dialog" id="ralationpopup" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel2">Relationship Details</h4>
+                        </div>
+                        @*@using (Html.BeginForm("create", "Home", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+                        {*@
+                        <div class="form-horizontal form-label-left">
+                            <div class="modal-body">
+
+
+
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Relationship</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtRelatioship" name="txtRelatioship" class="form-control" placeholder="Relationship">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Name</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtrelName" name="txtrelName" class="form-control" placeholder="Name">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Date Of Birth</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <div class='input-group date' id='datetimepicker19'>
+                                            <input type='text' id="txtrelDob" name="txtrelDob" class="form-control dp" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Occupation</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtrelOccupation" class="form-control" placeholder="Occupation">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Dependent (Y/N)</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtrelDependent" name="txtrelDependent" class="form-control" placeholder="Dependent (Y/N)">
+
+                                    </div>
+
+                                </div>
+
+
+                                @*</form>*@
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" id="btnrelclear" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                <button id="btnRelsave" type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                            </div>
+                        </div>
+                        @*}*@
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade ens-example-modal-md" tabindex="-1" role="dialog" id="ralationuppopup" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">Relationship Details</h4>
+            </div>
+            @*@using (Html.BeginForm("create", "Home", FormMethod.Post, new
+                {
+                    @class = "form-horizontal form-label-left",
+                    enctype = "multipart/form-data"
+                }))
+                                        {*@
+            <div class="form-horizontal form-label-left">
+                <div class="modal-body">
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Relationship</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtupRelatioship" name="txtupRelatioship" class="form-control" placeholder="Relationship">
+                            <input type="hidden" name="rowid1" id="rowid1">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Name</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtuprelName" name="txtuprelName" class="form-control" placeholder="Name">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Date Of Birth</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <div class='input-group date' id='datetimepicker20'>
+                                <input type='text' id="txtuprelDob" name="txtuprelDob" class="form-control dp" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Occupation</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtuprelOccupation" class="form-control" placeholder="Occupation">
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Dependent (Y/N)</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtuprelDependent" class="form-control" placeholder="Dependent (Y/N)">
+
+                        </div>
+
+                    </div>
+
+
+                    @*</form>*@
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="btnrelupclear" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                    <button id="btnRelationUpdate" type="submit" class="btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>Update</button>
+                </div>
+            </div>
+            @*}*@
+        </div>
+    </div>
+</div>
+       

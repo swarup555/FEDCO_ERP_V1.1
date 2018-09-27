@@ -1,0 +1,295 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .fa {
+        padding: 5px;
+    }
+
+    .btn {
+        width: 100px;
+    }
+
+    .test {
+        overflow-x: scroll;
+    }
+    /*#gbox_jqGrid01 {
+        width: 100% !important;
+    }
+    #gview_jqGrid01 {
+        width: 100% !important;
+    }
+    #jqGridPager01 {
+        width: 100% !important;
+    }*/
+</style>
+<link href="~/Content/JQGridReq/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/JQGridReq/styles/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+<script src="~/Content/JQGridReq/jquery.jqGrid.min.js"></script>
+<script src="~/Content/JQGridReq/grid.locale-en.js"></script>
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            @*<h3>Plain Page</h3>*@
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Reporting Persons</h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="modal fade es-example-modal-md" id="delete-dialog" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+
+                                    </div>
+                                    @using (Html.BeginForm("create", "Home", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+                                    {
+                                        <div class="modal-body">
+
+
+                                            @*<form class="form-horizontal form-label-left">*@
+                                            <div class="form-group">
+
+                                                <label>Are You Sure to delete This Record?</label>
+
+                                            </div>
+
+                                            @*</form>*@
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary" data-dismiss="modal">No</button>
+                                            <button type="submit" class="btn btn-success">Yes</button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        @*<div class="warnings" style="display: none;">
+                                <p class="yellow_warn">Please check and select the row user to edit/remove </p>
+                            </div>*@
+                        <div class="alert warnings alert-warning alert-dismissable " style="display: none;">
+                            <a href="#" class="close" aria-label="close">×</a>
+                            Please check and select the row  to edit/remove
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                <button type="submit" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                                <button id="upload_btn" type="submit" class="btn btn-success act_edit"><i class="fa fa-edit "></i>EDIT</button>
+                                <button id="upload_btn" type="submit" class="btn btn-success act_remv"><i class="fa fa-remove "></i>DELETE</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12 col-sm-12 col-xs-12 ">
+                                <div class="test">
+                                    <table id="jqGrid02"></table>
+                                    <div id="jqGridPager02"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal edit_form fade bs-example-modal-md" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">Reporting Persons</h4>
+                                </div>
+                                @using (Html.BeginForm("create", "Home", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+                                {
+                                    <div class="modal-body">
+
+
+                                        @*<form class="form-horizontal form-label-left">*@
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Reporting Persons</label>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                <input type="text" class="form-control" placeholder="Reporting Persons">
+                                            </div>
+
+                                        </div>
+
+                                        @*</form>*@
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                        <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade es-example-modal-md" id="error-dialog" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">Reporting Persons </h4>
+                                </div>
+                                @using (Html.BeginForm("create", "Home", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+                                {
+                                    <div class="modal-body">
+
+
+                                        @*<form class="form-horizontal form-label-left">*@
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Reporting Persons</label>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                <input type="text" class="form-control" placeholder="Reporting Persons">
+                                            </div>
+
+                                        </div>
+
+                                        @*</form>*@
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                        <button type="submit" class="btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>Update</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    var mydata1 = [
+          { id: "1", desgnation: "Reporting Persons" }
+
+    ];
+    var lastSel;
+    // Setup grid
+    jQuery("#jqGrid02").jqGrid({
+        data: mydata1,
+        datatype: "local",
+        height: 222,
+        width: 550,
+        rowNum: 10,
+        rowList: [10, 20, 30],
+        colNames: ['Employee Code', 'Reporting Persons Name'],
+        colModel: [
+            { name: 'id', index: 'id', editable: true, sorttype: "int", search: true, hidden: true },
+            { name: 'desgnation', index: 'name', editable: true, search: true }
+
+        ],
+
+
+        pager: "#jqGridPager02",
+        viewrecords: true,
+        multiselect: true,
+
+        hidegrid: false,
+        jsonReader: {
+            repeatitems: false,
+            id: "Id",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGrid02").hide();
+    // Setup buttons
+
+    // Setup filters
+    //jQuery("#jqGrid01").jqGrid('filterToolbar', { defaultSearch: true, stringResult: true });
+    jQuery("#jqGrid02").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+    $(".act_edit").click(function () {//edit user data row calling function
+        edit_table_row();
+        //$(".edit_form").fadeIn();
+    });
+    $(".close").click(function () {//edit user data row calling function
+        $(".warnings").fadeOut('slow');
+        //$(".edit_form").fadeIn();
+    });
+    function edit_table_row() { // function to edit user data row
+        if ($('.cbox').is(':checked')) {
+            //$(".row_selected").children("td").children(".inp_act").attr("readonly", false);
+            //$(".row_selected").children("td").children(".btn_save").show();
+            $("#error-dialog").modal("show");
+        } else {
+            $(".warnings").fadeIn(function () {
+                setTimeout(function () {
+                    $(".warnings").fadeOut();
+                }, 3000);
+            });
+        }
+    }
+    $(".act_remv").click(function () { //remove user data row calling function
+        remove_table_row();
+    });
+    function remove_table_row() { // function to remove user data row
+        if ($('.cbox').is(':checked')) {
+
+            $("#delete-dialog").modal("show");
+        } else {
+            $(".warnings").fadeIn(function () {
+                setTimeout(function () {
+                    $(".warnings").fadeOut();
+                }, 3000);
+            });
+        }
+    }
+</script>
+

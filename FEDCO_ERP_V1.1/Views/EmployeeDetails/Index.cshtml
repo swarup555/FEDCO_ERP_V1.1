@@ -1,0 +1,618 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .fa {
+        padding: 5px;
+    }
+    .custom-combobox {
+        position: relative;
+        display: inline-block;
+    }
+
+    .custom-combobox-toggle {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin-left: -1px;
+        padding: 0;
+        /* support: IE7 */
+        *height: 1.7em;
+        *top: 0.1em;
+    }
+
+    .custom-combobox-input {
+        margin: 0;
+        padding: 0.3em;
+    }
+    .ui-menu-item {
+        padding: 10px;
+        height: 30px;
+        font-size: 14px;
+        display: block;
+        border-right: 3px solid #1ABB9C;
+        border-bottom: 1px solid #efefef;
+    }
+    .top_search .form-control {
+        /*border: 1px solid rgb(38, 185, 154) !important;*/
+    }
+    .top_search .input-group-btn button {
+        color: #f2f5f7 !important;
+    }
+    .btn-default {
+        background-color: #26b99a !important;
+    }
+    .ui-widget {
+        font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+        font-size: 13px !important;
+    }
+</style>
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="~/Content/JQGridReq/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/JQGridReq/styles/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+<script src="~/Content/JQGridReq/jquery.jqGrid.min.js"></script>
+<script src="~/Content/JQGridReq/grid.locale-en.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+<div class="">
+
+   
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            @*<div class="x_panel">
+                <div class="x_title">
+                    <h2>Employee Details </h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">*@
+            <!-- start Profile pictuire -->
+
+            <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                <div class="profile_img">
+                    <div id="crop-avatar">
+                        <!-- Current avatar -->
+                        @*@if (TempData["IMAGEURL"] != null)
+                            {
+                                <img class="img-responsive avatar-view" src='@TempData["IMAGEURL"].ToString()' alt="Avatar">
+                            }*@
+                        @if (TempData["IMGURL"] != null)
+                        {
+                        <img class="img-responsive avatar-view" src='@TempData["IMGURL"]' alt="Avatar">
+                        }
+                        else
+                        {  <img class="img-responsive avatar-view" src="~/images/user.png" alt="Avatar">}
+                    </div>
+                </div>
+                @if (TempData["fullname"] != null)
+                {
+                <h3>@TempData["fullname"].ToString()</h3>
+                }
+                <ul class="list-unstyled user_data">
+                    <li>
+                        @if (TempData["fulladdress"] != null)
+                        {
+                        <i class="fa fa-map-marker user-profile-icon"></i>  @TempData["fulladdress"].ToString()
+                        }
+
+                    </li>
+                    <li>
+                        @if (TempData["designationname"] != null)
+                        {
+                        <i class="fa fa-briefcase user-profile-icon"></i> 	@TempData["designationname"].ToString()
+                        }
+                    </li>
+                    <li>
+                        @if (TempData["period"] != null)
+                        {
+                        <i class="fa fa-calendar user-profile-icon"></i> 	@TempData["period"].ToString()
+                        }
+                    </li>
+
+                    @*<li>
+                            @if (TempData["designationname"] != null)
+                            {
+                                <i class="fa fa-hourglass-2 user-profile-icon"></i> 	@TempData["status"].ToString()
+                            }
+                        </li>*@
+                    <li>
+                        <button id="uploadimage_btn" type="submit" class="btn btn-success" data-toggle="modal" data-target=".cs-example-modal-sm"><i class="fa fa-camera "></i>CHANGE IMAGE</button>
+                        @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>*@
+                        <div class="modal fade cs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+
+                                    </div>
+                                    @using (Html.BeginForm("PostMpFormData", "EmployeeDetails", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+                                    {
+                                    <div class="modal-body">
+
+
+                                        @*<form class="form-horizontal form-label-left">*@
+                                        <div class="form-group">
+                                            <div class="profile_img">
+                                                <div id="crop-avatar">
+                                                    <!-- Current avatar -->
+                                                    @if (TempData["IMGURL"] != null)
+                                                        {
+                                                        <img id="blah" class="img-responsive avatar-view" src='@TempData["IMGURL"]' alt="Avatar">
+                                                        }
+                                                        else
+                                                        {
+                                                        <img id="blah" class="img-responsive avatar-view" src='~/images/user.png' alt="Avatar">
+                                                        }
+                                                    @*@if (TempData["imageurl"] != null)
+                                                        {
+                                                            <img id="blah" class="img-responsive avatar-view" src='@TempData["imageurl"].ToString()' alt="Avatar">
+                                                        }*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="file" name="file" id="fileupload1" style="display: none;" />
+                                            <button id="up_btn1" type="submit" class="btn btn-success"><i class="fa fa-camera "></i>BROWSE</button>
+                                        </div>
+                                        @*</form>*@
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                        <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                                    </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div id="myPartialContainer">
+                    @{ Html.RenderAction("_carrerprogress", "EmployeeDetails");}
+                </div>
+              
+            </div>
+
+            <!-- End Profile pictuire -->
+            <div class="col-md-9 col-sm-9 col-xs-12">
+
+                <div class="x_panel">
+                    <!-- Start Upload to Excel Section-->
+
+                    <div class="x_title">
+                        @using (Html.BeginForm("Excel", "Home", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+                        {
+                            <h2><i class="fa fa-user"></i> Employee Information Details</h2>
+                            <div class="title_right">
+                                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                                    <div class="input-group">
+                                        <input type="text" id="txtName" name="txtName" class="form-control" placeholder="Search for...">
+                                        <input type="hidden" name="rowid11" id="rowid11">
+                                        <span class="input-group-btn">
+                                            <button id="btnsearchemp" class="btn btn-default" type="button">Go!</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            @*<ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <input type="file" name="file" id="fileupload" style="display: none;" />
+                                        <button id="up_btn" type="submit" class="btn btn-success"><i class="fa fa-file-excel-o "></i>BROWSE</button>
+
+                                    </li>
+
+                                    <li>
+                                        <span>
+                                            <label for="myalue"></label>
+                                        </span>
+
+                                    </li>
+                                    <li>
+                                        <button id="upload_btn" type="submit" class="btn btn-success"><i class="fa fa-upload "></i>UPLOAD</button>
+                                    </li>
+                                </ul>*@
+                        }
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <!-- End Upload to Excel Section-->
+                    @*<div class="x_content">*@
+                    <!-- start accordion -->
+                    <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
+                        <!-- Start Basic Information Section-->
+                        <div class="panel">
+                            <a class="panel-heading collapsed " role="tab" id="headingOne" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                <h4 class="panel-title"><i class="fa fa-info-circle"></i>Basic Information </h4>
+                            </a>
+                            <div id="collapseOne" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
+                                <div id="basicinfo" class="panel-body">
+                                    @Html.Partial("_BasicInformation")
+                                    @*@Html.Partial("_BasicInformation", Model.BIE)*@
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Basic Information Section-->
+                        <!-- Start Communication Details Section-->
+                        <div class="panel">
+                            <a class="panel-heading collapsed" role="tab" id="headingseven" data-toggle="collapse" data-parent="#accordion" href="#collapseseven" aria-expanded="false" aria-controls="collapsesix">
+                                <h4 class="panel-title"><i class="fa fa-envelope"></i>Communication Details</h4>
+                            </a>
+                            <div id="collapseseven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingseven">
+                                <div id="comdtls" class="panel-body">
+                                    @*@Html.Partial("_CommunicationDetails")*@
+                                    @{ Html.RenderAction("_CommunicationDetails", "EmployeeDetails");}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End Communication Details Section-->
+                        <!-- Start Qualification Details Section-->
+                        <div class="panel">
+                            <a class="panel-heading collapsed" role="tab" id="headingTwo" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <h4 class="panel-title"><i class="fa fa-graduation-cap"></i>Qualification Details</h4>
+                            </a>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div id="Qualificatiodtls" class="panel-body" style="overflow-x:scroll">
+                                    @Html.Partial("_QualificationDetails")
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Qualification Details Section-->
+                        <!-- Start Employment Details Section-->
+                        <div class="panel">
+                            <a class="panel-heading collapsed" role="tab" id="headingThree" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <h4 class="panel-title"><i class="fa fa-briefcase"></i>Employment Details</h4>
+                            </a>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div id="Employmentdtls" class="panel-body" style="overflow-x:scroll">
+                                    @Html.Partial("_EmploymentDetails")
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Employment Details Section-->
+                        <!-- Start Relationship Details Section-->
+                        <div class="panel">
+                            <a class="panel-heading collapsed" role="tab" id="headingfour" data-toggle="collapse" data-parent="#accordion" href="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+                                <h4 class="panel-title"><i class="fa fa-group"></i>Relationship Details</h4>
+                            </a>
+                            <div id="collapsefour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingfour">
+                                <div id="relationshipdtls" class="panel-body" style="overflow-x:scroll">
+                                    @Html.Partial("_RelationshipDetails")
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End Relationship Details Section-->
+                        <!-- Start Record Details Section-->
+                        <!-- End Record Details Section-->
+                        <!-- Start Levae Details Section-->
+                        <div class="panel">
+                            <a class="panel-heading collapsed" role="tab" id="headingfive" data-toggle="collapse" data-parent="#accordion" href="#collapsefive" aria-expanded="false" aria-controls="collapsefive">
+                                <h4 class="panel-title"><i class="fa fa-cart-plus"></i>Asset Details</h4>
+                            </a>
+                            <div id="collapsefive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingfive">
+                                <div id="empasset" class="panel-body" style="overflow-x:scroll">
+                                    @Html.Partial("_Asset")
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End Leave Details Section-->
+                        <!-- Start Transfer Details Section-->
+                        <div class="panel">
+                            <a class="panel-heading collapsed" role="tab" id="headingsix" data-toggle="collapse" data-parent="#accordion" href="#collapsesix" aria-expanded="false" aria-controls="collapsesix">
+                                <h4 class="panel-title"><i class="fa fa-taxi"></i>Transfer Details</h4>
+                            </a>
+                            <div id="collapsesix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingsix">
+                                <div id="Emptransfer" class="panel-body" style="overflow-x:scroll">
+
+                                    @Html.Partial("_TransferDetails")
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Transfer Details Section-->
+                        <!-- Start PIP Details Section-->
+                        <div class="panel">
+                            <a class="panel-heading collapsed" role="tab" id="headingnine" data-toggle="collapse" data-parent="#accordion" href="#collapsenine" aria-expanded="false" aria-controls="collapsenine">
+                                <h4 class="panel-title"><i class="fa fa-tasks"></i>PIP Details</h4>
+                            </a>
+                            <div id="collapsenine" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingnine">
+                                <div id="emppip" class="panel-body" style="overflow-x:scroll">
+                                    @Html.Partial("_PIP")
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End PIP Details Section-->
+                        <!-- Start Acount Details Section-->
+                        <div class="panel">
+                            <a class="panel-heading collapsed" role="tab" id="headingten" data-toggle="collapse" data-parent="#accordion" href="#collapseten" aria-expanded="false" aria-controls="collapseten">
+                                <h4 class="panel-title"><i class="fa fa-bitcoin"></i>Account Details</h4>
+                            </a>
+                            <div id="collapseten" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingten">
+                                <div id="Acount" class="panel-body">
+                                    <div class="form-horizontal form-label-left">
+
+
+                                        <div class="form-group">
+                                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Account No.</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtAccno" name="txtAccno" class="form-control" placeholder="Account No.">
+                                            </div>
+                                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">IFSC Code</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtIfccode" name="txtIfccode" class="form-control" placeholder="IFSC Code">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Bank Name</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtBank" name="txtBranch" class="form-control" placeholder="Bank Name.">
+                                            </div>
+                                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">CTC</label>
+                                            </div>
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtCTC" name="txtCTC" class="form-control" placeholder="CTC">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Branch:</label>
+                                            </div>
+                                            <div class="col-md-10 col-sm-6 col-xs-12">
+                                                <textarea id="txtBranch" class="form-control" name="txtBranch"
+                                                          placeholder="Enter Branch "></textarea>
+                                            </div>
+
+                                        </div>
+                                        <div class="ln_solid"></div>
+                                        <div class="form-group">
+                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2">
+                                                <button type="submit" id="btn_save_accclr" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                                <button type="submit" id="btn_save_acc" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Acount Details Section-->
+                    </div>
+                    <!-- end of accordion -->
+                    @*</div>*@
+                </div>
+                <!-- end of user-activity-graph -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        //if (window.history && window.history.pushState) {
+
+        //    $(window).on('popstate', function () {
+        //        location.reload();
+        //    });
+
+        //}
+        //$("#headingOne").click();
+        //$("#menu_toggle").click();
+
+        $.ajax({
+        url:" @Url.Action("AccountDetails", "EmployeeDetails")",
+        type: "GET",
+        datatype: "Json",
+        success:
+        function (result) {
+            $.each(result, function (i) {
+                $('#txtAccno').val(result[i].ACCOUNTNO);
+                $('#txtIfccode').val(result[i].IFSCCODE);
+                $('#txtBank').val(result[i].BANKNAME);
+                $('#txtCTC').val(result[i].CTC);
+                $('#txtBranch').val(result[i].BRANCH);
+            });
+        }
+        });
+        $("#btn_save_acc").click(function () {
+        $.ajax({
+            url: '@Url.Action("InsertAccountdetails", "EmployeeDetails")',
+            data: {
+                ACCOUNTNO: $('#txtAccno').val(),
+                IFSCCODE: $('#txtIfccode').val(),
+                BANKNAME: $('#txtBank').val(),
+                CTC: $('#txtCTC').val(),
+                BRANCH: $('#txtBranch').val(),
+            },
+            //Passes the content of an input up
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                new PNotify({
+                    title: 'Message',
+                    text: 'Data Saved successfully',
+                    type: "success",
+                    styling: 'bootstrap3'
+                });
+              }
+           });
+           });
+        $("#btnsearchemp").click(function () {
+            var urlserchid = $('#rowid11').val();
+            window.location = urlserchid;
+        }
+    );
+    $('#up_btn').click(function (e) {
+        e.preventDefault();
+        $('#fileupload').click();
+
+    }
+    );
+    $('#up_btn1').click(function (e) {
+        e.preventDefault();
+        $('#fileupload1').click();
+
+    }
+   );
+    $('#up_btn2').click(function (e) {
+        e.preventDefault();
+        $('#fileupload2').click();
+
+    }
+   );
+
+
+    $("#fileupload1").change(function () {
+        readURL(this);
+    });
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $('input[name=file]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $("label[for='myalue']").html(fileName);
+    });
+    $('input[name=file2]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $("label[for='myalue1']").html(fileName);
+    });
+    //$(function () {
+    //    $('#datetimepicker1').datepicker(
+    //          { format: "dd/mm/yyyy" }
+    //        );
+
+    //});
+
+    //$(function () {
+    //    $('#datetimepicker8').datepicker(
+    //          {
+    //              autoclose: true,
+    //              format: 'dd/mm/yyyy',
+    //          }
+    //        );
+
+    //});
+    //$(function () {
+    //    $('#datetimepicker2').datepicker(
+    //          {
+    //              format: "dd/mm/yyyy",
+
+    //          }
+    //        );
+
+    //});
+    //$(function () {
+    //    $('#datetimepicker3').datepicker(
+    //          {
+    //              format: "dd/mm/yyyy",
+
+
+    //          });
+
+    //});
+    //$(function () {
+    //    $('#datetimepicker41').datepicker(
+    //          {
+    //              format: "dd/mm/yyyy",
+
+
+    //          });
+
+    //});
+    //$(document).ready(function () {
+
+    //    $('.dp').on('change', function () {
+    //        $('.datepicker').hide();
+
+    //    });
+
+    //});
+    $("#txtDob").change(function () {
+        var birthDay = $('#txtDob').val();
+        var DOB = new Date(birthDay);
+        var today = new Date();
+        var age = today.getTime() - DOB.getTime();
+        age = Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
+        alert(age);
+
+        $('#txtAge').val(age);
+    });
+    $('#txtName').autocomplete({
+        source: function (request, response) {
+            var fname = $('#txtName').val();
+            var autocompleteUrl = " @Url.Action("BasicInfosearch", "EmployeeDetails")/" + fname;
+            $.ajax({
+                //url: autocompleteUrl,
+                //type: 'GET',
+                //cache: false,
+                //dataType: 'json',
+                //success: function (json) {
+                //    response($.map(json, function (data, id) {
+                //        return {
+                //            label: data.EMPLOYEE_FULLNAME,
+                //            value: data.ID
+                //        };
+                //    }));
+                //},
+                //error: function (xmlHttpRequest, textStatus, errorThrown) {
+                //    console.log('some error occured', textStatus, errorThrown);
+                //}
+                url:autocompleteUrl,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+                    response($.map(result, function (data, id) {
+                        return {
+                            label: data.EMPLOYEE_FULLNAME,
+                            value: data.ID
+                        };
+                    }));
+                }
+            });
+
+        },
+        minLength: 1,
+        select: function (event, ui) {
+            //alert(ui.item.value);
+            //alert(ui.item.label);
+            //lblMessage.innerText = "Your Selected Name :";
+            //lblSelectedVal.innerText = ui.item.value;
+            $('#rowid11').val(ui.item.value);
+            $('#txtName').val(ui.item.label);
+            return false;
+        }
+    });
+    });
+</script>
+
+<script src="~/Scripts/moment-with-locales.js"></script>
+
+<script src="~/Scripts/bootstrap-datepicker.js"></script>

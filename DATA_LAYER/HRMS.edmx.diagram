@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="25aeb2abe7ad43598064946b6bee90b8" Name="Diagram1" ZoomLevel="56">
+        <EntityTypeShape EntityType="Model.TBL_COUNTRY" Width="1.5" PointX="6.75" PointY="56.125" />
+        <EntityTypeShape EntityType="Model.TBL_DIVISION" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_ASSETDETAILS" Width="1.5" PointX="5.25" PointY="87" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_BASICINFO" Width="1.5" PointX="3" PointY="35.375" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_BASICINFO_HISTORY" Width="1.5" PointX="8.25" PointY="36.75" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_COM_DETAILS_HISTORY" Width="1.5" PointX="5.25" PointY="47.25" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_COMMUNICATION_DETAILS" Width="1.5" PointX="11.25" PointY="39.25" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_DOCUMENT_DETAILS" Width="1.5" PointX="5.25" PointY="35.125" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_EMPLOYMENT_RECORD" Width="1.5" PointX="5.25" PointY="74" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_EXTRACULMACTIVITY" Width="1.5" PointX="5.25" PointY="83.25" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_LEAVE_DETAILS" Width="1.5" PointX="5.25" PointY="24.625" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_PIPDETAILS" Width="1.5" PointX="5.25" PointY="29.25" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_QUALIFICATION_DETAILS" Width="1.5" PointX="5.25" PointY="91.625" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_RELATIONSHIP_DETAILS" Width="1.5" PointX="5.25" PointY="97.25" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_SALARYACCOUNTDETAILS" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_TRAINING_DETAILS" Width="1.5" PointX="5.25" PointY="79" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_TRANSFER_DETAILS" Width="1.5" PointX="5.25" PointY="39.75" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_ASSET_MASTER" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_ASSETTYPE_MASTER" Width="1.5" PointX="4.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_BLOODGROUP_MASTER" Width="1.5" PointX="0.75" PointY="53.75" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_BOARD_UNIVERSITY_M" Width="1.5" PointX="6.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_DEGREETYPE_MASTER" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_DEPARTMENTMASTER" Width="1.5" PointX="0.75" PointY="45.5" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_DESIGNATIONMASTER" Width="1.5" PointX="0.75" PointY="49.625" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_EXITSUBCATAGORY" Width="1.5" PointX="8.75" PointY="4.75" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_EXITTYPE_MASTER" Width="1.5" PointX="0.75" PointY="35.25" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_GRADE_MASTER" Width="1.5" PointX="0.75" PointY="41.25" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_LOCATIONMASTER" Width="1.5" PointX="0.75" PointY="37.875" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_RECORDTYPE_MASTER" Width="1.5" PointX="3" PointY="32.125" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_REPORTINGMASTER" Width="1.5" PointX="8.75" PointY="7.75" />
+        <EntityTypeShape EntityType="Model.TBL_HRMS_SHIFT_MASTER" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.TBL_SECTION" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="Model.TBL_STATE" Width="1.5" PointX="9" PointY="55.625" />
+        <EntityTypeShape EntityType="Model.TBL_SUB_DIVISION" Width="1.5" PointX="3" PointY="1.375" />
+        <EntityTypeShape EntityType="Model.USER" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_TRANSFER_DETAILS_BCK" Width="1.5" PointX="2.75" PointY="9.75" />
+        <AssociationConnector Association="Model.FK_COUNTRY_ID" />
+        <AssociationConnector Association="Model.FK_DIVISIONCODE" />
+        <AssociationConnector Association="Model.FK_ASSET_EMPID" />
+        <AssociationConnector Association="Model.FK_BASIC_LOC_ID" />
+        <AssociationConnector Association="Model.FK_BLOODGROUP_ID" />
+        <AssociationConnector Association="Model.FK_COMHISEMP_ID" />
+        <AssociationConnector Association="Model.FK_DEPARTMENT_ID" />
+        <AssociationConnector Association="Model.FK_DOC_EMPLOYEE_ID" />
+        <AssociationConnector Association="Model.FK_EMP_ID" />
+        <AssociationConnector Association="Model.FK_EMPLOY_EMP_ID" />
+        <AssociationConnector Association="Model.FK_EXITTYPE_ID" />
+        <AssociationConnector Association="Model.FK_GRADE_ID" />
+        <AssociationConnector Association="Model.FK_PIP_EMPID" />
+        <AssociationConnector Association="Model.FK_QUAL_EMP_ID" />
+        <AssociationConnector Association="Model.FK_REL_EMP_ID" />
+        <AssociationConnector Association="Model.FK_TR_EMPLOYEE_ID" />
+        <AssociationConnector Association="Model.PK_LEAVE_EMPLOYEE_ID" />
+        <AssociationConnector Association="Model.SYS_C00123005" />
+        <AssociationConnector Association="Model.SYS_C00123930" />
+        <AssociationConnector Association="Model.SYS_C00123938" />
+        <AssociationConnector Association="Model.SYS_C00123941" />
+        <AssociationConnector Association="Model.FK_BASIC_HISLOC_ID" />
+        <AssociationConnector Association="Model.FK_BLOODGROUPHIS_ID" />
+        <AssociationConnector Association="Model.FK_DEPARTMENTHIS_ID" />
+        <AssociationConnector Association="Model.FK_EXITTYPEHIS_ID" />
+        <AssociationConnector Association="Model.FK_GRADEHIS_ID" />
+        <AssociationConnector Association="Model.SYS_C00123929" />
+        <AssociationConnector Association="Model.FK_COMHISMA_STATE_ID" />
+        <AssociationConnector Association="Model.FK_COMHISPA_STATE_ID" />
+        <AssociationConnector Association="Model.FK_MA_STATE_ID" />
+        <AssociationConnector Association="Model.FK_PA_STATE_ID" />
+        <AssociationConnector Association="Model.FK_RECCORDTYPE_ID" />
+        <AssociationConnector Association="Model.FK_TR_DESIGNATION_ID" />
+        <AssociationConnector Association="Model.FK_TRA_DEPTID" />
+        <AssociationConnector Association="Model.FK_TRA_LOCID" />
+        <AssociationConnector Association="Model.SYS_C00123942" />
+        <AssociationConnector Association="Model.FK_SUBDIVISIONCODE" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_AWARDS" Width="1.5" PointX="5.375" PointY="9.75" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_CULTURAL_ACTIVITYDTLS" Width="1.5" PointX="11.375" PointY="4.75" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_HOBBIES" Width="1.5" PointX="11.375" PointY="7.75" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_PUBLICATIONS" Width="1.5" PointX="7.375" PointY="11.75" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_SOCIALACTIVITIES" Width="1.5" PointX="9.375" PointY="11.75" />
+        <EntityTypeShape EntityType="Model.TBL_EMP_SPORTSDETAILS" Width="1.5" PointX="11.375" PointY="10.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

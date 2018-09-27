@@ -1,0 +1,578 @@
+﻿<style>
+    .ui-pnotify {
+        width: 250px !important;
+        right: 2% !important;
+        top: 10% !important;
+        cursor: auto;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $("body").removeClass("modal-open");
+        $("body").removeAttr("style");
+        var lastSel;
+        jQuery("#jqGrid01").jqGrid({
+            url: " @Url.Action("qualificationdtls", "EmployeeDetails")",
+            type: "GET",
+            datatype: "Json",
+            height: 222,
+            width: 840,
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            colNames: ['Employee Code', 'Employee Code', 'Employee Code', 'School/College', 'Board/University', 'FT/PT/C', 'Starting Date', 'Completed Date', 'Exam/Degree', 'Subject', '%Mark & Division'],
+            colModel: [
+                { name: 'ID', index: 'ID', editable: true, sorttype: "int", search: true, key: true, hidden: true },
+                 { name: 'TOTAL_MARKS', index: 'TOTAL_MARKS', search: true, hidden: true },
+                  { name: 'MARKS_SECURED', index: 'MARKS_SECURED', search: true, hidden: true },
+                { name: 'SCHOOL_COLLEGE_NAME', index: 'SCHOOL_COLLEGE_NAME', editable: true, search: true },
+                { name: 'BOARD_UNIVERSITY_NAME', index: 'BOARD_UNIVERSITY_NAME', editable: true, hidden: true },
+                 { name: 'TYPE', index: 'TYPE', editable: true },
+                { name: 'START_DATE', index: 'START_DATE', formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
+                { name: 'END_DATE', index: 'END_DATE', formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
+                 { name: 'EXAM_DEGREE_TYPE', index: 'EXAM_DEGREE_TYPE', editable: true },
+                 { name: 'SUBJECT', index: 'SUBJECT', editable: true },
+                  { name: 'PERCENTAGE_OF_MARK_DIVISION', index: 'PERCENTAGE_OF_MARK_DIVISION', editable: true }
+            ],
+
+
+            pager: "#jqGridPager01",
+            viewrecords: true,
+            multiselect: true,
+
+            hidegrid: false,
+            jsonReader: {
+                repeatitems: false,
+                id: "Id",
+                root: function (obj) { return obj; },
+                page: function (obj) { return 1; },
+                total: function (obj) { return 1; },
+                records: function (obj) { return obj.length; }
+            },
+            onSelectRow: function (rowId, status, e) {
+                if (rowId == lastSel) {
+                    $(this).jqGrid("resetSelection");
+                    lastSel = undefined;
+                    status = false;
+                } else {
+                    lastSel = rowId;
+                }
+            },
+            beforeSelectRow: function (rowId, e) {
+                $(this).jqGrid("resetSelection");
+                return true;
+            }
+        });
+        $("#cb_jqGrid01").hide();
+        // Setup buttons
+
+        // Setup filters
+        //jQuery("#jqGrid01").jqGrid('filterToolbar', { defaultSearch: true, stringResult: true });
+        jQuery("#jqGrid01").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+        // Set grid width to #content
+        //$("#jqGrid01").jqGrid('setGridWidth', $("#content").width(), true);
+        //$(window).on('resize.jqGrid', function () {
+        //    $("#jqGrid01").jqGrid('setGridWidth', $("#content").width());
+        //});
+        //jQuery(window).bind('resize', function () {
+
+        //    // Get width of parent container
+        //    var width = jQuery(targetContainer).attr('#content');
+        //    if (width == null || width < 1) {
+        //        // For IE, revert to offsetWidth if necessary
+        //        width = jQuery(targetContainer).attr('#content');
+        //    }
+        //    width = width - 2; // Fudge factor to prevent horizontal scrollbars
+        //    if (width > 0 &&
+        //        // Only resize if new width exceeds a minimal threshold
+        //        // Fixes IE issue with in-place resizing when mousing-over frame bars
+        //        Math.abs(width - jQuery(targetGrid).width()) > 5) {
+        //        jQuery(targetGrid).setGridWidth(width);
+        //    }
+
+        //}).trigger('resize');
+        //$(window).bind('resize', function () {
+        //    //$("#jqGrid01").setGridWidth($(window).width());
+        //}).trigger('resize');
+
+
+
+
+        $("#add_qual_btnsave").click(function () {
+            //var test = $('#fn').val();
+            // alert(test);
+            $("#qualificationpopup").modal("hide");
+            HideModal();
+            $.ajax({
+                url: '@Url.Action("QualificationCreate", "EmployeeDetails")',
+
+                data: {
+                    SCHOOL_COLLEGE_NAME: $('#txtSchool').val(),
+                    BOARD_UNIVERSITY_NAME: $('#ddlBoard').val(),
+                    TYPE: $('#txtType').val(),
+                    ENROLLEDDATE: $('#txtStartdate').val(),
+                    COMPLETEDDATE: $('#txtCompleteddate').val(),
+                    EXAM_DEGREE_TYPE: $('#ddlExam').val(),
+                    SUBJECT: $('#txtSubject').val(),
+                    TOTAL_MARKS: $('#txttotalmarks').val(),
+                    MARKS_SECURED: $('#txtMarksecured').val(),
+                    PERCENTAGE_OF_MARK_DIVISION: $('#txtDivision').val(),
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    //$("#qualificationpopup").modal("close");
+                    $('#Qualificatiodtls').html(data);
+                    new PNotify({
+                        title: 'Message',
+                        text: 'Data Saved successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+                }
+            });
+        });
+        function HideModal() {
+            $('.modal-backdrop').remove();
+            //location.reload();
+        }
+        $("#edit_qual_btn").click(function () {
+            var grid = $("#jqGrid01");
+            var rowKey = grid.getGridParam("selrow");
+
+            if (!rowKey)
+            {
+                new PNotify({
+                    title: 'Warning',
+                    text: 'Please select a row to Update',
+
+                    styling: 'bootstrap3'
+                });
+            }
+            else {
+                var selectedIDs = grid.getGridParam("selarrrow");
+                var index = selectedIDs + 1; // zero-based index of row so it means the 3rd row
+                var rowId = jQuery('#jqGrid01 tr:eq(' + selectedIDs + ')').attr('id');
+                //(here I suppose that the <table> element of your jqGrid has id="list"). After you know the id of the row you can get the row data with respect of getRowData method or the data from one cell only with respect of getCell method:
+                var dataFromTheRow = jQuery('#jqGrid01').jqGrid('getRowData', rowId);
+                var result = "";
+                for (var i = 0; i < selectedIDs.length; i++) {
+                    result += selectedIDs[0];
+                }
+                var SCHOOL_COLLEGE_NAME1 = grid.jqGrid('getCell', result, 'SCHOOL_COLLEGE_NAME');
+                var BOARD_UNIVERSITY_NAME1 = grid.jqGrid('getCell', result, 'BOARD_UNIVERSITY_NAME');
+                var TYPE1 = grid.jqGrid('getCell', result, 'TYPE');
+                var START_DATE1 = grid.jqGrid('getCell', result, 'START_DATE');
+                var END_DATE1 = grid.jqGrid('getCell', result, 'END_DATE');
+                var EXAM_DEGREE_TYPE1 = grid.jqGrid('getCell', result, 'EXAM_DEGREE_TYPE');
+                var SUBJECT1 = grid.jqGrid('getCell', result, 'SUBJECT');
+                var PERCENTAGE_OF_MARK_DIVISION1 = grid.jqGrid('getCell', result, 'PERCENTAGE_OF_MARK_DIVISION');
+                //var BOARD_UNIVERSITY_NAMEDTLS1 = grid.jqGrid('getCell', result, 'BOARD_UNIVERSITY_NAMEDTLS');
+                //var EXAM_DEGREE_TYPENAME1 = grid.jqGrid('getCell', result, 'EXAM_DEGREE_TYPENAME');
+                var TOTAL_MARKS1 = grid.jqGrid('getCell', result, 'TOTAL_MARKS');
+                var MARKS_SECURED1 = grid.jqGrid('getCell', result, 'MARKS_SECURED');
+                //$('#ddlupBoard option').map(function () {
+                //    if ($(this).text() == BOARD_UNIVERSITY_NAMEDTLS1) return this;
+                //}).attr('selected', 'selected');
+                //$('#ddlupExam option').map(function () {
+                //    if ($(this).text() == EXAM_DEGREE_TYPENAME1) return this;
+                //}).attr('selected', 'selected');
+                $('#ddlupBoard').val(BOARD_UNIVERSITY_NAME1);
+                $('#ddlupExam').val(EXAM_DEGREE_TYPE1);
+                $('#txtupSchool').val(SCHOOL_COLLEGE_NAME1);
+                $('#txtupType').val(TYPE1);
+                $('#txtupStartdate').val(START_DATE1);
+                $('#txtupCompleteddate').val(END_DATE1);
+                $('#txtupSubject').val(SUBJECT1);
+                $('#txtupDivision').val(PERCENTAGE_OF_MARK_DIVISION1);
+                $('#txtuptotalmarks').val(TOTAL_MARKS1);
+                $('#txtupMarksecured').val(MARKS_SECURED1);
+                $("#rowid45").val(result);
+                $("#qualificationeditpopup").modal("show");
+            }
+
+        }); 
+        $("#qualclr").click(function () {
+            $('#txtSchool').val("");
+            $('#ddlBoard').val("");
+            $('#txtType').val("");
+            $('#txtStartdate').val("");
+            $('#txtCompleteddate').val("");
+            $('#ddlExam').val("");
+            $('#txtSubject').val("");
+            $('#txttotalmarks').val("");
+            $('#txtMarksecured').val("");
+            $('#txtDivision').val("");
+        });
+        $("#qualupclr").click(function () {
+            $('#txtupSchool').val("");
+            $('#ddlupBoard').val("");
+            $('#txtupType').val("");
+            $('#txtupStartdate').val("");
+            $('#txtupCompleteddate').val("");
+            $('#ddlupExam').val("");
+            $('#txtupSubject').val("");
+            $('#txtuptotalmarks').val("");
+            $('#txtupMarksecured').val("");
+            $('#txtupDivision').val("");
+        });
+        $("#add_qual_btnupdate").click(function () {
+            //var test = $('#fn').val();
+            // alert(test);
+            $('#qualificationeditpopup').modal("hide");
+            HideModal();
+            var ID45 = $("#rowid45").val();
+            //alert(ID45);
+            $.ajax({
+                url: '/EmployeeDetails/Qualificationdetailsedit/' + ID45,
+
+                data: {
+                    SCHOOL_COLLEGE_NAME: $('#txtupSchool').val(),
+
+                    BOARD_UNIVERSITY_NAME: $('#ddlupBoard').val(),
+                    TYPE: $('#txtupType').val(),
+                    ENROLLEDDATE: $('#txtupStartdate').val(),
+                    COMPLETEDDATE: $('#txtupCompleteddate').val(),
+                    EXAM_DEGREE_TYPE: $('#ddlupExam').val(),
+
+
+                    SUBJECT: $('#txtupSubject').val(),
+                    TOTAL_MARKS: $('#txtuptotalmarks').val(),
+                    MARKS_SECURED: $('#txtupMarksecured').val(),
+                    PERCENTAGE_OF_MARK_DIVISION: $('#txtupDivision').val(),
+
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    $('#Qualificatiodtls').html(data);
+                    //$("#error-dialog").modal("hide");
+                    new PNotify({
+                        title: 'Message',
+                        text: 'Data Updated successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+                }
+            });
+        });
+    });
+    $(function () {
+        $('#datetimepicker4').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+    $(function () {
+        $('#datetimepicker5').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+    $(function () {
+        $('#datetimepicker6').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+    $(function () {
+        $('#datetimepicker7').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+
+</script>
+
+            <div class="form-group">
+                <div class="col-md-6 col-sm-8 col-xs-12 ">
+                    <button id="add_qual_btn" type="submit" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                    <button id="edit_qual_btn" type="submit" class="btn btn-success act_edit" data-toggle="modal" ><i class="fa fa-edit "></i>EDIT</button>
+                    @*<button id="delte_qual_btn" type="submit" class="btn btn-success act_remv"><i class="fa fa-remove "></i>DELETE</button>*@
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12 ">
+                    <table id="jqGrid01"></table>
+                    <div id="jqGridPager01"></div>
+                </div>
+            </div>
+            <!-- modals -->
+            <!-- Large modal -->
+            <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" id="qualificationpopup" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Qualification Details</h4>
+            </div>
+            <div class="form-horizontal form-label-left">
+                <div class="modal-body">
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">School/College</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtSchool" name="txtSchool" class="form-control" placeholder="School/College">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Board/University</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            @*<select id="ddlBoard" name="ddlBoard" class="form-control"></select>*@
+                            <input type="text" id="ddlBoard" name="ddlBoard" class="form-control" placeholder="Board/University">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Type</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtType" name="txtType" class="form-control" placeholder="Type">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Starting Date</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <div class='input-group date' id='datetimepicker4'>
+                                <input type='text' id="txtStartdate" name="txtStartdate" class="form-control dp" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Completion Date</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <div class='input-group date' id='datetimepicker5'>
+                                <input type='text' id="txtCompleteddate" name="txtCompleteddate" class="form-control dp" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Exam/Degre</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            @*<select id="ddlExam" name="ddlExam" class="form-control"></select>*@
+                            <input type="text" id="ddlExam" name="ddlExam" class="form-control" placeholder="Exam/Degre">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Subject</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtSubject" name="txtSubject" class="form-control" placeholder="Subject">
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Total Marks</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txttotalmarks" name="txttotalmarks" class="form-control" placeholder="Total Marks">
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Mark Secured</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtMarksecured" name="txtMarksecured" class="form-control" placeholder="Mark secured">
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">%Of Mark/Division</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtDivision" name="txtDivision" class="form-control" placeholder="%Of Mark/Division">
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="qualclr" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                    <button id="add_qual_btnsave" type="submit"  class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+   <div class="modal fade ebs-example-modal-md" tabindex="-1" id="qualificationeditpopup" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Qualification Details</h4>
+            </div>
+            <div class="form-horizontal form-label-left">
+                <div class="modal-body">
+
+
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">School/College</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtupSchool" name="txtupSchool" class="form-control" placeholder="School/College">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Board/University</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            @*<select id="ddlupBoard" name="ddlupBoard" class="form-control"></select>*@
+                            <input type="text" id="ddlupBoard" name="ddlupBoard" class="form-control" placeholder="Board/University">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Type</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtupType" name="txtupType" class="form-control" placeholder="Type">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Starting Date</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <div class='input-group date' id='datetimepicker6'>
+                                <input type='text' id="txtupStartdate" name="txtupStartdate" class="form-control dp" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Completion Date</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <div class='input-group date' id='datetimepicker7'>
+                                <input type='text' id="txtupCompleteddate" name="txtupCompleteddate" class="form-control dp" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Exam/Degre</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            @*<select id="ddlupExam" name="ddlupExam" class="form-control"></select>*@
+                            <input type="hidden" name="rowid45" id="rowid45">
+                            <input type="text" id="ddlupExam" name="ddlupExam" class="form-control" placeholder="Exam/Degre">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Subject</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtupSubject" name="txtupSubject" class="form-control" placeholder="Subject">
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Total Marks</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtuptotalmarks" name="txtuptotalmarks" class="form-control" placeholder="Total Marks">
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Mark Secured</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtupMarksecured" name="txtupMarksecured" class="form-control" placeholder="Mark secured">
+
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">%Of Mark/Division</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <input type="text" id="txtupDivision" name="txtupDivision" class="form-control"  placeholder="%Of Mark/Division">
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="qualupclr" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                    <button id="add_qual_btnupdate" type="submit"  class="btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>UPDATE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- Small modal -->
+            <!-- /modals -->
+
+       
+

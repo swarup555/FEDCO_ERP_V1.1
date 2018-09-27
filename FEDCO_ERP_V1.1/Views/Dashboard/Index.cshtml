@@ -1,0 +1,3682 @@
+﻿@{
+    ViewBag.Title = "DashBoard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .activeemployees {
+        color: white !important;
+    }
+    .control_header {
+        padding-bottom: 10px;
+        /* background-color: rgba(88, 117, 66, 0.87); */
+        padding-top: 10px;
+        padding-right: 10px;
+        /* color: #fff; */
+        border: 1px solid rgb(42, 63, 84);
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0px 0px 17px 5px rgba(0,0,0,0.08);
+        -moz-box-shadow: inset 0px 0px 17px 5px rgba(0,0,0,0.08);
+        box-shadow: inset 0px 0px 17px 5px rgba(0,0,0,0.08);
+    }
+
+    .controldrop {
+        border: 1px solid rgb(42, 63, 84);
+        border-top: none;
+        padding-top: 10px;
+        border-radius: 10px;
+    }
+</style>
+
+<script src="~/Content/highcharts.js"></script>
+@*<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/drilldown.js"></script>*@
+<link href="~/Content/JQGridReq/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/JQGridReq/styles/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+<script src="~/Content/JQGridReq/jquery.jqGrid.min.js"></script>
+<script src="~/Content/JQGridReq/grid.locale-en.js"></script>
+<script src="~/Scripts/jqGridExportToExcel.js"></script>
+@*<script src="~/Content/mootools.highchart.adapter.js"></script>*@
+@*<script src="~/Content/drilldown.js"></script>*@
+@*<script src="~/Scripts/drilldown.src.js"></script>*@
+<div class="">
+
+
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="row top_tiles">
+                <a href="javascript:;" id="activeemployees">
+                    <div class="animated fadeInDownBig col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats bg-light-blue">
+                            <div class="icon"><i class="fa fa-users"></i></div>
+                            <h4>Active Employees</h4>
+                            @*<div class="count">179</div>*@
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="text-align:center; margin-top:10px">
+                                <h1>@ViewBag.activeemployees</h1>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="text-align:center;">
+
+                            </div>
+
+                            <p>@*Lorem ipsum psdea itgum rixt.*@</p>
+                        </div>
+                    </div>
+                </a>
+                <div class="animated fadeInDownBig col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats bg-grass">
+                        <div class="icon"><i class="fa fa-comments-o"></i></div>
+                        <h4>Recruitment</h4>
+                        @*<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <br />
+                                <span class="spanhead">Total</span><br />
+                                <span class="spanhead">Open</span><br />
+                                <span class="spanhead">Closed</span>
+                            </div>*@
+                        <a href="javascript:;" id="monthrec" class="activeemployees">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 margintop5" style="text-align:center;">
+                                <span class="spanhead">Monthly</span><br />
+                                <span class="spandatalg">@ViewBag.monthrec</span><br />
+                                @*<span class="spandata">7</span><br />
+                <span class="spandata">18</span>*@
+                            </div>
+                        </a>
+                        <a href="javascript:;" id="yearrec" class="activeemployees">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 margintop5" style="text-align:center;">
+                                <span class="spanhead">Yearly</span><br />
+                                <span class="spandatalg">@ViewBag.yearrec</span><br />
+                                @*<span class="spandata">15</span><br />
+                <span class="spandata">41</span>*@
+                            </div>
+                        </a>
+                        <p>@*Lorem ipsum psdea itgum rixt.*@</p>
+                    </div>
+                </div>
+                <div class="animated fadeInDownBig col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats bg-teal">
+                        <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
+                        <h4>Employee Separation </h4>
+                        <a href="javascript:;" id="monsep" class="activeemployees">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 margintop5" style="text-align:center;">
+                                <span class="spanhead">Monthly</span><br />
+                                <span class="spandatalg">@ViewBag.monsep</span><br />
+                                @*<span class="spandata">7</span><br />
+                <span class="spandata">18</span>*@
+                            </div>
+                        </a>
+                        <a href="javascript:;" id="yearsep" class="activeemployees">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 margintop5" style="text-align:center;">
+                                <span class="spanhead">Yearly</span><br />
+                                <span class="spandatalg">@ViewBag.yearsep </span><br />
+                                @*<span class="spandata">15</span><br />
+                <span class="spandata">41</span>*@
+                            </div>
+                        </a>
+
+                        <p>@*Lorem ipsum psdea itgum rixt.*@</p>
+                    </div>
+                </div>
+                <a href="javascript:;" id="fieldemployees">
+                    <div class="animated fadeInDownBig col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div class="tile-stats bg-orange">
+                            <div class="icon"><i class="fa fa-check-square-o"></i></div>
+                            <h4>Field Employees</h4>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="text-align:center; margin-top:10px">
+                                <h1>@ViewBag.fieldemployees</h1>
+
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="text-align:center;">
+
+                            </div>
+
+                            <p>@*Lorem ipsum psdea itgum rixt.*@</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel animated slideInLeft">
+                <div class="x_title">
+                    <h2>Total No. Of Employee Location wise</h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="chart_div" style="height:300px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel animated slideInRight">
+                <div class="x_title">
+                    <h2>Total No. of Employee Blood Group wise</h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="chart_dept" style="height:300px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel animated slideInLeft">
+                <div class="x_title">
+                    <h2>Total No. of Employee Department & Designation wise</h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <div class="form-group">
+                                <select class="form-control" id="department" name="DEPARTMENT"></select>
+                            </div>
+                        </li>
+                    </ul>
+                    <div id="chart_blood" style="height:300px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel animated slideInLeft">
+                <div class="x_title">
+                    <h2>Total No.Of Employee Grade wise</h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="chart_gender" style="height:300px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel animated slideInLeft">
+                <div class="x_title">
+                    <h2>Total No. of Recruitment Month wise</h2>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="chart_emprec" style="height:300px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel animated slideInLeft">
+                <div class="x_title">
+                    <h2>Total No.Of Employee Separation Month wise</h2>
+                    @*<ul class="nav navbar-right panel_toolbox">
+                            <li>
+                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>*@
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="chart_empsepa" style="height:300px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel animated slideInLeft">
+                <div class="x_title">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-top: 5px; padding-bottom: 5px;">
+                        <div class="control_header" style="cursor: pointer;">
+                            <span class="" style="margin-left: 15px; color: #26B99A; text-transform: lowercase; font-style: italic"><i class="fa fa-filter text-success" style="color: #26B99A; margin-right: 2px;"></i>[CLICK HERE FOR FILTER OPTIONS]</span>
+                            <div id="togglecontrol" style="color: #26B99A;" class=" control_toggle pull-right"><i class="fa fa-search pullbtn" style="color: #26B99A; margin-right: 2px;"></i>Search</div>
+                        </div>
+                        <div id="div_controls" style="display: none; padding-top: 5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 controldrop">
+                                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <select id="WORKLOCATION" name="WORKLOCATION" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <select class="form-control" id="division" name="division" disabled="disabled"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <select class="form-control" id="subdivision" name="subdivision" disabled="disabled"></select>
+                                    </div>
+                                </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <select class="form-control" id="section" name="section" disabled="disabled"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="form-group">
+                                            <select class="form-control" id="department1" name="DEPARTMENT" ></select>
+                                        </div>
+                                    </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <select class="form-control" id="designation" name="designation"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <select class="form-control" id="grades" name="GRADES"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group" style="margin-top: 1px">
+                                        <button type="button" class="btn btn-md btn-success" id="btn_view">View</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                        <div class="clearfix"></div>
+                    </div>
+                <div class="x_content">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                        <div id="content">
+                            <table id="jqGridfilter"></table>
+                            <div id="jqGridPagefilter"></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="activeemppopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Active Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridactiveemp"></table>
+                        <div id="jqGridPageractiveemp"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="monrecpopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Monthly Recruited Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridmonrec"></table>
+                        <div id="jqGridPagermonrec"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="yearrecpopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Yearly Recruited  Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridyearrec"></table>
+                        <div id="jqGridPageryearrec"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="monseppopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Monthly Separated Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridmonsep"></table>
+                        <div id="jqGridPagermonsep"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="yaerseppopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Yearly Separated Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridyearsep"></table>
+                        <div id="jqGridPageryearsep"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="fieldemployeepopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">On Field Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridfieldemp"></table>
+                        <div id="jqGridPagerfieldemp"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="corporatepopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Corporate Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridcorporate"></table>
+                        <div id="jqGridPagercorporate"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="khodha1popup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Khodha1 Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridkhordha1"></table>
+                        <div id="jqGridPagerkhordha1"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="nayagarhpopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Nayagarh Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridnayagarh"></table>
+                        <div id="jqGridPagernayagarh"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="balugaonpopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Balugaon Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridbalunga"></table>
+                        <div id="jqGridPagerbalunga"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="puriruralpopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Puri Rural Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridpurirural"></table>
+                        <div id="jqGridPagerpurirural"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="puriurbanpopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Puri Urban Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridpuriurban"></table>
+                        <div id="jqGridPagerpuriurban"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="khordha2popup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Khordha2 Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridkhordha2"></table>
+                        <div id="jqGridPagerkhordha2"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="spclprjpopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridspclprj"></table>
+                        <div id="jqGridPagerspclprj"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="apospopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">A+ Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridapos"></table>
+                        <div id="jqGridPageapos"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="anegpopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">A- Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridaneg"></table>
+                        <div id="jqGridPageaneg"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="bpospopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">B+ Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridbpos"></table>
+                        <div id="jqGridPagebpos"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="bnegpopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">B- Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridbneg"></table>
+                        <div id="jqGridPagebneg"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="opospopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">O+ Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridopos"></table>
+                        <div id="jqGridPage0pos"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="onegpopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">O- Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridoneg"></table>
+                        <div id="jqGridPageoneg"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="abpospopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">AB+ Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridabpos"></table>
+                        <div id="jqGridPageabpos"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" id="abnegpopup" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">AB- Employee Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="content" style="overflow-x:scroll">
+                        <table id="jqGridabneg"></table>
+                        <div id="jqGridPageabneg"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button id="btnBasicinfosave" type="submit" class="btn btn-success" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i>CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div> 
+ </div>
+<script>
+    $(function () {
+        var chart = Highcharts.chart('chart_div', {
+            title: {
+                text: ''
+            },
+            credits: { enabled: false },
+            subtitle: {
+                text: ''
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                    },
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                //for (var i = 0; i < this.series.data.length; i++) {
+                                if (this.category == 'Corporate') {
+                                    //alert("corporate");
+                                    $("#corporatepopup").modal("show");
+                                }
+                                if (this.category == 'Khordha 1') {
+                                    //alert("corporate");
+                                    $("#khodha1popup").modal("show");
+                                }
+                                if (this.category == 'Nayagarh') {
+                                    //alert("corporate");
+                                    $("#nayagarhpopup").modal("show");
+                                }
+                                if (this.category == 'Puri Urban') {
+                                    //alert("corporate");
+                                    $("#puriurbanpopup").modal("show");
+                                }
+                                if (this.category == 'Balugaon') {
+                                    //alert("corporate");
+                                    $("#balugaonpopup").modal("show");
+                                }
+                                if (this.category == 'Puri Rural') {
+                                    //alert("corporate");
+                                    $("#puriruralpopup").modal("show");
+                                }
+                                if (this.category == 'Khordha 2') {
+                                    //alert("corporate");
+                                    $("#khordha2popup").modal("show");
+                                }
+                                //}
+                            }
+                        }
+                    }
+                }
+            },
+            xAxis: {
+                categories: [
+                     'Corporate',
+                     'Khordha 1',
+                     'Nayagarh',
+                     'Puri Urban',
+                     'Balugaon',
+                     'Puri Rural',
+                     'Khordha 2'
+                ],
+            },
+
+            series: [{
+                type: 'column',
+                colorByPoint: true,
+                data: [@ViewBag.corporate,@ViewBag.khordha1, @ViewBag.nayagarh, @ViewBag.puriurban, @ViewBag.balungan, @ViewBag.purirural, @ViewBag.khordha2],
+                showInLegend: false
+            }]
+
+        });
+    });
+    //Highcharts.setOptions({
+    //    lang: {
+    //        drillUpText: '◁ Back to {series.name}'
+    //    }
+    //});
+
+    //var options = {
+
+    //    chart: {
+    //        height: 300
+    //    },
+
+    //    title: {
+    //        text: 'Highcharts Drilldown Plugin'
+    //    },
+
+    //    xAxis: {
+    //        categories: true
+    //    },
+
+    //    drilldown: {
+    //        series: [{
+    //            id: 'fruits',
+    //            name: 'Fruits',
+    //            data: [
+    //                ['Apples', 4],
+    //                ['Pears', 6],
+    //                ['Oranges', 2],
+    //                ['Grapes', 8]
+    //            ]
+    //        }, {
+    //            id: 'cars',
+    //            name: 'Cars',
+    //            data: [{
+    //                name: 'Toyota',
+    //                y: 4,
+    //                drilldown: 'toyota'
+    //            },
+    //            ['Volkswagen', 3],
+    //            ['Opel', 5]
+    //            ]
+    //        }, {
+    //            id: 'toyota',
+    //            name: 'Toyota',
+    //            data: [
+    //                ['RAV4', 3],
+    //                ['Corolla', 1],
+    //                ['Carina', 4],
+    //                ['Land Cruiser', 5]
+    //            ]
+    //        }]
+    //    },
+
+    //    legend: {
+    //        enabled: false
+    //    },
+
+    //    plotOptions: {
+    //        series: {
+    //            dataLabels: {
+    //                enabled: true
+    //            },
+    //            shadow: false
+    //        },
+    //        pie: {
+    //            size: '80%'
+    //        }
+    //    },
+
+    //    series: [{
+    //        name: 'Overview',
+    //        colorByPoint: true,
+    //        data: [{
+    //            name: 'Fruits',
+    //            y: 10,
+    //            drilldown: 'fruits'
+    //        }, {
+    //            name: 'Cars',
+    //            y: 12,
+    //            drilldown: 'cars'
+    //        }, {
+    //            name: 'Countries',
+    //            y: 8
+    //        }]
+    //    }]
+    //};
+
+    //// Column chart
+    //options.chart.renderTo = 'chart_div';
+    //options.chart.type = 'column';
+    //var chart1 = new Highcharts.Chart(options);
+
+    // Pie
+    //options.chart.renderTo = 'container2';
+    //options.chart.type = 'pie';
+    //var chart2 = new Highcharts.Chart(options);
+    @*$(function () {
+
+        Highcharts.setOptions({
+            lang: {
+                drillUpText: '◁ Back '
+            }
+        });
+
+        // Create the chart
+        $('#chart_div').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: ''
+            },
+            xAxis: {
+                type: 'category'
+            },
+
+            legend: {
+                enabled: false
+            },
+
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                    },
+                }
+            },
+            series: [{
+                name: 'Location',
+                colorByPoint: true,
+                data: [{
+                    name: 'Corporate',
+                    y: @ViewBag.corporate
+                    //drilldown: 'animals'
+                }, {
+                    name: 'Khordha 1',
+                    y: @ViewBag.khordha1
+                    //drilldown: 'fruits'
+                }, {
+                    name: 'Nayagarh',
+                    y: @ViewBag.nayagarh,
+                    //drilldown: 'fruits'
+                }, {
+                    name: 'Puri Urban',
+                    y: @ViewBag.puriurban
+                    //drilldown: 'fruits'
+                }, {
+                    name: 'Balugaon',
+                    y: @ViewBag.balungan
+                    //drilldown: 'fruits'
+                },
+                {
+                    name: 'Puri Rural',
+                    y: @ViewBag.purirural
+                    //drilldown: 'fruits'
+                },
+                {
+                    name: "Khordha 2",
+                    y: @ViewBag.khordha2
+                }]
+            }],
+            //drilldown: {
+            //    drillUpButton: {
+            //        relativeTo: 'spacingBox',
+            //        position: {
+            //            y: 0,
+            //            x: 0
+            //        },
+            //        theme: {
+            //            fill: 'white',
+            //            'stroke-width': 1,
+            //            stroke: 'silver',
+            //            r: 0,
+            //            states: {
+            //                hover: {
+            //                    fill: '#bada55'
+            //                },
+            //                select: {
+            //                    stroke: '#039',
+            //                    fill: '#bada55'
+            //                }
+            //            }
+            //        }
+
+            //    },
+            //    series: [{
+            //        id: 'animals',
+            //        data: [
+            //            ['Katten', 4],
+            //            ['Honden', 2],
+            //            ['Koeien', 1],
+            //            ['Schapen', 2],
+            //            ['Varkens', 1]
+            //        ]
+            //    }, {
+            //        id: 'fruits',
+            //        data: [
+            //            ['Appels', 4],
+            //            ['Sinaasappels', 2]
+            //        ]
+            //    }]
+            //}
+        })
+    });*@
+    $(function () {
+        var chart = Highcharts.chart('chart_emprec', {
+            title: {
+                text: ''
+            },
+            credits: { enabled: false },
+            subtitle: {
+                text: ''
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                    },
+                }
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+
+            series: [{
+                type: 'column',
+                colorByPoint: true,
+                data: [@ViewBag.jan, @ViewBag.feb, @ViewBag.mar, @ViewBag.apr, @ViewBag.may, @ViewBag.jun, @ViewBag.jul, @ViewBag.aug, @ViewBag.sep, @ViewBag.oct, @ViewBag.nov, @ViewBag.dec],
+                showInLegend: false
+            }]
+
+        });
+    });
+
+    $(function () {
+        var chart = Highcharts.chart('chart_empsepa', {
+            title: {
+                text: ''
+            },
+            credits: { enabled: false },
+            subtitle: {
+                text: ''
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                    },
+                }
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+
+            series: [{
+                type: 'column',
+                colorByPoint: true,
+                data: [@ViewBag.jansep, @ViewBag.febsep, @ViewBag.marsep, @ViewBag.aprsep, @ViewBag.maysep, @ViewBag.junsep, @ViewBag.julsep, @ViewBag.augsep, @ViewBag.sepsep, @ViewBag.octsep, @ViewBag.novsep, @ViewBag.decsep],
+                showInLegend: false
+            }]
+
+        });
+    });
+    $(function () {
+        var chart = Highcharts.chart('chart_blood', {
+            title: {
+                text: ''
+            },
+            credits: { enabled: false },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: ['']
+            },
+
+            series: [{
+                type: 'column',
+                colorByPoint: true,
+                data: [0],
+                showInLegend: false
+            }]
+        });
+    });
+
+    $(function () {
+        var chart = Highcharts.chart('chart_dept', {
+            title: {
+                text: ''
+            },
+            credits: { enabled: false },
+            subtitle: {
+                text: ''
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                    },
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                //for (var i = 0; i < this.series.data.length; i++) {
+                                if (this.category == 'A+') {
+                                    $("#apospopup").modal("show");
+                                }
+                                if (this.category == 'A-') {
+                                    //alert("corporate");
+                                    $("#anegpopup").modal("show");
+                                }
+                                if (this.category == 'B+') {
+                                    //alert("corporate");
+                                    $("#bpospopup").modal("show");
+                                }
+                                if (this.category == 'B-') {
+                                    //alert("corporate");
+                                    $("#bnegpopup").modal("show");
+                                }
+                                if (this.category == 'O+') {
+                                    //alert("corporate");
+                                    $("#opospopup").modal("show");
+                                }
+                                if (this.category == 'O-') {
+                                    //alert("corporate");
+                                    $("#onegpopup").modal("show");
+                                }
+                                if (this.category == 'AB+') {
+                                    //alert("corporate");
+                                    $("#abpospopup").modal("show");
+                                }
+                                if (this.category == 'AB-') {
+                                    //alert("corporate");
+                                    $("#abnegpopup").modal("show");
+                                }
+
+                            }
+                        }
+                    }
+                }
+            },
+            xAxis: {
+                categories: ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-']
+            },
+
+            series: [{
+                type: 'column',
+                colorByPoint: true,
+                data: [@ViewBag.apos, @ViewBag.aneg, @ViewBag.bpos, @ViewBag.bneg, @ViewBag.opos, @ViewBag.Oneg, @ViewBag.abpos, @ViewBag.abneg],
+                showInLegend: false
+            }]
+
+        });
+    });
+    $(function () {
+        var chart = Highcharts.chart('chart_gender', {
+            title: {
+                text: ''
+            },
+            credits: { enabled: false },
+            subtitle: {
+                text: ''
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                    },
+                }
+            },
+            xAxis: {
+                categories: ['1B', '2A', '2B', '2C', '3A', '4A', '4B', '5A', '5B', '6A', '6C']
+            },
+
+            series: [{
+                type: 'column',
+                colorByPoint: true,
+                data: [@ViewBag.oneb, @ViewBag.twoa, @ViewBag.twob, @ViewBag.twoc, @ViewBag.thra, @ViewBag.fora, @ViewBag.forb, @ViewBag.fiva, @ViewBag.fivb, @ViewBag.sixa, @ViewBag.sixc],
+                showInLegend: false
+            }]
+
+        });
+    });
+    @*$(function () {
+        Highcharts.chart('chart_gender', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: ''
+            },
+            credits: { enabled: false },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Gender',
+                colorByPoint: true,
+                data: [{
+                    name: 'Male',
+                    y: @ViewBag.male
+                    }, {
+                        name: 'Female',
+                        y: @ViewBag.female
+                        }]
+            }]
+        });
+    });*@
+    $(document).ready(function () {
+        $(".control_header").click(function () {
+            $("#div_controls").slideToggle();
+        });
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Transferlocation", "EmployeeDetails")",
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#WORKLOCATION').empty();
+                $('#WORKLOCATION').append($('<option></option>').val(0).html("SELECT Location"));
+                $.each(result, function (i) {
+                    $('#WORKLOCATION').append($('<option></option>').val(result[i].ID).html(result[i].LOCATION_NAME));
+                });
+            }
+        });
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Divisions", "EmployeeDetails")",
+
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+
+                $('#division').append($('<option></option>').val(0).html("SELECT DIVISION"));
+                $('#subdivision').append($('<option></option>').val(0).html("SUB-DIVISION"));
+                $('#section').append($('<option></option>').val(0).html("SECTION"));
+                $.each(result, function (i) {
+                    $('#division').append($('<option></option>').val(result[i].DIVISION_CODE).html(result[i].DIV_NAME));
+                });
+            }
+        });
+        $('#division').on('change', function () {
+            var divisionid = $('#division').val();
+            $.ajax({
+
+                url: " @Url.Action("SubDivisions", "EmployeeDetails")/" + divisionid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+                    $('#subdivision').empty();
+                    $('#section').empty();
+                    $('#subdivision').append($('<option></option>').val(0).html("SUB-DIVISION"));
+                    $('#section').append($('<option></option>').val(0).html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#subdivision').append($('<option></option>').val(result[i].SUB_DIV_CODE).html(result[i].SUB_DIV_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                    });
+                }
+            });
+        });
+        $('#subdivision').on('change', function () {
+            var subdivisionid = $('#subdivision').val();
+            $.ajax({
+                url: " @Url.Action("Sections", "EmployeeDetails")/" + subdivisionid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+
+                    $('#section').empty();
+
+                    $('#section').append($('<option></option>').val(0).html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#section').append($('<option></option>').val(result[i].SEC_CODE).html(result[i].SEC_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                    });
+                }
+            });
+        });
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Departments", "EmployeeDetails")",
+
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+                $('#department1').empty();
+                $('#department1').append($('<option></option>').val(0).html("SELECT DEPARTMENT"));
+
+                //$('#reportingto').append($('<option></option>').val("").html("SELECT REPOTING TO"));
+                $.each(result, function (i) {
+
+                    $('#department1').append($('<option></option>').val(result[i].ID).html(result[i].DEPARTMENT_NAME));
+                });
+
+            }
+        });
+
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Designations", "EmployeeDetails")",
+
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+                $('#designation').empty();
+                $('#designation').append($('<option></option>').val(0).html("SELECT DESIGNATION"));
+                $.each(result, function (i) {
+                    $('#designation').append($('<option></option>').val(result[i].ID).html(result[i].DESIGNATION_NAME));
+                });
+            }
+        });
+        $.ajax({
+            url: " @Url.Action("Grades", "EmployeeDetails")",
+        type: "GET",
+        datatype: "Json",
+        success:
+        function (result) {
+            $('#grades').empty();
+            $('#grades').append($('<option></option>').val("0").html("SELECT GRADE"));
+            $.each(result, function (i) {
+                $('#grades').append($('<option></option>').val(result[i].ID).html(result[i].GRADE_NAME));
+            });
+        }
+    });
+        $('#WORKLOCATION').change(
+      function () {
+          //var val1 = $('#pick option:selected').val();
+          var val2 = $('#WORKLOCATION option:selected').val();
+          if (val2 == 1 || val2 == 0 || val2 == 5 || val2 == 6 || val2 == 7 || val2 == 8 || val2 == 9 || val2 == 10 || val2 == 11 || val2 == 12 || val2 == 13 || val2 == 14 || val2 == 15) {
+              $("#division").attr("disabled", "disabled");
+              $("#division").val(0);
+              $("#subdivision").attr("disabled", "disabled");
+              $("#subdivision").val(0);
+              $("#section").attr("disabled", "disabled");
+              $("#section").val(0);
+          }
+          if (val2 == 2) {
+              $("#division").removeAttr("disabled");
+              $("#subdivision").removeAttr("disabled");
+              $("#section").removeAttr("disabled");
+              $("#subdivision").attr("disabled", "disabled");
+              $("#section").attr("disabled", "disabled");
+              $("#subdivision").val(0);
+              $("#section").val(0);
+          }
+          if (val2 == 3) {
+              $("#division").removeAttr("disabled");
+              $("#subdivision").removeAttr("disabled");
+              $("#section").removeAttr("disabled");
+              $("#section").attr("disabled", "disabled");
+              $("#section").val(0);
+          }
+          if (val2 == 4) {
+              $("#division").removeAttr("disabled");
+              $("#subdivision").removeAttr("disabled");
+              $("#section").removeAttr("disabled");
+          }
+          // Do something with val1 and val2 ...
+      }
+     );
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Departments", "EmployeeDetails")",
+
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+                $('#department').empty();
+                $('#department').append($('<option></option>').val("").html("SELECT DEPARTMENT"));
+                //$('#reportingto').append($('<option></option>').val("").html("SELECT REPOTING TO"));
+                $.each(result, function (i) {
+                    $('#department').append($('<option></option>').val(result[i].ID).html(result[i].DEPARTMENT_NAME));
+                });
+            }
+        });
+        $('#department').on('change', function () {
+            var deptid = $('#department').val();
+            $.ajax({
+
+                url: " @Url.Action("test", "Dashboard")/" + deptid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (data) {
+                    var chartData = $.map(data, function(obj, i) {
+                        return [[obj.Name]] ;
+                    })
+                    var chartData1 = $.map(data, function(obj, i) {
+                        return [[obj.count]] ;
+                    })
+                    $(function () {
+                        var chart = Highcharts.chart('chart_blood', {
+                            title: {
+                                text: ''
+                            },
+                            credits: { enabled: false },
+                            subtitle: {
+                                text: ''
+                            },
+                            plotOptions: {
+                                series: {
+                                    dataLabels: {
+                                        enabled: true,
+                                    },
+                                    cursor: 'pointer',
+                                    point: {
+                                        events: {
+                                            click: function () {
+                                                //alert( this.category);
+                                                $("#jqGridspclprj").setGridParam(
+                                                {
+                                                    url: " @Url.Action("test1", "Dashboard")/" + this.category,
+                                                    datatype: 'json',
+                                                    page: 1
+                                                }
+                                                ).jqGrid('hideCol',"somecol").trigger("reloadGrid");
+                                                $('#jqGridspclprj').jqGrid('GridUnload');
+                                                jQuery("#jqGridspclprj").jqGrid({
+                                                    url: " @Url.Action("test1", "Dashboard")/"+ this.category,
+                                                    type: "GET",
+                                                    datatype: "Json",
+                                                    height: 250,
+                                                    colModel: [
+
+                                                    { name: 'ID', index: 'ID', key: true, hidden: true },
+                                                    { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+                                                    { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+                                                    { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+                                                    { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+                                                    { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+                                                    { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+                                                    {
+                                                        name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                                                            var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                                                            return x.replace("myid", rowObject['ID']);
+                                                        }, align: 'center', search: false
+                                                    }
+
+                                                    ],
+
+                                                    loadonce: true,
+                                                    viewrecords: true,
+                                                    width: 1190,
+                                                    rowNum: 10,
+                                                    rowList: [20, 30, 50],
+
+                                                    rownumWidth: 25,
+                                                    multiselect: true,
+                                                    pager: "#jqGridPagerspclprj",
+                                                    jsonReader: {
+                                                        repeatitems: false,
+                                                        id: "ID",
+                                                        root: function (obj) { return obj; },
+                                                        page: function (obj) { return 1; },
+                                                        total: function (obj) { return 1; },
+                                                        records: function (obj) { return obj.length; }
+                                                    },
+                                                    ondblClickRow: function (rowid) {
+                                                        //jQuery(this).jqGrid('editGridRow', rowid);
+                                                        var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+                                                        window.location = x;
+                                                    },
+                                                    onSelectRow: function (rowId, status, e) {
+                                                        if (rowId == lastSel) {
+                                                            $(this).jqGrid("resetSelection");
+                                                            lastSel = undefined;
+                                                            status = false;
+                                                        } else {
+                                                            lastSel = rowId;
+                                                        }
+                                                    },
+                                                    beforeSelectRow: function (rowId, e) {
+                                                        $(this).jqGrid("resetSelection");
+                                                        return true;
+                                                    }
+                                                });
+                                                $("#cb_jqGridspclprj").hide();
+                                                function imageFormatter(cellvalue, options, rowObject) {
+                                                    //$("cellvalue").val(cellvalue);
+                                                    if (cellvalue == null) {
+                                                        return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+                                                    }
+                                                    else {
+                                                        return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+                                                    }
+
+                                                };
+                                                $('#jqGridspclprj').navGrid('#jqGridPagerspclprj', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagerspclprj', {
+                                                    caption: "Export to Excel",
+                                                    buttonicon: "ui-icon-disk",
+                                                    onClickButton: function () {
+                                                        ExportDataToExcel("#jqGridspclprj");
+                                                    },
+                                                    position: "last"
+                                                });
+                                                jQuery("#jqGridspclprj").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+                                                $(".ui-jqgrid-sortable").css('white-space', 'normal');
+                                                $(".ui-jqgrid-sortable").css('height', 'auto');
+                                                $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+                                                $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+                                                $("#spclprjpopup").modal("show");
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            xAxis: {
+                                categories: chartData
+                            },
+
+                            series: [{
+                                type: 'column',
+                                colorByPoint: true,
+                                data: chartData1,
+                                showInLegend: false
+                            }]
+
+                        });
+                        $('#plain').click(function () {
+                            chart.update({
+                                chart: {
+                                    inverted: false,
+                                    polar: false
+                                },
+                                subtitle: {
+                                    text: 'Plain'
+                                }
+                            });
+                        });
+
+                        $('#inverted').click(function () {
+                            chart.update({
+                                chart: {
+                                    inverted: true,
+                                    polar: false
+                                },
+                                subtitle: {
+                                    text: 'Inverted'
+                                }
+                            });
+                        });
+
+                        $('#polar').click(function () {
+                            chart.update({
+                                chart: {
+                                    inverted: false,
+                                    polar: true
+                                },
+                                subtitle: {
+                                    text: 'Polar'
+                                }
+                            });
+                        });
+
+                    });
+                }
+            });
+        });
+        $('#activeemployees').click(function () {
+            $('#activeemppopup').modal('show')
+        })
+        $('#fieldemployees').click(function () {
+            $('#fieldemployeepopup').modal('show')
+        })
+        $('#yearsep').click(function () {
+            $('#yaerseppopup').modal('show')
+        })
+        $('#monsep').click(function () {
+            $('#monseppopup').modal('show')
+        })
+        $('#yearrec').click(function () {
+            $('#yearrecpopup').modal('show')
+        })
+        $('#monthrec').click(function () {
+            $('#monrecpopup').modal('show')
+        })
+        //region active employee grid bind
+        var lastSel;
+        jQuery("#jqGridactiveemp").jqGrid({
+            url: " @Url.Action("BasicInfoactiveemployee", "Dashboard")",
+            type: "GET",
+            datatype: "Json",
+            height: 250,
+            colModel: [
+
+            { name: 'ID', index: 'ID', key: true, hidden: true },
+            { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+            { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+            { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+            { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+            { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+            { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+            {
+                name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                    var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                    return x.replace("myid", rowObject['ID']);
+                }, align: 'center', search: false
+            }
+
+            ],
+
+            loadonce: true,
+            viewrecords: true,
+            width: 1190,
+            rowNum: 10,
+            rowList: [20, 30, 50],
+
+            rownumWidth: 25,
+            multiselect: true,
+            pager: "#jqGridPageractiveemp",
+            jsonReader: {
+                repeatitems: false,
+                id: "ID",
+                root: function (obj) { return obj; },
+                page: function (obj) { return 1; },
+                total: function (obj) { return 1; },
+                records: function (obj) { return obj.length; }
+            },
+            ondblClickRow: function (rowid) {
+                //jQuery(this).jqGrid('editGridRow', rowid);
+                var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+                window.location = x;
+            },
+            onSelectRow: function (rowId, status, e) {
+                if (rowId == lastSel) {
+                    $(this).jqGrid("resetSelection");
+                    lastSel = undefined;
+                    status = false;
+                } else {
+                    lastSel = rowId;
+                }
+            },
+            beforeSelectRow: function (rowId, e) {
+                $(this).jqGrid("resetSelection");
+                return true;
+            }
+        });
+        $("#cb_jqGridactiveemp").hide();
+        function imageFormatter(cellvalue, options, rowObject) {
+            //$("cellvalue").val(cellvalue);
+            if (cellvalue == null) {
+                return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+            }
+            else {
+                return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+            }
+
+        };
+        //jQuery("#jqGridactiveemp").jqGrid('navGrid', '#jqGridPageractiveemp', { add: false, edit: false, del: false, search: false, refresh: false });
+        $('#jqGridactiveemp').navGrid('#jqGridPageractiveemp', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPageractiveemp', {
+            caption: "Export to Excel",
+            buttonicon: "ui-icon-disk",
+            onClickButton: function () {
+                ExportDataToExcel("#jqGridactiveemp");
+            },
+            position: "last"
+        });
+        jQuery("#jqGridactiveemp").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+        $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+        $("#btn_view").click(function () {
+            //var WORKLOCATIONs = $('#WORKLOCATION').val();
+            //var divisions = $('#division').val();
+            //var subdivisions = $('#subdivision').val();
+            //var sections = $('#section').val();
+            //var departments = $('#department1').val();
+            var WORKLOCATIONs = "0";
+
+            if ($('#WORKLOCATION').val() != null) { WORKLOCATIONs = $('#WORKLOCATION').val(); }
+
+            var divisions = "0";
+            if ($('#division').val() != null) { divisions = $('#division').val(); }
+
+
+
+            var subdivisions = "0";
+            if ($('#subdivision').val() != null) { subdivisions = $('#subdivision').val(); }
+
+            var sections = "0";
+            if ($('#section').val() != null) { sections = $('#section').val(); }
+
+
+
+            var departments = "0";
+            if ($('#department').val() != null) { departments = $('#department1').val(); }
+            var designation = "0";
+            if ($('#designation').val() != null) { designation = $('#designation').val(); }
+            var grades = "0";
+            if ($('#grades').val() != null) { grades = $('#grades').val(); }
+            //alert(WORKLOCATIONs + "-" + divisions + "-" + subdivisions + "-" + sections + "-" + departments + "-" + designation);
+            //alert(dv);
+            //alert(subv);
+            //alert(secv);
+            //alert(depv);
+            @*$("#jqGridfilter").setGridParam(
+              {
+                  url: " @Url.Action("GetEmployeeInfofilter", "Dashboard")/" + WORKLOCATIONs + "/" + divisions + "/" + subdivisions + "/" + sections + "/" + departments,
+              datatype: 'json',
+              page: 1
+          }
+           ).trigger("reloadGrid");*@//Reload grid trigger
+        $('#jqGridfilter').jqGrid('GridUnload');
+        jQuery("#jqGridfilter").jqGrid({
+            url: " @Url.Action("GetEmployeeInfofilter", "Dashboard")/" + WORKLOCATIONs + "/" + divisions + "/" + subdivisions + "/" + sections + "/" + departments + "/" + designation + "/" + grades,
+            type: "GET",
+        datatype: "Json",
+        height: 150,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                    return x.replace("myid", rowObject['ID']);
+                }, align: 'center', search: false
+            }
+
+            ],
+
+            loadonce: true,
+            viewrecords: true,
+            width: 1190,
+            rowNum: 10,
+            rowList: [20, 30, 50],
+
+            rownumWidth: 25,
+            multiselect: true,
+            pager: "#jqGridPagefilter",
+            jsonReader: {
+                repeatitems: false,
+                id: "ID",
+                root: function (obj) { return obj; },
+                page: function (obj) { return 1; },
+                total: function (obj) { return 1; },
+                records: function (obj) { return obj.length; }
+            },
+            ondblClickRow: function (rowid) {
+                //jQuery(this).jqGrid('editGridRow', rowid);
+                var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+                window.location = x;
+            },
+            onSelectRow: function (rowId, status, e) {
+                if (rowId == lastSel) {
+                    $(this).jqGrid("resetSelection");
+                    lastSel = undefined;
+                    status = false;
+                } else {
+                    lastSel = rowId;
+                }
+            },
+            beforeSelectRow: function (rowId, e) {
+                $(this).jqGrid("resetSelection");
+                return true;
+            }
+        });
+        $("#cb_jqGridfilter").hide();
+        function imageFormatter(cellvalue, options, rowObject) {
+            //$("cellvalue").val(cellvalue);
+            if (cellvalue == null) {
+                return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+            }
+            else {
+                return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+            }
+
+        };
+        //jQuery("#jqGridactiveemp").jqGrid('navGrid', '#jqGridPageractiveemp', { add: false, edit: false, del: false, search: false, refresh: false });
+        $('#jqGridfilter').navGrid('#jqGridPagefilter', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagefilter', {
+            caption: "Export to Excel",
+            buttonicon: "ui-icon-disk",
+            onClickButton: function () {
+                ExportDataToExcel("#jqGridfilter");
+            },
+            position: "last"
+        });
+        jQuery("#jqGridfilter").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+        $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    });
+    $("#btn_view").click();
+    jQuery("#jqGridyearrec").jqGrid({
+        url: " @Url.Action("yearlyrecuirtment", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPageryearrec",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridyearrec").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    //jQuery("#jqGridyearrec").jqGrid('navGrid', '#jqGridPageryearrec', { add: false, edit: false, del: false, search: false, refresh: false });
+    $('#jqGridyearrec').navGrid('#jqGridPageryearrec', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPageryearrec', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridyearrec");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridyearrec").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end yearly rec
+    //start monthly recuirtment
+    //<table id="jqGridmonrec"></table>
+    //       <div id="jqGridPagermonrec"></div>
+    jQuery("#jqGridmonrec").jqGrid({
+        url: " @Url.Action("monthlyrecuirtment", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagermonrec",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridmonrec").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    //jQuery("#jqGridmonrec").jqGrid('navGrid', '#jqGridPagermonrec', { add: false, edit: false, del: false, search: false, refresh: false });
+    $('#jqGridmonrec').navGrid('#jqGridPagermonrec', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagermonrec', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridmonrec");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridmonrec").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+
+    //end monthly rec
+    //start monthly separation
+    //<table id="jqGridmonsep"></table>
+    //       <div id="jqGridPagermonsep"></div>
+    jQuery("#jqGridmonsep").jqGrid({
+        url: " @Url.Action("monthlyseparation", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagermonsep",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (cellvalue, options, rowObject) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index", "EmployeeDetails", new { id = "myid" })';
+            return x.replace("myid", rowObject['ID']);
+            //window.location = 'EmployeeDetails/Index/' + rowid;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridmonsep").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    //jQuery("#jqGridmonsep").jqGrid('navGrid', '#jqGridPagermonsep', { add: false, edit: false, del: false, search: false, refresh: false });
+    $('#jqGridmonsep').navGrid('#jqGridPagermonsep', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagermonsep', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridmonsep");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridmonsep").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end monthly separation
+    //<table id="jqGridyearsep"></table>
+    //      <div id="jqGridPageryearsep"></div>
+    //start yearly separation
+    jQuery("#jqGridyearsep").jqGrid({
+        url: " @Url.Action("yearlyseparation", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPageryearsep",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridyearsep").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    //jQuery("#jqGridyearsep").jqGrid('navGrid', '#jqGridPageryearsep', { add: false, edit: false, del: false, search: false, refresh: false });
+    $('#jqGridyearsep').navGrid('#jqGridPageryearsep', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPageryearsep', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridyearsep");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridyearsep").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end yearly separation
+    //start fieldemployee
+    //<table id="jqGridfieldemp"></table>
+    //       <div id="jqGridPagerfieldemp"></div>
+    jQuery("#jqGridfieldemp").jqGrid({
+        url: " @Url.Action("feildemployees", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagerfieldemp",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridfieldemp").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridfieldemp').navGrid('#jqGridPagerfieldemp', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagerfieldemp', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridfieldemp");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridfieldemp").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end fieldemployee
+    //<table id="jqGridcorporate"></table>
+    //               <div id="jqGridPagercorporate"></div>
+    //start corporate
+    jQuery("#jqGridcorporate").jqGrid({
+        url: " @Url.Action("corporate", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagercorporate",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridcorporate").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridcorporate').navGrid('#jqGridPagercorporate', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagercorporate', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridcorporate");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridcorporate").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+
+    //end corporate
+    //<table id="jqGridkhordha1"></table>
+    //                   <div id="jqGridPagerkhordha1"></div>
+    //start khordha1
+    jQuery("#jqGridkhordha1").jqGrid({
+        url: " @Url.Action("khordha1", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagerkhordha1",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridkhordha1").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridkhordha1').navGrid('#jqGridPagerkhordha1', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagerkhordha1', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridkhordha1");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridkhordha1").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end khordha1
+    //<table id="jqGridnayagarh"></table>
+    //                <div id="jqGridPagernayagarh"></div>
+    //start nayagarh
+    jQuery("#jqGridnayagarh").jqGrid({
+        url: " @Url.Action("nayagarh", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagernayagarh",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridnayagarh").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridnayagarh').navGrid('#jqGridPagernayagarh', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagernayagarh', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridnayagarh");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridnayagarh").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end nayagarh
+    //<table id="jqGridbalunga"></table>
+    //                <div id="jqGridPagerbalunga"></div>
+    //start balungaon
+    jQuery("#jqGridbalunga").jqGrid({
+        url: " @Url.Action("balungan", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagerbalunga",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridbalunga").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridbalunga').navGrid('#jqGridPagerbalunga', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagerbalunga', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridbalunga");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridbalunga").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end balungao
+    //<table id="jqGridpurirural"></table>
+    //                <div id="jqGridPagerpurirural"></div>
+    //start puri rural
+    jQuery("#jqGridpurirural").jqGrid({
+        url: " @Url.Action("purirural", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagerpurirural",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridpurirural").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridpurirural').navGrid('#jqGridPagerpurirural', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagerpurirural', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridpurirural");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridpurirural").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end purirural
+    //<table id="jqGridpuriurban"></table>
+    //                    <div id="jqGridPagerpuriurban"></div>
+    //start puriurban
+    jQuery("#jqGridpuriurban").jqGrid({
+        url: " @Url.Action("puriurban", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagerpuriurban",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridpuriurban").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridpuriurban').navGrid('#jqGridPagerpuriurban', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagerpuriurban', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridpuriurban");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridpuriurban").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end purirurban
+    //<table id="jqGridkhordha2"></table>
+    //               <div id="jqGridPagerkhordha2"></div>
+    //start khordha2
+    jQuery("#jqGridkhordha2").jqGrid({
+        url: " @Url.Action("khordha2", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagerkhordha2",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridkhordha2").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridkhordha2').navGrid('#jqGridPagerkhordha2', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagerkhordha2', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridkhordha2");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridkhordha2").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end khordha2
+    //<table id="jqGridrd"></table>
+    //               <div id="jqGridPagerrd"></div>
+    //start rd
+
+    //<table id="jqGridapos"></table>
+    //               <div id="jqGridPageapos"></div>
+    ////Start A+ section
+    jQuery("#jqGridapos").jqGrid({
+        url: " @Url.Action("apos", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPageapos",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridapos").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridapos').navGrid('#jqGridPageapos', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPageapos', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridapos");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridapos").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end apos
+    //satrt a-
+    //<table id="jqGridaneg"></table>
+    //               <div id="jqGridPageaneg"></div>
+    jQuery("#jqGridaneg").jqGrid({
+        url: " @Url.Action("aneg", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPageaneg",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridaneg").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridaneg').navGrid('#jqGridPageaneg', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPageaneg', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridaneg");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridaneg").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end a-
+    //start b+
+    //<table id="jqGridbpos"></table>
+    //                   <div id="jqGridPagebpos"></div>
+    jQuery("#jqGridbpos").jqGrid({
+        url: " @Url.Action("bpos", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagebpos",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridbpos").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridbpos').navGrid('#jqGridPagebpos', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagebpos', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridbpos");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridbpos").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end b+
+    //start b-
+    //<table id="jqGridbneg"></table>
+    //               <div id="jqGridPagebneg"></div>
+    jQuery("#jqGridbneg").jqGrid({
+        url: " @Url.Action("bneg", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPagebneg",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridbneg").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridbneg').navGrid('#jqGridPagebneg', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagebneg', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridbneg");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridbneg").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end b-
+    //start O+
+    //<table id="jqGridopos"></table>
+    //              <div id="jqGridPage0pos"></div>
+    jQuery("#jqGridopos").jqGrid({
+        url: " @Url.Action("opos", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPage0pos",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridopos").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridopos').navGrid('#jqGridPage0pos', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPage0pos', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridopos");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridopos").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end opos
+    //start o-
+    //<table id="jqGridoneg"></table>
+    //                  <div id="jqGridPageoneg"></div>
+    jQuery("#jqGridoneg").jqGrid({
+        url: " @Url.Action("oneg", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPageoneg",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridoneg").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridoneg').navGrid('#jqGridPageoneg', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPageoneg', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridoneg");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridoneg").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end oneg
+    //<table id="jqGridabpos"></table>
+    //               <div id="jqGridPageabpos"></div>
+    //start ab+
+    jQuery("#jqGridabpos").jqGrid({
+        url: " @Url.Action("abpos", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPageabpos",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridabpos").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridabpos').navGrid('#jqGridPageabpos', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPageabpos', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridabpos");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridabpos").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    //end ab+
+    //start ab-
+    //<table id="jqGridabneg"></table>
+    //               <div id="jqGridPageabneg"></div>
+    jQuery("#jqGridabneg").jqGrid({
+        url: " @Url.Action("abneg", "Dashboard")",
+        type: "GET",
+        datatype: "Json",
+        height: 250,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 10,
+        rowList: [20, 30, 50],
+
+        rownumWidth: 25,
+        multiselect: true,
+        pager: "#jqGridPageabneg",
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+            window.location = x;
+        },
+        onSelectRow: function (rowId, status, e) {
+            if (rowId == lastSel) {
+                $(this).jqGrid("resetSelection");
+                lastSel = undefined;
+                status = false;
+            } else {
+                lastSel = rowId;
+            }
+        },
+        beforeSelectRow: function (rowId, e) {
+            $(this).jqGrid("resetSelection");
+            return true;
+        }
+    });
+    $("#cb_jqGridabneg").hide();
+    function imageFormatter(cellvalue, options, rowObject) {
+        //$("cellvalue").val(cellvalue);
+        if (cellvalue == null) {
+            return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+        }
+        else {
+            return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+        }
+
+    };
+    $('#jqGridabneg').navGrid('#jqGridPageabneg', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPageabneg', {
+        caption: "Export to Excel",
+        buttonicon: "ui-icon-disk",
+        onClickButton: function () {
+            ExportDataToExcel("#jqGridabneg");
+        },
+        position: "last"
+    });
+    jQuery("#jqGridabneg").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    });
+
+</script>
+
+<script type="text/javascript">
+    function ExportDataToExcel(tableCtrl) {
+        //  Export the data from our jqGrid into a "real" Excel 2007 file
+        ExportJQGridDataToExcel(tableCtrl, "Employee data.xlsx");
+    }
+</script>

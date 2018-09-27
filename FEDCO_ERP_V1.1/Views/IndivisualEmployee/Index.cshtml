@@ -1,0 +1,649 @@
+﻿
+@{
+    Layout = null;
+}
+@model IEnumerable<BUSSINESS_ENTITIES.IndivisualEmployeeEntities>
+<!DOCTYPE html>
+
+<html>
+<head>
+    @*<link rel="shortcut icon" type="image/ico" href="favicon.ico" />*@
+    <link rel="apple-touch-icon" sizes="57x57" href="~/images/icon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="~/images/icon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/images/icon//apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="~/images/icon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/images/icon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="~/images/icon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/images/icon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="~/images/icon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="~/images/icon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/images/icon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/images/icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="~/images/icon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/images/icon/favicon-16x16.png">
+    @*<link rel="manifest" href="/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">*@
+    <meta name="msapplication-TileImage" content="~/images/icon/ms-icon-144x144.png">
+    @*<meta name="theme-color" content="#ffffff">*@
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>FEDCO | </title>
+    <!-- Bootstrap -->
+    <link href="~/Content/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- NProgress -->
+    <link href="~/Content/nprogress/nprogress.css" rel="stylesheet" />
+    <!-- iCheck -->
+    <link href="~/Content/iCheck/skins/flat/green.css" rel="stylesheet" />
+
+    <!-- bootstrap-progressbar -->
+
+    <link href="~/Content/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
+    <!-- JQVMap -->
+    <!-- Custom Theme Style -->
+    <link href="~/Content/custom.min.css" rel="stylesheet" />
+    <link href="~/Content/pnotify/dist/pnotify.css" rel="stylesheet" />
+    <link href="~/Content/pnotify/dist/pnotify.buttons.css" rel="stylesheet" />
+    <link href="~/Content/pnotify/dist/pnotify.nonblock.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Cairo|Orbitron|Oswald|Play|Ubuntu" rel="stylesheet" />
+    <!-- Bootstrap -->
+    <script src="~/Content/bootstrap/dist/js/bootstrap.min.js"></script>
+    <style>
+        .nav-md .container.body .right_col {
+        margin-left:0px !important;
+        }
+        h3 {
+            padding: 10px;
+            color: white !important;
+        }
+        ul.user_data li {
+            margin-bottom: 5px !important;
+            color: white !important;
+            font-size: 16px !important;
+        }
+        .fa {
+            padding: 10px;
+        }
+        .tabs-left > li > a {
+            background: #1884a0 !important;
+            color: white !important;
+        }
+        .tabs-left > li.active > a {
+            font-size: 16px !important;
+        }
+    </style>
+</head>
+<body class="nav-md">
+    <div class="se-pre-con"></div>
+    <div class="container body">
+        <div class="main_container">
+            <div class="right_col" role="main" style="min-height:1694px;">
+                <div class="">
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+@if (Model != null)
+{
+    foreach (var obj1 in Model)
+    {
+                            <div class="x_panel" style="background-image: url(/images/bg.jpg); "  >
+                                <div class="row" style="height:60px"></div>
+                                    <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                                        <div class="profile_img">
+                                            <div id="crop-avatar">
+                                                <img class="img-responsive avatar-view" src=@obj1.EMPIMAGE alt="Avatar">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <h3>@obj1.EMPLOYEE_FIRSTNAME @obj1.EMPLOYEE_MIDDLENAME @obj1.EMPLOYEE_LASTNAME</h3>
+                                        <ul class="list-unstyled user_data">
+                                            <li>
+
+                                                <i class="fa fa-map-marker user-profile-icon"></i>  @obj1.WorkLocationname
+
+                                            </li>
+                                            <li>
+
+                                                <i class="fa fa-briefcase user-profile-icon"></i>@obj1.designationname @obj1.departmentname
+                                            </li>
+                                            <li>
+
+                                                <i class="fa fa-calendar user-profile-icon"></i>@obj1.JOINING_DATE
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- End Profile pictuire -->
+                                </div>
+}
+}
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+@if (Model != null)
+{
+    foreach (var obj in Model)
+    {
+                            <div class="x_panel">
+                                <div class="x_content">
+                                    <div class="col-xs-3">
+                                        <!-- required for floating -->
+                                        <!-- Nav tabs -->
+                                        <ul class="nav nav-tabs tabs-left">
+                                            <li class="active">
+                                                <a href="#home" data-toggle="tab"><i class="fa fa-info-circle"></i>Basic Information</a>
+                                            </li>
+                                            <li>
+                                                <a href="#profile" data-toggle="tab"><i class="fa fa-envelope"></i>Communication Details</a>
+                                            </li>
+                                            @*<li>
+                                                <a href="#messages" data-toggle="tab"><i class="fa fa-envelope"></i>Carrer Progress</a>
+                                            </li>*@
+                                            @*<li>
+                                                <a href="#messages" data-toggle="tab"><i class="fa fa-graduation-cap"></i>Qualification Details</a>
+                                            </li>
+                                            <li>
+                                                <a href="#settings" data-toggle="tab"><i class="fa fa-briefcase"></i>Employment Details</a>
+                                            </li>
+                                            <li>
+                                                <a href="#pip" data-toggle="tab"><i class="fa fa-group"></i>Relationship Details</a>
+                                            </li>
+                                            <li>
+                                                <a href="#tra" data-toggle="tab"><i class="fa fa-taxi"></i>Transfer Details</a>
+                                            </li>*@
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="home">
+                                                <p class="lead"><i class="fa fa-info-circle"></i>Basic Information </p>
+                                                <div class="x_panel">
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Name:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.EMPLOYEE_FIRSTNAME @obj.EMPLOYEE_MIDDLENAME @obj.EMPLOYEE_LASTNAME
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Designation:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.designationname
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Deepartment:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.departmentname
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Grade:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.gradename
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Work Location:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.WorkLocationname
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Reporting Person:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.REPORTING_TO
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Date Of Joining:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.JOINING_DATE
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Date Of Birth:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.DATE_OF_BIRTH
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Gender:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.SEX
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Marital Status:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.MATERIAL_STATUS
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Wedding Anniverssary:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.WEDDING_ANNIVERSARY
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Blood Group:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.bloodgroupname
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                Mediclaim No.:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.MEDICLAIM_NUMBER
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                ESIC No.:
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-9 col-sm-6 col-xs-12">
+                                                            <span style="font-size: 16px; margin-left: 40px; ">
+                                                                @obj.ESIC_NO
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                    <div class="tab-pane" id="profile">
+                                                        <p class="lead"><i class="fa fa-envelope"></i>Communication Details </p>
+                                                        <div class="x_panel">
+                                                            <div class="row">
+                                                                <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        Permanent Address.:
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-md-9 col-sm-6 col-xs-12">
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        @obj.Permanentaddress
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        Mailing Address.:
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-md-9 col-sm-6 col-xs-12">
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        @obj.MAILING_ADDRESS
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        Personal Email:
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-md-9 col-sm-6 col-xs-12">
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        @obj.PERSONAL_EMAIL
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        Official Email:
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-md-9 col-sm-6 col-xs-12">
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        @obj.OFFICIAL_EMAIL
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        Personal Mobile No.:
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-md-9 col-sm-6 col-xs-12">
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        @obj.MOBILE_NUMBER
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        Official Mobile No.:
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-md-9 col-sm-6 col-xs-12">
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        @obj.OFFICIAL_MOBILE_NUMBER
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-3 col-sm-6 col-xs-12">
+
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        Emergency Mobile No.:
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-md-9 col-sm-6 col-xs-12">
+                                                                    <span style="font-size: 16px; margin-left: 40px; ">
+                                                                        @obj.EMERGENCY_CONTACT_NUMBER
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    <div class="tab-pane" id="messages">
+                                                        <p class="lead"><i class="fa fa-graduation-cap"></i>Qualification Details </p>
+                                                                           @*@{
+                                                                             var ls = (List<BUSSINESS_ENTITIES.TransferdetailsEntities>)TempData["ModelLs"];
+                                                                           }
+                                                        @foreach (var str in ls)
+                                                        {
+                                                           @str.WorkLocationname
+                                                            @str.STATUS
+                                                        }*@
+                                                        <div class="x_panel">
+                                                            <div class="x_title">
+                                                                <h2>Daily active users <small>Sessions</small></h2>
+                                                                <ul class="nav navbar-right panel_toolbox">
+                                                                    <li>
+                                                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                                    </li>
+                                                                    <li class="dropdown">
+                                                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                                                        <ul class="dropdown-menu" role="menu">
+                                                                            <li>
+                                                                                <a href="#">Settings 1</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#">Settings 2</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                            <div class="x_content">
+                                                                <ul class="list-unstyled timeline">
+                                                                    <li>
+                                                                        <div class="block">
+                                                                            <div class="tags">
+                                                                                <a href="" class="tag">
+                                                                                    <span>Entertainment</span>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="block_content">
+                                                                                <h2 class="title">
+                                                                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                                                </h2>
+                                                                                <div class="byline">
+                                                                                    <span>13 hours ago</span> by <a>Jane Smith</a>
+                                                                                </div>
+                                                                                <p class="excerpt">
+                                                                                    Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="block">
+                                                                            <div class="tags">
+                                                                                <a href="" class="tag">
+                                                                                    <span>Entertainment</span>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="block_content">
+                                                                                <h2 class="title">
+                                                                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                                                </h2>
+                                                                                <div class="byline">
+                                                                                    <span>13 hours ago</span> by <a>Jane Smith</a>
+                                                                                </div>
+                                                                                <p class="excerpt">
+                                                                                    Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="block">
+                                                                            <div class="tags">
+                                                                                <a href="" class="tag">
+                                                                                    <span>Entertainment</span>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="block_content">
+                                                                                <h2 class="title">
+                                                                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                                                </h2>
+                                                                                <div class="byline">
+                                                                                    <span>13 hours ago</span> by <a>Jane Smith</a>
+                                                                                </div>
+                                                                                <p class="excerpt">
+                                                                                    Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+</div>
+                                                    <div class="tab-pane" id="settings">
+                                                        <p class="lead"><i class="fa fa-briefcase"></i>Employment Details </p>
+                                                    </div>
+                                                    <div class="tab-pane" id="pip">
+                                                        <p class="lead"><i class="fa fa-group"></i>Relationship Details </p>
+                                                    </div>
+                                                    <div class="tab-pane" id="tra">
+                                                        <p class="lead"><i class="fa fa-taxi"></i>Transfer Details </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+}
+}
+                        </div>
+                    </div>
+                </div>
+               </div>
+           </div>
+    </div>
+</body>
+</html>
+<script>
+    function HideModal() {
+
+        //location.reload();
+    }
+    $(document).ready(function () {
+
+        $("body").removeClass("modal-open");
+        //window.onhashchange = function () {
+        //    if (window.innerDocClick) {
+        //        window.innerDocClick = false;
+        //    } else {
+        //        if (window.location.hash != '#undefined') {
+        //            goBack();
+        //        } else {
+        //            history.pushState("", document.title, window.location.pathname);
+        //            location.reload();
+        //            alert("test");
+        //        }
+        //    }
+        //}
+        $(document).on('focus', ':input', function () {
+            $(this).attr('autocomplete', 'off');
+        });
+        $(window).load(function () {
+            // Animate loader off screen
+            if (typeof history.pushState === "function") {
+                history.pushState("jibberish", null, null);
+                window.onpopstate = function () {
+                    history.pushState('newjibberish', null, null);
+                    //alert("test");
+                    // Handle the back (or forward) buttons here
+                    // Will NOT handle refresh, use onbeforeunload for this.
+                };
+            }
+            else {
+                var ignoreHashChange = true;
+                window.onhashchange = function () {
+                    if (!ignoreHashChange) {
+                        ignoreHashChange = true;
+                        //alert("test1");
+                        //window.location.hash = Math.random();
+                        // Detect and redirect change here
+                        // Works in older FF and IE9
+                        // * it does mess with your hash symbol (anchor?) pound sign
+                        // delimiter on the end of the URL
+                    }
+                    else {
+                        //ignoreHashChange = false;
+                        alert("test2");
+                    }
+                };
+            }
+            $(".se-pre-con").fadeOut("fast");
+        });
+    });
+</script>
+<!-- FastClick -->
+<!-- NProgress -->
+<script src="~/Content/nprogress/nprogress.js"></script>
+@*<script src="~/Scripts/bootstrap.min.js"></script>*@
+<!-- Chart.js -->
+<!-- bootstrap-progressbar -->
+<script src="~/Content/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+<script src="~/Content/iCheck/icheck.min.js"></script>
+<!-- iCheck -->
+<!-- Custom Theme Scripts -->
+<script src="~/Scripts/custom.min.js"></script>
+<script src="~/Content/pnotify/dist/pnotify.js"></script>
+<script src="~/Content/pnotify/dist/pnotify.buttons.js"></script>
+<script src="~/Content/pnotify/dist/pnotify.nonblock.js"></script>

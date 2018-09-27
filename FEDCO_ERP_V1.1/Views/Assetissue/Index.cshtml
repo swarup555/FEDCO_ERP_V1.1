@@ -1,0 +1,697 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layoutadmin.cshtml";
+}
+<style>
+    input:focus {
+        outline: none !important;
+        border-color: #169F85 !important;
+        box-shadow: 0 0 10px #169F85 !important;
+    }
+    textarea:focus {
+        outline: none !important;
+        border-color: #169F85 !important;
+        box-shadow: 0 0 10px #169F85 !important;
+    }
+
+    select:focus {
+        outline: none !important;
+        border-color: #169F85 !important;
+        box-shadow: 0 0 10px #169F85 !important;
+    }
+    .errorClass {
+        border-color: red;
+    }
+        .errorClass:focus {
+            outline: none !important;
+            border-color: #169F85 !important;
+            box-shadow: 0 0 10px #169F85 !important;
+        }
+</style>
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="~/Content/JQGridReq/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/JQGridReq/styles/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+<script src="~/Content/JQGridReq/jquery.jqGrid.min.js"></script>
+<script src="~/Content/JQGridReq/grid.locale-en.js"></script>
+<script src="~/Scripts/validator.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('input[type="text"]').each(function () {
+            $(this).focus(function () {
+                $(this).removeClass("errorClass");
+                $("label[for='errormsgas']").css({ 'display': 'none' });
+                $("label[for='errormsgis']").css({ 'display': 'none' });
+                $("label[for='errormsgupdate']").css({ 'display': 'none' });
+                $("label[for='errormsgret']").css({ 'display': 'none' });
+                $("label[for='errormsgsta']").css({ 'display': 'none' });
+            });
+            $(this).blur(function () {
+                $(this).removeClass("errorClass");
+                $("label[for='errormsgas']").css({ 'display': 'none' });
+                $("label[for='errormsgis']").css({ 'display': 'none' });
+                $("label[for='errormsgupdate']").css({ 'display': 'none' });
+                $("label[for='errormsgret']").css({ 'display': 'none' });
+                $("label[for='errormsgsta']").css({ 'display': 'none' });
+            });
+        });
+       
+        $('select').each(function () {
+            $(this).focus(function () {
+                $(this).removeClass("errorClass");
+                $("label[for='errormsg']").css({ 'display': 'none' });
+                $("label[for='errormsgna']").css({ 'display': 'none' });
+            });
+            $(this).blur(function () {
+                $(this).removeClass("errorClass");
+                $("label[for='errormsg']").css({ 'display': 'none' });
+                $("label[for='errormsgna']").css({ 'display': 'none' });
+            });
+        });
+        $("body").removeClass("modal-open");
+        $("body").removeAttr("style");
+        var lastSel;
+        jQuery("#jqGrid05").jqGrid({
+            url: " @Url.Action("Assetdetails", "Assetissue")",
+            type: "GET",
+            datatype: "Json",
+            height: 300,
+            width: 1020,
+            rowNum: 20,
+            rowList: [20, 50, 100],
+            colNames: ['Employee Code', 'ASSET NAME', 'ASSET CODE', 'ISSUED DATE', 'RETURNED DATE', 'ISSUED BY', 'RETURNED TO', 'ASSET STATUS'],
+            colModel: [
+                { name: 'ID', index: 'ID', editable: true, sorttype: "int", key: true, search: true, hidden: true },
+                 { name: 'ASSET_NAME', index: 'ASSET_NAME', editable: true },
+                { name: 'ASSET_CODE', index: 'ASSET_CODE', editable: true },
+                { name: 'ISSUED_DATE', index: 'ISSUED_DATE', editable: true, formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
+                 { name: 'RETURNED_DATE', index: 'RETURNED_DATE', editable: true, formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
+                { name: 'ISSUEDBY', index: 'ISSUEDBY', editable: true },
+                 { name: 'RETURNEDTO', index: 'RETURNEDTO', editable: true },
+                 { name: 'ASSET_STATUS', index: 'ASSET_STATUS', editable: true }
+
+            ],
+
+
+            pager: "#jqGridPager05",
+            viewrecords: true,
+            multiselect: true,
+
+            hidegrid: false,
+            jsonReader: {
+                repeatitems: false,
+                id: "Id",
+                root: function (obj) { return obj; },
+                page: function (obj) { return 1; },
+                total: function (obj) { return 1; },
+                records: function (obj) { return obj.length; }
+            },
+            onSelectRow: function (rowId, status, e) {
+                if (rowId == lastSel) {
+                    $(this).jqGrid("resetSelection");
+                    lastSel = undefined;
+                    status = false;
+                } else {
+                    lastSel = rowId;
+                }
+            },
+            beforeSelectRow: function (rowId, e) {
+                $(this).jqGrid("resetSelection");
+                return true;
+            }
+        });
+        $("#cb_jqGrid05").hide();
+        // Setup buttons
+
+        // Setup filters
+        //jQuery("#jqGrid01").jqGrid('filterToolbar', { defaultSearch: true, stringResult: true });
+        jQuery("#jqGrid05").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+
+
+        $("#btnAssetclear").click(function () {
+            $('#txtAssetname').val("");
+            $('#txtAssetcode').val("");
+            $('#txtAssetissueddate').val("");
+            $('#txtIssuedby').val("");
+            $('input[type="text"]').removeClass("errorClass");
+            $('select').removeClass("errorClass");
+            $("label[for='errormsg']").css({ 'display': 'none' });
+            $("label[for='errormsgna']").css({ 'display': 'none' });
+            $("label[for='errormsgas']").css({ 'display': 'none' });
+            $("label[for='errormsgis']").css({ 'display': 'none' });
+            $("label[for='errormsgupdate']").css({ 'display': 'none' });
+            $("label[for='errormsgret']").css({ 'display': 'none' });
+            $("label[for='errormsgsta']").css({ 'display': 'none' });
+        });
+
+        $("#btnAssetsave").click(function () {
+            //var test = $('#fn').val();
+            // alert(test);
+            if ($("#ASSETTYPE_ID").val() == 0) {
+                //alert('Please enter  Email');
+                $("#ASSETTYPE_ID").addClass("errorClass");
+                //$("#txtAssetname").attr("placeholder", "Please enter email id").addClass('test');
+                $("label[for='errormsg']").text("Please Choose An Asset Type");
+                $("label[for='errormsg']").css({ 'display': 'block', 'color': 'red' });
+                return false;
+            }
+            if ($("#txtAssetname").val() == 0) {
+                //alert('Please enter  Email');
+                $("#txtAssetname").addClass("errorClass");
+                $("label[for='errormsgna']").text("Please Select Asset Name");
+                $("label[for='errormsgna']").css({ 'display': 'block', 'color': 'red' });
+                //$("#txtAssetname").attr("placeholder", "Please enter email id").addClass('test');
+                return false;
+            }
+           
+            if ($("#txtAssetissueddate").val() == "") {
+                //alert('Please enter Contact Person name');
+                $("#txtAssetissueddate").addClass("errorClass");
+                $("label[for='errormsgas']").text("Please Select Date");
+                $("label[for='errormsgas']").css({ 'display': 'block', 'color': 'red' });
+                return false;
+            }
+            if ($("#txtIssuedby").val() == "") {
+                //alert('Please enter Contact Person name');
+                $("#txtIssuedby").addClass("errorClass");
+                $("label[for='errormsgis']").text("Please Enter Issued by");
+                $("label[for='errormsgis']").css({ 'display': 'block', 'color': 'red' });
+                return false;
+            }
+            $('#assetpopup').modal("hide");
+            HideModal();
+            $.ajax({
+                url: '@Url.Action("Assetdtlscreate", "Assetissue")',
+
+                data: {
+                    ASSET_CODE: $('#txtAssetname').val(),
+                    ISSUEDDATE: $('#txtAssetissueddate').val(),
+                    ISSUEDBY: $('#txtIssuedby').val(),
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    new PNotify({
+                        title: 'Message',
+                        text: 'Data Saved successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+                    $("#jqGrid05").setGridParam(
+                    {
+                        url: " @Url.Action("Assetdetails", "Assetissue")",
+                        datatype: 'json',
+                        page: 1
+                    }
+                    ).trigger("reloadGrid");
+                   
+                }
+
+            });
+        });
+        $("#btnAssetedit").click(function () {
+            var grid = $("#jqGrid05");
+            var rowKey = grid.getGridParam("selrow");
+
+            if (!rowKey)
+                new PNotify({
+                    title: 'Warning',
+                    text: 'Please select a ITEM  to Return',
+
+                    styling: 'bootstrap3'
+                });
+            else {
+                var selectedIDs = grid.getGridParam("selarrrow");
+                var index = selectedIDs + 1; // zero-based index of row so it means the 3rd row
+                var rowId = jQuery('#jqGrid05 tr:eq(' + selectedIDs + ')').attr('id');
+                //(here I suppose that the <table> element of your jqGrid has id="list"). After you know the id of the row you can get the row data with respect of getRowData method or the data from one cell only with respect of getCell method:
+                var dataFromTheRow = jQuery('#jqGrid05').jqGrid('getRowData', rowId);
+                //alert(dataFromTheRow.hirarchy_id);
+                // var dataFromCellByColumnIndex = jQuery('#jqGrid').jqGrid('getCell', rowId, 7);
+                // var dataFromCellByColumnName = jQuery('#jqGrid').jqGrid('getCell', rowId, 'Tax');
+                var result = "";
+                for (var i = 0; i < selectedIDs.length; i++) {
+                    result += selectedIDs[0];
+                }
+                //ASSET_NAME: $('#txtupAssetname').val(),
+
+                //ASSET_CODE: $('#txtupAssetcode').val(),
+                //ISSUED_DATE: $('#txtupAssetissueddate').val(),
+                //RETURNED_DATE: $('#txtupAssetreturneddate').val(),
+                //ISSUEDBY: $('#txtupIssuedby').val(),
+                //RETURNEDTO: $('#txtupReturnto').val(),
+                //ASSET_STATUS: $('#txtupAssetstatus').val(),
+                var ASSET_NAME1 = grid.jqGrid('getCell', result, 'ASSET_NAME');
+                var ASSET_CODE1 = grid.jqGrid('getCell', result, 'ASSET_CODE');
+                var ISSUED_DATE1 = grid.jqGrid('getCell', result, 'ISSUED_DATE');
+                var RETURNED_DATE1 = grid.jqGrid('getCell', result, 'RETURNED_DATE');
+                var ISSUEDBY1 = grid.jqGrid('getCell', result, 'ISSUEDBY');
+                var RETURNEDTO1 = grid.jqGrid('getCell', result, 'RETURNEDTO');
+                var ASSET_STATUS1 = grid.jqGrid('getCell', result, 'ASSET_STATUS');
+                $('#txtupAssetname').val(ASSET_NAME1);
+                $('#ASSETTYPE_ID').val(ASSET_CODE1);
+                //$('#txtupAssetissueddate').val(ISSUED_DATE1);
+                $('#txtupAssetreturneddate').val(RETURNED_DATE1);
+                //$('#txtupIssuedby').val(ISSUEDBY1);
+                $('#txtupReturnto').val(RETURNEDTO1);
+                $('#txtupAssetstatus').val(ASSET_STATUS1);
+                //$("#edit_project_name").val(Project_Name1);
+                $("#rowid2").val(result);
+                $("#asseteditpopup").modal("show");
+                //$("#employmentuppopup").show();
+
+            }
+
+        });
+        function HideModal() {
+            $('.modal-backdrop').remove();
+            //location.reload();
+        }
+        $("#btnAssetupclear").click(function () {
+            $('#txtupAssetreturneddate').val("");
+            $('#txtupReturnto').val("");
+            $('#txtupAssetstatus').val("");
+                    $('input[type="text"]').removeClass("errorClass");
+                    $("label[for='errormsgas']").css({ 'display': 'none' });
+                    $("label[for='errormsgis']").css({ 'display': 'none' });
+                    $("label[for='errormsgupdate']").css({ 'display': 'none' });
+                    $("label[for='errormsgret']").css({ 'display': 'none' });
+                    $("label[for='errormsgsta']").css({ 'display': 'none' });
+        });
+        $.ajax({
+    @*@Url.Action("Action","Controller")*@
+        url: " @Url.Action("Assettypedtls", "Asset")",
+        type: "GET",
+        datatype: "Json",
+        success:
+        function (result) {
+            $('#ASSETTYPE_ID').empty();
+            $('#ASSETTYPE_ID').append($('<option></option>').val(0).html("SELECT Asset Type"));
+            $('#txtAssetname').empty();
+            $('#txtAssetname').append($('<option></option>').val(0).html("SELECT Asset Name"));
+            $.each(result, function (i) {
+                $('#ASSETTYPE_ID').append($('<option></option>').val(result[i].ID).html(result[i].ASSETTYPE_NAME));
+            });
+        }
+    });
+    $('#ASSETTYPE_ID').on('change', function () {
+        var assettypeid = $('#ASSETTYPE_ID').val();
+        $.ajax({
+
+            url: " @Url.Action("Assetname", "Assetissue")/" + assettypeid,
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#txtAssetname').empty();
+                $('#txtAssetname').append($('<option></option>').val("").html("SELECT Asset Name"));
+                $.each(result, function (i) {
+                    $('#txtAssetname').append($('<option></option>').val(result[i].ID).html(result[i].ASSET_NAME));
+                    //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                });
+                
+            }
+        });
+    });
+    $("#btnAssetupdate").click(function () {
+        //var test = $('#fn').val();
+        var x = ($("#txtupAssetreturneddate").val().length);
+        if (x == 1||x == 0) {
+            //alert('Please enter Contact Person name');
+            $("#txtupAssetreturneddate").addClass("errorClass");
+            $("label[for='errormsgupdate']").text("Please Select Date");
+            $("label[for='errormsgupdate']").css({ 'display': 'block', 'color': 'red' });
+            return false;
+        }
+        if ($("#txtupReturnto").val() == "") {
+            //alert('Please enter Contact Person name');
+            $("#txtupReturnto").addClass("errorClass");
+            $("label[for='errormsgret']").text("Please Enter Returning to ");
+            $("label[for='errormsgret']").css({ 'display': 'block', 'color': 'red' });
+            return false;
+        }
+        if ($("#txtupAssetstatus").val() == "") {
+            //alert('Please enter Contact Person name');
+            $("#txtupAssetstatus").addClass("errorClass");
+            $("label[for='errormsgsta']").text("Please Enter Status ");
+            $("label[for='errormsgsta']").css({ 'display': 'block', 'color': 'red' });
+            return false;
+        }
+        $('#asseteditpopup').modal("hide");
+        HideModal();
+        var ID1 = $("#rowid2").val();
+        $.ajax({
+            url: '/Assetissue/Assetdtlsedit/' + ID1,
+
+            data: {
+                RETURNEDDATE: $('#txtupAssetreturneddate').val(),
+                RETURNEDTO: $('#txtupReturnto').val(),
+                ASSET_STATUS: $('#txtupAssetstatus').val(),
+            },
+            //Passes the content of an input up
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                new PNotify({
+                    title: 'Message',
+                    text: 'Data Updated successfully',
+                    type: "success",
+                    styling: 'bootstrap3'
+                });
+                $("#jqGrid05").setGridParam(
+                {
+                    url: " @Url.Action("Assetdetails", "Assetissue")",
+                    datatype: 'json',
+                page: 1
+                }
+               ).trigger("reloadGrid");
+            }
+        });
+    });
+    });
+    $(function () {
+        $('#datetimepicker26').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+
+
+    $(function () {
+        $('#datetimepicker29').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+</script>
+<div class="">
+    <div class="page-title">
+        <div class="title_left">
+            @*<h3>Plain Page</h3>*@
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Asset Details</h2>
+                    @if (TempData["sucsmsg"] != null)
+                    {
+                        <button type="submit" id="sucmsg" class="btn btn-success" onclick="new PNotify({
+                                  title: 'Message',
+                                  text: 'Data Saved successfully',
+                                  type: 'success',
+                                  styling: 'bootstrap3'
+                                  });" style="visibility:hidden">
+                            <i class=" fa fa-upload" aria-hidden="true">
+                            </i>UPLOAD
+                        </button>
+                    }
+                    @if (TempData["sucmsgupdate"] != null)
+                    {
+                        <button type="submit" id="sucmsgup" class="btn btn-success" onclick="new PNotify({
+                                  title: 'Message',
+                                  text: 'Data Updated successfully',
+                                  type: 'success',
+                                  styling: 'bootstrap3'
+                                  });" style="visibility:hidden">
+                            <i class=" fa fa-upload" aria-hidden="true">
+                            </i>UPLOAD
+                        </button>
+                    }
+                    @if (TempData["sucmsgdel"] != null)
+                    {
+                        <button type="submit" id="sucmsgdel" class="btn btn-success" onclick="new PNotify({
+                                   title: 'Message',
+                                  text: 'Data Deleted successfully',
+                                  type: 'success',
+                                  styling: 'bootstrap3'
+                                  });" style="visibility:hidden">
+                            <i class=" fa fa-upload" aria-hidden="true">
+                            </i>UPLOAD
+                        </button>
+                    }
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="form-group">
+                        <div class="col-md-6 col-sm-8 col-xs-12 ">
+                            <button type="submit" class="btn btn-success" data-toggle="modal" data-target=".ks-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ASSET ISSUE</button>
+                            <button id="btnAssetedit" type="submit" class="btn btn-success"><i class="fa fa-edit "></i>ASSET RETURN</button>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12 " style="overflow-x:scroll">
+                           
+                                    <table id="jqGrid05"></table>
+                                    <div id="jqGridPager05"></div>
+                                
+                        </div>
+                    </div>
+
+                    @*<button type="submit" class="btn btn-success" data-toggle="modal" data-target=".ks-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>*@
+                    <div class="modal fade ks-example-modal-md" tabindex="-1" id="assetpopup" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel2">Asset Details</h4>
+                                </div>
+                                @*@using (Html.BeginForm("create", "Home", FormMethod.Post, new
+                    {
+                        @class = "form-horizontal form-label-left",
+                        enctype = "multipart/form-data"
+                    }))
+                                            {*@
+                                <div class="form-horizontal form-label-left" data-toggle="validator" role="form">
+                                    <div class="modal-body">
+
+
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Asset Type</label>
+                                               
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                @*<input type="text" id="txtAssetname" name="txtAssetname" class="form-control" placeholder="Asset Name">*@
+                                                <select id="ASSETTYPE_ID" name="ASSETTYPE_ID" required="required" class="form-control"></select>
+                                                <label for="errormsg"  style="vertical-align: middle;display:none"></label>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Asset Name</label>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                @*<input type="text" id="txtAssetname" name="txtAssetname" class="form-control" placeholder="Asset Name">*@
+                                                <select class="form-control" id="txtAssetname" required="required"  name="txtAssetname"></select>
+                                                <label for="errormsgna" style="vertical-align: middle;display:none"></label>
+                                            </div>
+
+                                        </div>
+                                        @*<div class="form-group">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Asset Code</label>
+                    </div>
+                    <div class="col-md-9 col-sm-6 col-xs-12">
+                        <input type="text" id="txtAssetcode" name="txtAssetcode" class="form-control" placeholder="Employee Name">
+                    </div>
+
+                </div>*@
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Issued Date:</label>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                <div class='input-group date' id='datetimepicker26'>
+                                                    <input type='text' id="txtAssetissueddate" name="txtAssetissueddate" required="required" class="form-control dp" />
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                                <label for="errormsgas" style="vertical-align: middle;display:none"></label>
+                                            </div>
+                                          
+                                        </div>
+                                        @*<div class="form-group">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Return Date</label>
+                    </div>
+                    <div class="col-md-9 col-sm-6 col-xs-12">
+                        <div class='input-group date' id='datetimepicker27'>
+                            <input type='text' id="txtAssetreturneddate" name="txtAssetreturneddate" class="form-control dp" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>*@
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Issued By</label>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtIssuedby" name="txtIssuedby" required="required" class="form-control" placeholder="Issued by">
+                                                <label for="errormsgis" style="vertical-align: middle;display:none"></label>
+                                            </div>
+
+                                        </div>
+                                        @*<div class="form-group">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Return To</label>
+                    </div>
+                    <div class="col-md-9 col-sm-6 col-xs-12">
+                        <input type="text" id="txtReturnto" name="txtReturnto" class="form-control" placeholder="Return to">
+                    </div>
+
+                </div>*@
+                                        @*<div class="form-group">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Asset Status On Return</label>
+                    </div>
+                    <div class="col-md-9 col-sm-6 col-xs-12">
+                        <input type="text" id="txtAssetstatus" name="txtAssetstatus" class="form-control" placeholder="Asset Status On Return">
+                    </div>
+
+                </div>*@
+                                        @*</form>*@
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="btnAssetclear" type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                        <button id="btnAssetsave" type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                                    </div>
+                                </div>
+                                @*}*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade eks-example-modal-md" tabindex="-1" role="dialog" id="asseteditpopup" aria-hidden="true">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel2">Asset Details</h4>
+                                </div>
+                                @*@using (Html.BeginForm("create", "Home", FormMethod.Post, new
+                    {
+                        @class = "form-horizontal form-label-left",
+                        enctype = "multipart/form-data"
+                    }))
+                                            {*@
+                                <div class="form-horizontal form-label-left">
+                                    <div class="modal-body">
+                                     
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Asset Name</label>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtupAssetname" name="txtupAssetname" class="form-control" disabled="disabled" placeholder="Asset Name">
+                                                <input type="hidden" name="rowid2" id="rowid2">
+                                            </div>
+
+                                        </div>
+                                        @*<div class="form-group">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Asset Code</label>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtupAssetcode" name="txtupAssetcode" class="form-control" placeholder="Employee Name">
+                                            </div>
+
+                                        </div>*@
+                                        @*<div class="form-group">
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <label style=" margin-top: 5px;">Issued Date:</label>
+                                </div>
+                                <div class="col-md-9 col-sm-6 col-xs-12">
+                                    <div class='input-group date' id='datetimepicker28'>
+                                        <input type='text' id="txtupAssetissueddate" name="txtupAssetissueddate" class="form-control dp" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>*@
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Return Date</label>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                <div class='input-group date' id='datetimepicker29'>
+                                                    <input type='text' id="txtupAssetreturneddate" name="txtupAssetreturneddate" required="required" class="form-control dp" />
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                                <label for="errormsgupdate" style="vertical-align: middle;display:none"></label>
+                                            </div>
+
+                                        </div>
+                                        @*<div class="form-group">
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <label style=" margin-top: 5px;">Issued By</label>
+                                </div>
+                                <div class="col-md-9 col-sm-6 col-xs-12">
+                                    <input type="text" id="txtupIssuedby" name="txtupIssuedby" class="form-control" placeholder="Issued by">
+                                </div>
+
+                            </div>*@
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Return To</label>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtupReturnto" name="txtupReturnto" class="form-control" placeholder="Return to">
+                                                <label for="errormsgret" style="vertical-align: middle;display:none"></label>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                                <label style=" margin-top: 5px;">Asset Status On Return</label>
+                                            </div>
+                                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                                <input type="text" id="txtupAssetstatus" name="txtupAssetstatus" class="form-control" placeholder="Asset Status On Return">
+                                                <label for="errormsgsta" style="vertical-align: middle;display:none"></label>
+                                            </div>
+
+                                        </div>
+                                        @*</form>*@
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="btnAssetupclear" type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                        <button id="btnAssetupdate" type="submit" class="btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>Update</button>
+                                    </div>
+                                </div>
+                                @*}*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Scripts/moment-with-locales.js"></script>
+
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+
+

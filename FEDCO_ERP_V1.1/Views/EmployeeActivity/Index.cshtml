@@ -1,0 +1,1269 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@*<link href="~/Content/JQGridReq/ui.jqgrid.css" rel="stylesheet" />*@
+@*<link href="~/Content/jqGrid-master/css/ui.jqgrid.min.css" rel="stylesheet" />*@
+<link href="~/Content/jqGrid-master/dist/css/ui.jqgrid.css" rel="stylesheet" />
+@*<link href="~/Content/jqGrid-master/dist/css/ui.jqgrid.min.css" rel="stylesheet" />*@
+<link href="~/Content/JQGridReq/styles/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+<script src="~/Content/jqGrid-master/dist/jquery.jqgrid.min.js"></script>
+@*<script src="~/Content/JQGridReq/jquery.jqGrid.min.js"></script>*@
+@*<script src="~/Content/JQGridReq/grid.locale-en.js"></script>*@
+<script src="~/Content/jqGrid-master/dist/i18n/grid.locale-en.min.js"></script>
+
+<div id="mainpage" class="">
+    @*<div class="page-title">
+            <div class="title_left">
+                <h3>All Employee Details</h3>
+            </div>
+            <div class="title_right">
+
+            </div>
+        </div>*@
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h3>Employee(s)</h3>
+                </div>
+
+                <div class="x_content">
+                    <div class="form-horizontal form-label-left">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                            <div id="content">
+                                <table id="jqGrid01"></table>
+                                <div id="jqGridPager01"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-lg" id="SMSModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h2 class="modal-title" id="myModalLabel"> </h2>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel animated slideInLeft">
+                            <div class="x_title">
+                                <h2><i class="fa fa-trophy" aria-hidden="true"></i>Awards/Honors/Scholarships</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <button type="submit" class="btn btn-success" id="btnaward"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                                    <div id="content">
+                                        <table id="jqGridaward"></table>
+                                        <div id="jqGridPageraward"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel animated slideInLeft">
+                            <div class="x_title">
+                                <h2><i class="fa fa-newspaper-o" aria-hidden="true"></i>Publications & Papers presented</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <button type="submit" class="btn btn-success" id="btn_publication"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                                    <div id="content">
+                                        <table id="jqGridpub"></table>
+                                        <div id="jqGridPagerpub"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel animated slideInLeft">
+                            <div class="x_title">
+                                <h2><i class="fa fa-hand-paper-o" aria-hidden="true"></i>Hobbies</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <button type="submit" class="btn btn-success" id="btn_hobbies"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                                    <div id="content">
+                                        <table id="jqGridhob"></table>
+                                        <div id="jqGridPagerhob"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel animated slideInLeft">
+                            <div class="x_title">
+                                <h2><i class="fa fa-futbol-o" aria-hidden="true"></i>Sports Activites</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <button type="submit" class="btn btn-success" id="btn_sports"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                                    <div id="content">
+                                        <table id="jqGridsport"></table>
+                                        <div id="jqGridPagersport"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel animated slideInLeft">
+                            <div class="x_title">
+                                <h2><i class="fa fa-music" aria-hidden="true"></i>Cultural Activites</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <button type="submit" class="btn btn-success" id="btn_cultural"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                                    <div id="content">
+                                        <table id="jqGridcul"></table>
+                                        <div id="jqGridPagercul"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel animated slideInLeft">
+                            <div class="x_title">
+                                <h2><i class="fa fa-globe" aria-hidden="true"></i>Social Activites</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <button type="submit" class="btn btn-success" id="btn_social"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                                    <div id="content">
+                                        <table id="jqGridsocial"></table>
+                                        <div id="jqGridPagerSocial"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-md" id="awardpopup" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">ADD Awards/Honors/Scholarships</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <div class="form-horizontal form-label-left">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Achievement date</label>
+                                            <div class='input-group date' id='datetimepicker1'>
+                                                <input id="txtawarddate" name="txtawarddate" type='text' class="form-control dp" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Awards/Honors/Scholarships Details</label>
+                                            <textarea id="txtawards" rows="5" placeholder="Awards/Honors/Scholarships Details here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Comments</label>
+                                            <textarea id="txtcomment" rows="5" placeholder="Comments here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <button id="btn_award_save" name="sendsms" class="btn btn-block btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-md" id="publicationpopup" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">ADD Publications & Papers presented</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <div class="form-horizontal form-label-left">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Publication date</label>
+                                            <div class='input-group date' id='datetimepicker3'>
+                                                <input id="txtpublicationdate" name="txtpublicationdate" type='text' class="form-control dp" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Publications & Papers presented Details</label>
+                                            <textarea id="txtpublications" rows="5" placeholder="Write Publications & Papers presented Details here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Comments</label>
+                                            <textarea id="txt_pub_comment" rows="5" placeholder="Write Comments here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <div class="form-group">
+                    <button id="btn_pub_save" name="sendsms" class="btn btn-block btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bs-example-modal-md" id="hobbiespopup" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">ADD Hobbies</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <div class="form-horizontal form-label-left">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Hobbies</label>
+                                            <textarea id="txt_hobbies" rows="5" placeholder="Write Hobbies here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <div class="form-group">
+                    <button id="btn_hob_save" name="sendsms" class="btn btn-block btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-md" id="sportspopup" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">ADD Sports Activites</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <div class="form-horizontal form-label-left">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Participation date</label>
+                                            <div class='input-group date' id='datetimepicker2'>
+                                                <input id="txtsportsdate" name="txtsportsdate" type='text' class="form-control dp" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Sports Details</label>
+                                            <textarea id="txtsportsdtls" rows="3" placeholder="Write Sports Details here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Ocassion</label>
+                                            <textarea id="txtSportsOccasion" rows="2" placeholder="Write Ocassion here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Comments</label>
+                                            <textarea id="txtsportscomment" rows="3" placeholder="Write Comments here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <div class="form-group">
+                    <button id="btn_sports_save" name="sendsms" class="btn btn-block btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-md" id="culturalpopup" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">ADD Cultural Activities</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <div class="form-horizontal form-label-left">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Participation date</label>
+                                            <div class='input-group date' id='datetimepicker4'>
+                                                <input id="txtCulturaldate" name="txtCulturaldate" type='text' class="form-control dp" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Cultural Activities Details</label>
+                                            <textarea id="txtculturalactdtls" rows="3" placeholder="Write Cultural Activities Details here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Ocassion</label>
+                                            <textarea id="txtculocassion" rows="2" placeholder="Write Ocassion here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Comments</label>
+                                            <textarea id="txtCulComment" rows="3" placeholder="Write Comments here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <div class="form-group">
+                    <button id="btn_culturalactivity_save" name="sendsms" class="btn btn-block btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-md" id="socialpopup" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" id="socclo" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">ADD Social Activites</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <div class="form-horizontal form-label-left">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Involvement date</label>
+                                            <div class='input-group date' id='datetimepicker5'>
+                                                <input id="socialinvdate" name="socialinvdate" type='text' class="form-control dp" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Social Activites Details</label>
+                                            <textarea id="txt_socialact_dtls" rows="5" placeholder="Write text here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label style=" margin-top: 5px;">Comments</label>
+                                            <textarea id="txt_socialactcomments" rows="5" placeholder="Write text here..." class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <div class="form-group">
+                    <button id="btn_socialact_save" name="sendsms" class="btn btn-block btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.modal').on('hidden.bs.modal', function (e) {
+            if ($('.modal').hasClass('in')) {
+                $('body').addClass('modal-open');
+            }
+        });
+        $("#btnaward").click(function () {
+            $('#awardpopup').modal('show');
+        });
+        $("#btn_publication").click(function () {
+            $('#publicationpopup').modal('show');
+        });
+        $("#btn_hobbies").click(function () {
+            $('#hobbiespopup').modal('show');
+        });
+        $("#btn_sports").click(function () {
+            $('#sportspopup').modal('show');
+        });
+        $("#btn_cultural").click(function () {
+            $('#culturalpopup').modal('show');
+        });
+        $("#btn_social").click(function () {
+            $('#socialpopup').modal('show');
+        });
+        var employeeid;
+        var WORKLOCATION = "0";
+
+        var division = "0";
+
+        var subdivision = "0";
+
+        var section = "0";
+
+        var department = "0";
+        var selectedRows = {};
+        var lastSel;
+        $("#btn_award_save").click(function () {
+            //var test = $('#fn').val();
+            //alert(employeeid);
+            //$('#PIPpopup').modal("hide");
+            //HideModal();
+            $.ajax({
+                url: '@Url.Action("InsertAwardDetails", "EmployeeActivity")',
+
+                data: {
+                    EMPLOYEEID: employeeid,
+                    ACHIEVEMENTDATE: $('#txtawarddate').val(),
+                    AWARDSDETAIL: $('#txtawards').val(),
+                    COMMENTS: $('#txtcomment').val(),
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#awardpopup').modal('hide');
+                    new PNotify({
+                        title: 'Message',
+                        text: 'Data Saved successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+
+                    $("#jqGridaward").setGridParam(
+                    {
+                        url: " @Url.Action("GetAwards", "EmployeeActivity")/" + employeeid,
+                        datatype: 'json',
+                        page: 1
+                    }
+                    ).trigger("reloadGrid");//Reload grid trigger
+                }
+            });
+        });
+        $("#btn_pub_save").click(function () {
+            //var test = $('#fn').val();
+            //alert(employeeid);
+            //$('#PIPpopup').modal("hide");
+            //HideModal();
+            $.ajax({
+                url: '@Url.Action("InsertPublicationDetails", "EmployeeActivity")',
+
+                data: {
+                    EMPLOYEEID: employeeid,
+                    DATEOFPUBLICATION: $('#txtpublicationdate').val(),
+                    PUBLICATIONDETAILS: $('#txtpublications').val(),
+                    COMMENTS: $('#txt_pub_comment').val(),
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#publicationpopup').modal('hide');
+                    new PNotify({
+                        title: 'Message',
+                        text: 'Data Saved successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+                    $("#jqGridpub").setGridParam(
+                    {
+                        url: " @Url.Action("GetPublications", "EmployeeActivity")/" + employeeid,
+                        datatype: 'json',
+                        page: 1
+                    }
+                    ).trigger("reloadGrid");//Reload grid trigger
+                }
+            });
+        });
+        $("#btn_hob_save").click(function () {
+            //var test = $('#fn').val();
+            //alert(employeeid);
+            //$('#PIPpopup').modal("hide");
+            //HideModal();
+            $.ajax({
+                url: '@Url.Action("InsertHobbiesDetails", "EmployeeActivity")',
+
+                data: {
+                    EMPLOYEEID: employeeid,
+                    HOBBIES: $('#txt_hobbies').val(),
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#hobbiespopup').modal('hide');
+                    new PNotify({
+                        title: 'Message',
+                        text: 'Data Saved successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+
+                    $("#jqGridhob").setGridParam(
+                    {
+                        url: " @Url.Action("GetHobbies", "EmployeeActivity")/" + employeeid,
+                        datatype: 'json',
+                        page: 1
+                    }
+                    ).trigger("reloadGrid");//Reload grid trigger
+                }
+            });
+        });
+        $("#btn_sports_save").click(function () {
+            //var test = $('#fn').val();
+            //alert(employeeid);
+            //$('#PIPpopup').modal("hide");
+            //HideModal();
+            $.ajax({
+                url: '@Url.Action("InsertSportsDetails", "EmployeeActivity")',
+
+                data: {
+                    EMPLOYEEID: employeeid,
+                    PARTICIPATIONDATE: $('#txtsportsdate').val(),
+                    SPORTSDETAIL: $('#txtsportsdtls').val(),
+                    OCCASION: $('#txtSportsOccasion').val(),
+                    COMMENTS: $('#txtsportscomment').val(),
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#sportspopup').modal('hide');
+                    new PNotify({
+                        title: 'Message',
+                        text: 'Data Saved successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+
+                    $("#jqGridsport").setGridParam(
+                    {
+                        url: " @Url.Action("GetSports", "EmployeeActivity")/" + employeeid,
+                        datatype: 'json',
+                        page: 1
+                    }
+                    ).trigger("reloadGrid");//Reload grid trigger
+                }
+            });
+        });
+        $("#btn_culturalactivity_save").click(function () {
+           
+            $.ajax({
+                url: '@Url.Action("InsertCulturalActivityDetails", "EmployeeActivity")',
+
+                data: {
+                    EMPLOYEEID: employeeid,
+                    PARTICIPATIONDATE: $('#txtCulturaldate').val(),
+                    CULTURALACTIVITY: $('#txtculturalactdtls').val(),
+                    OCCASION: $('#txtculocassion').val(),
+                    COMMENTS: $('#txtCulComment').val(),
+                    },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                $('#culturalpopup').modal('hide');
+                new PNotify({
+                    title: 'Message',
+                    text: 'Data Saved successfully',
+                    type: "success",
+                    styling: 'bootstrap3'
+                });
+
+                $("#jqGridcul").setGridParam(
+                {
+                    url: " @Url.Action("GetCulturalActivity", "EmployeeActivity")/" + employeeid,
+                    datatype: 'json',
+                    page: 1
+                }
+                ).trigger("reloadGrid");//Reload grid trigger
+        }
+        });
+        });
+    $("#btn_socialact_save").click(function () {
+        //var test = $('#fn').val();
+        //alert(employeeid);
+        //$('#PIPpopup').modal("hide");
+        //HideModal();
+        $.ajax({
+            url: '@Url.Action("InsertSocialActivityDetails", "EmployeeActivity")',
+
+            data: {
+                EMPLOYEEID: employeeid,
+                ACTIVITYDATE: $('#socialinvdate').val(),
+                ACTIVITYDETAILS: $('#txt_socialact_dtls').val(),
+                COMMENTS: $('#txt_socialactcomments').val(),
+            },
+            //Passes the content of an input up
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#socialpopup').modal('hide');
+                new PNotify({
+                    title: 'Message',
+                    text: 'Data Saved successfully',
+                    type: "success",
+                    styling: 'bootstrap3'
+                });
+                $("#jqGridsocial").setGridParam(
+                {
+                    url: " @Url.Action("GetSocialActivity", "EmployeeActivity")/" + employeeid,
+                    datatype: 'json',
+                    page: 1
+                }
+                ).trigger("reloadGrid");//Reload grid trigger
+            }
+        });
+    });
+
+    jQuery("#jqGrid01").jqGrid({
+        url: " @Url.Action("GetEmployeeInfo", "Utility")/" + WORKLOCATION + "/" + division + "/" + subdivision + "/" + section + "/" + department,
+        @*jQuery("#jqGrid01").jqGrid({
+
+            url: " @Url.Action("GetEmployeeInfo", "Utility")",*@
+        //url: 'http://localhost:56783/api/basicinformation',
+        type: "GET",
+        datatype: "Json",
+        height: 350,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 250 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+        { name: 'OFFICIAL_EMAIL', index: 'OFFICIAL_EMAIL', label: 'OFFICIAL EMAIL' },
+        { name: 'EMERGENCY_CONTACT_NUMBER', index: 'EMERGENCY_CONTACT_NUMBER', label: 'EMERGENCY CONTACT NO' },
+        { name: 'OFFICIAL_MOBILE_NUMBER', index: 'OFFICIAL_MOBILE_NUMBER', label: 'OFFICIAL MOBILE NO.' },
+        { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                return x.replace("myid", rowObject['ID']);
+            }, align: 'center', search: false
+        }
+
+        ],
+
+        loadonce: true,
+        viewrecords: true,
+        width: 1190,
+        rowNum: 100,
+        rowList: [100, 500, 1000],
+
+        rownumWidth: 25,
+        multiselect: true,
+        multiPageSelection: true,
+        pager: "#jqGridPager01",
+        //loadComplete: function () {
+        //    if ($("#jqGrid01").getGridParam("records") == 0) {
+        //        $("#jqGrid01").addRowData(
+        //        $("#jqGrid01")
+        //            .empty()
+        //            .append('<tr><td></td><td><h3>No data Available to Display</h3></td></tr>')
+        //         );
+        //    }
+        //},
+        jsonReader: {
+            repeatitems: false,
+            id: "ID",
+            root: function (obj) { return obj; },
+            page: function (obj) { return 1; },
+            total: function (obj) { return 1; },
+            records: function (obj) { return obj.length; }
+        },
+        ondblClickRow: function (rowid) {
+            //jQuery(this).jqGrid('editGridRow', rowid);
+            //window.location = 'EmployeeDetails/Index/' + rowid;
+            var empid = rowid;
+            employeeid = rowid;
+            $('#SMSModal').modal('show');
+            var lastSel;
+            $('#jqGridaward').jqGrid('GridUnload');
+            jQuery("#jqGridaward").jqGrid({
+                url: " @Url.Action("GetAwards", "EmployeeActivity")/" + empid ,
+                type: "GET",
+                datatype: "Json",
+                height: 100,
+                colModel: [
+
+                { name: 'ID', index: 'ID', key: true, hidden: true },
+                { name: 'ACHIEVEMENTDATE', index: 'ACHIEVEMENTDATE', label: 'ACHIEVEMENT DATE' },
+                { name: 'AWARDSDETAIL', index: 'AWARDSDETAIL', label: 'AWARDS DETAIL', width: 250 },
+                { name: 'COMMENTS', index: 'COMMENTS', label: 'COMMENTS', width: 250 }
+
+                ],
+
+                loadonce: true,
+                viewrecords: true,
+                width: 800,
+                rowNum: 100,
+                rowList: [100, 500, 1000],
+
+                rownumWidth: 25,
+                multiselect: true,
+                multiPageSelection: true,
+                pager: "#jqGridPageraward",
+                //loadComplete: function () {
+                //    if ($("#jqGrid01").getGridParam("records") == 0) {
+                //        $("#jqGrid01").addRowData(
+                //        $("#jqGrid01")
+                //            .empty()
+                //            .append('<tr><td></td><td><h3>No data Available to Display</h3></td></tr>')
+                //         );
+                //    }
+                //},
+                jsonReader: {
+                    repeatitems: false,
+                    id: "ID",
+                    root: function (obj) { return obj; },
+                    page: function (obj) { return 1; },
+                    total: function (obj) { return 1; },
+                    records: function (obj) { return obj.length; }
+                },
+                ondblClickRow: function (rowid) {
+                    //jQuery(this).jqGrid('editGridRow', rowid);
+                    //window.location = 'EmployeeDetails/Index/' + rowid;
+                    // $('#SMSModal').modal('show');
+                }
+            });
+
+            jQuery("#jqGridaward").jqGrid('navGrid', '#jqGridPageraward', { add: false, edit: false, del: false, search: false, refresh: false });
+            jQuery("#jqGridaward").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+            $(".ui-jqgrid-sortable").css('white-space', 'normal');
+            $(".ui-jqgrid-sortable").css('height', 'auto');
+            $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+            $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+
+            $('#jqGridpub').jqGrid('GridUnload');
+            jQuery("#jqGridpub").jqGrid({
+                url: " @Url.Action("GetPublications", "EmployeeActivity")/" + empid ,
+                type: "GET",
+                datatype: "Json",
+                height: 100,
+                colModel: [
+
+                { name: 'ID', index: 'ID', key: true, hidden: true },
+                { name: 'DATEOFPUBLICATION', index: 'DATEOFPUBLICATION', label: 'DATE OF PUBLICATION', width: 250 },
+                { name: 'PUBLICATIONDETAILS', index: 'PUBLICATIONDETAILS', label: 'PUBLICATION DETAIL' },
+                { name: 'COMMENTS', index: 'COMMENTS', label: 'COMMENTS' }
+
+                ],
+
+                loadonce: true,
+                viewrecords: true,
+                width: 800,
+                rowNum: 100,
+                rowList: [100, 500, 1000],
+
+                rownumWidth: 25,
+                multiselect: true,
+                multiPageSelection: true,
+                pager: "#jqGridPagerpub",
+                //loadComplete: function () {
+                //    if ($("#jqGrid01").getGridParam("records") == 0) {
+                //        $("#jqGrid01").addRowData(
+                //        $("#jqGrid01")
+                //            .empty()
+                //            .append('<tr><td></td><td><h3>No data Available to Display</h3></td></tr>')
+                //         );
+                //    }
+                //},
+                jsonReader: {
+                    repeatitems: false,
+                    id: "ID",
+                    root: function (obj) { return obj; },
+                    page: function (obj) { return 1; },
+                    total: function (obj) { return 1; },
+                    records: function (obj) { return obj.length; }
+                },
+                ondblClickRow: function (rowid) {
+                    //jQuery(this).jqGrid('editGridRow', rowid);
+                    //window.location = 'EmployeeDetails/Index/' + rowid;
+                    // $('#SMSModal').modal('show');
+                }
+            });
+
+            jQuery("#jqGridpub").jqGrid('navGrid', '#jqGridPagerpub', { add: false, edit: false, del: false, search: false, refresh: false });
+            jQuery("#jqGridpub").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+            $(".ui-jqgrid-sortable").css('white-space', 'normal');
+            $(".ui-jqgrid-sortable").css('height', 'auto');
+            $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+            $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+
+            $('#jqGridhob').jqGrid('GridUnload');
+            jQuery("#jqGridhob").jqGrid({
+                url: " @Url.Action("GetHobbies", "EmployeeActivity")/" + empid ,
+                type: "GET",
+                datatype: "Json",
+                height: 100,
+                colModel: [
+
+                { name: 'ID', index: 'ID', key: true, hidden: true },
+                { name: 'HOBBIES', index: 'HOBBIES', label: 'HOBBIES' }
+                ],
+
+                loadonce: true,
+                viewrecords: true,
+                width: 800,
+                rowNum: 100,
+                rowList: [100, 500, 1000],
+
+                rownumWidth: 25,
+                multiselect: true,
+                multiPageSelection: true,
+                pager: "#jqGridPagerhob",
+                //loadComplete: function () {
+                //    if ($("#jqGrid01").getGridParam("records") == 0) {
+                //        $("#jqGrid01").addRowData(
+                //        $("#jqGrid01")
+                //            .empty()
+                //            .append('<tr><td></td><td><h3>No data Available to Display</h3></td></tr>')
+                //         );
+                //    }
+                //},
+                jsonReader: {
+                    repeatitems: false,
+                    id: "ID",
+                    root: function (obj) { return obj; },
+                    page: function (obj) { return 1; },
+                    total: function (obj) { return 1; },
+                    records: function (obj) { return obj.length; }
+                },
+                ondblClickRow: function (rowid) {
+                    //jQuery(this).jqGrid('editGridRow', rowid);
+                    //window.location = 'EmployeeDetails/Index/' + rowid;
+                    // $('#SMSModal').modal('show');
+                }
+            });
+
+            jQuery("#jqGridhob").jqGrid('navGrid', '#jqGridPagerhob', { add: false, edit: false, del: false, search: false, refresh: false });
+            jQuery("#jqGridhob").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+            $(".ui-jqgrid-sortable").css('white-space', 'normal');
+            $(".ui-jqgrid-sortable").css('height', 'auto');
+            $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+            $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+
+            $('#jqGridsport').jqGrid('GridUnload');
+            jQuery("#jqGridsport").jqGrid({
+                url: " @Url.Action("GetSports", "EmployeeActivity")/" + empid ,
+                type: "GET",
+                datatype: "Json",
+                height: 100,
+                colModel: [
+
+                { name: 'ID', index: 'ID', key: true, hidden: true },
+                { name: 'PARTICIPATIONDATE', index: 'PARTICIPATIONDATE', label: 'PARTICIPATION DATE' },
+                 { name: 'SPORTSDETAIL', index: 'SPORTSDETAIL', label: 'SPORTS DETAIL' },
+                  { name: 'OCCASION', index: 'OCCASION', label: 'OCCASION' },
+                   { name: 'COMMENTS', index: 'COMMENTS', label: 'COMMENTS' }
+                ],
+
+                loadonce: true,
+                viewrecords: true,
+                width: 800,
+                rowNum: 100,
+                rowList: [100, 500, 1000],
+
+                rownumWidth: 25,
+                multiselect: true,
+                multiPageSelection: true,
+                pager: "#jqGridPagersport",
+                //loadComplete: function () {
+                //    if ($("#jqGrid01").getGridParam("records") == 0) {
+                //        $("#jqGrid01").addRowData(
+                //        $("#jqGrid01")
+                //            .empty()
+                //            .append('<tr><td></td><td><h3>No data Available to Display</h3></td></tr>')
+                //         );
+                //    }
+                //},
+                jsonReader: {
+                    repeatitems: false,
+                    id: "ID",
+                    root: function (obj) { return obj; },
+                    page: function (obj) { return 1; },
+                    total: function (obj) { return 1; },
+                    records: function (obj) { return obj.length; }
+                },
+                ondblClickRow: function (rowid) {
+                    //jQuery(this).jqGrid('editGridRow', rowid);
+                    //window.location = 'EmployeeDetails/Index/' + rowid;
+                    // $('#SMSModal').modal('show');
+                }
+            });
+
+            jQuery("#jqGridsport").jqGrid('navGrid', '#jqGridPagersport', { add: false, edit: false, del: false, search: false, refresh: false });
+            jQuery("#jqGridsport").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+            $(".ui-jqgrid-sortable").css('white-space', 'normal');
+            $(".ui-jqgrid-sortable").css('height', 'auto');
+            $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+            $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+
+
+            $('#jqGridcul').jqGrid('GridUnload');
+            jQuery("#jqGridcul").jqGrid({
+                url: " @Url.Action("GetCulturalActivity", "EmployeeActivity")/" + empid ,
+                type: "GET",
+                datatype: "Json",
+                height: 100,
+                colModel: [
+
+                { name: 'ID', index: 'ID', key: true, hidden: true },
+                 { name: 'PARTICIPATIONDATE', index: 'PARTICIPATIONDATE', label: 'PARTICIPATION DATE' },
+                  { name: 'CULTURALACTIVITY', index: 'CULTURALACTIVITY', label: 'CULTURAL ACTIVITY' },
+                   { name: 'OCCASION', index: 'OCCASION', label: 'OCCASION', width: 100 },
+                { name: 'COMMENTS', index: 'COMMENTS', label: 'COMMENTS' }
+                ],
+
+                loadonce: true,
+                viewrecords: true,
+                width: 800,
+                rowNum: 100,
+                rowList: [100, 500, 1000],
+
+                rownumWidth: 25,
+                multiselect: true,
+                multiPageSelection: true,
+                pager: "#jqGridPagercul",
+                //loadComplete: function () {
+                //    if ($("#jqGrid01").getGridParam("records") == 0) {
+                //        $("#jqGrid01").addRowData(
+                //        $("#jqGrid01")
+                //            .empty()
+                //            .append('<tr><td></td><td><h3>No data Available to Display</h3></td></tr>')
+                //         );
+                //    }
+                //},
+                jsonReader: {
+                    repeatitems: false,
+                    id: "ID",
+                    root: function (obj) { return obj; },
+                    page: function (obj) { return 1; },
+                    total: function (obj) { return 1; },
+                    records: function (obj) { return obj.length; }
+                },
+                ondblClickRow: function (rowid) {
+                    //jQuery(this).jqGrid('editGridRow', rowid);
+                    //window.location = 'EmployeeDetails/Index/' + rowid;
+                    // $('#SMSModal').modal('show');
+                }
+            });
+
+            jQuery("#jqGridcul").jqGrid('navGrid', '#jqGridPagercul', { add: false, edit: false, del: false, search: false, refresh: false });
+            jQuery("#jqGridcul").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+            $(".ui-jqgrid-sortable").css('white-space', 'normal');
+            $(".ui-jqgrid-sortable").css('height', 'auto');
+            $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+            $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+
+
+            $('#jqGridsocial').jqGrid('GridUnload');
+            jQuery("#jqGridsocial").jqGrid({
+                url: " @Url.Action("GetSocialActivity", "EmployeeActivity")/" + empid ,
+                type: "GET",
+                datatype: "Json",
+                height: 100,
+                colModel: [
+
+                { name: 'ID', index: 'ID', key: true, hidden: true },
+                 { name: 'ACTIVITYDATE', index: 'ACTIVITYDATE', label: 'ACTIVITY DATE' },
+                  { name: 'ACTIVITYDETAILS', index: 'ACTIVITYDETAILS', label: 'ACTIVITY DETAILS' },
+                { name: 'COMMENTS', index: 'COMMENTS', label: 'COMMENTS' }
+                ],
+
+                loadonce: true,
+                viewrecords: true,
+                width: 800,
+                rowNum: 100,
+                rowList: [100, 500, 1000],
+
+                rownumWidth: 25,
+                multiselect: true,
+                multiPageSelection: true,
+                pager: "#jqGridPagerSocial",
+                //loadComplete: function () {
+                //    if ($("#jqGrid01").getGridParam("records") == 0) {
+                //        $("#jqGrid01").addRowData(
+                //        $("#jqGrid01")
+                //            .empty()
+                //            .append('<tr><td></td><td><h3>No data Available to Display</h3></td></tr>')
+                //         );
+                //    }
+                //},
+                jsonReader: {
+                    repeatitems: false,
+                    id: "ID",
+                    root: function (obj) { return obj; },
+                    page: function (obj) { return 1; },
+                    total: function (obj) { return 1; },
+                    records: function (obj) { return obj.length; }
+                },
+                ondblClickRow: function (rowid) {
+                    //jQuery(this).jqGrid('editGridRow', rowid);
+                    //window.location = 'EmployeeDetails/Index/' + rowid;
+                    // $('#SMSModal').modal('show');
+                }
+            });
+
+            jQuery("#jqGridsocial").jqGrid('navGrid', '#jqGridPagerSocial', { add: false, edit: false, del: false, search: false, refresh: false });
+            jQuery("#jqGridsocial").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+            $(".ui-jqgrid-sortable").css('white-space', 'normal');
+            $(".ui-jqgrid-sortable").css('height', 'auto');
+            $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+            $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+
+        }
+    });
+
+    jQuery("#jqGrid01").jqGrid('navGrid', '#pjmap', { add: false, edit: false, del: false, search: false, refresh: false });
+    jQuery("#jqGrid01").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+    $(".ui-jqgrid-sortable").css('white-space', 'normal');
+    $(".ui-jqgrid-sortable").css('height', 'auto');
+    $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+    $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+
+
+    });
+</script>
+
+<script type="text/javascript">
+    function ExportDataToExcel(tableCtrl) {
+        //  Export the data from our jqGrid into a "real" Excel 2007 file
+        ExportJQGridDataToExcel(tableCtrl, "Employee data.xlsx");
+    }
+
+    $(function () {
+        $('#datetimepicker3').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+    });
+    $(function () {
+        $('#datetimepicker1').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+    });
+    $(function () {
+        $('#datetimepicker2').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+    });
+    $(function () {
+        $('#datetimepicker4').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+    });
+    $(function () {
+        $('#datetimepicker5').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+    });
+    function HideModal() {
+        $('.modal-backdrop').remove();
+        $("body").addClass("modal-open");
+    }
+</script>
+
+<script src="~/Scripts/moment-with-locales.js"></script>
+
+<script src="~/Scripts/bootstrap-datepicker.js"></script>

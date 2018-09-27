@@ -1,0 +1,463 @@
+﻿<script>
+    $(document).ready(function () {
+        $("body").removeClass("modal-open");
+        $("body").removeAttr("style");
+           var lastSel;
+           jQuery("#jqGrid09").jqGrid({
+            url:" @Url.Action("PIPDtls", "EmployeeDetails")",
+            type: "GET",
+            datatype: "Json",
+            height: 222,
+            width: 840,
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            colNames: ['Employee Code', 'PIP DATE', 'REASON', 'PERIOD', 'PIP CREATED BY', 'PIP CLOSED BY', 'PIP CLOSED DATE', 'REMARKS'],
+            colModel: [
+                { name: 'ID', index: 'ID', editable: true, sorttype: "int", search: true, key: true, hidden: true },
+                 { name: 'PIP_DATE', index: 'PIP_DATE', formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
+                { name: 'REASON', index: 'REASON', editable: true },
+                { name: 'PERIOD', index: 'PERIOD', editable: true },
+                 { name: 'PIPCREATEDBY', index: 'PIPCREATEDBY', editable: true },
+                { name: 'PIPCLOSEDBY', index: 'PIPCLOSEDBY', editable: true },
+                 { name: 'PIPCLOSEDDATE', index: 'PIPCLOSEDDATE', editable: true, formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
+                 { name: 'REMARKS', index: 'REMARKS', editable: true }
+
+            ],
+
+
+            pager: "#jqGridPager09",
+            viewrecords: true,
+            multiselect: true,
+
+            hidegrid: false,
+            jsonReader: {
+                repeatitems: false,
+                id: "Id",
+                root: function (obj) { return obj; },
+                page: function (obj) { return 1; },
+                total: function (obj) { return 1; },
+                records: function (obj) { return obj.length; }
+            },
+            onSelectRow: function (rowId, status, e) {
+                if (rowId == lastSel) {
+                    $(this).jqGrid("resetSelection");
+                    lastSel = undefined;
+                    status = false;
+                } else {
+                    lastSel = rowId;
+                }
+            },
+            beforeSelectRow: function (rowId, e) {
+                $(this).jqGrid("resetSelection");
+                return true;
+            }
+        });
+        $("#cb_jqGrid09").hide();
+        // Setup buttons
+
+        // Setup filters
+        //jQuery("#jqGrid01").jqGrid('filterToolbar', { defaultSearch: true, stringResult: true });
+        jQuery("#jqGrid09").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+
+
+        $('#ddlPeriod').empty();
+        $('#ddlPeriod').append($('<option></option>').html("SELECT Period"));
+        $('#ddlupPeriod').empty();
+        $('#ddlupPeriod').append($('<option></option>').html("SELECT Period"));
+        $.ajax({
+           @*@Url.Action("Action","Controller")*@
+        url:" @Url.Action("period", "EmployeeDetails")",
+        type: "GET",
+        datatype: "Json",
+        success:
+        function (result) {
+           
+            $.each(result, function (i) {
+                $('#ddlPeriod').append($('<option></option>').val(result[i]).html(result[i]));
+            });
+            $.each(result, function (j) {
+                $('#ddlupPeriod').append($('<option></option>').val(result[j]).html(result[j]));
+            });
+        }
+    });
+        $("#btnPIPSave").click(function () {
+            //var test = $('#fn').val();
+            // alert(test);
+            $('#PIPpopup').modal("hide");
+            HideModal();
+            $.ajax({
+                url: '@Url.Action("PIPcreate", "EmployeeDetails")',
+
+                data: {
+                    CREATEDATE: $('#txtPipdate').val(),
+
+                    REASON: $('#txtpipReason').val(),
+                    PERIOD: $('#ddlPeriod').val(),
+                    PIPCREATEDBY: $('#txtPIPceatedby').val(),
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#emppip').html(data);
+                    new PNotify({
+                        title: 'Message',
+                        text: 'Data Saved successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+                }
+            });
+        }); 
+        $("#btnPIPClear").click(function () {
+            $('#txtPipdate').val("");
+
+            $('#txtpipReason').val("");
+            $('#ddlPeriod').val("");
+            $('#txtPIPceatedby').val("");
+        });
+        $("#btnPIPupClear").click(function () {
+            $('#txtupPIPclosedby').val("");
+            $('#txtupPIPcloseddate').val("");
+            $('#txtuppipRemarks').val("");
+        });
+        $("#btnPIPEdit").click(function () {
+        var grid = $("#jqGrid09");
+        var rowKey = grid.getGridParam("selrow");
+
+        if (!rowKey)
+            new PNotify({
+                title: 'Warning',
+                text: 'Please select a row to Update',
+
+                styling: 'bootstrap3'
+            });
+        else {
+            var selectedIDs = grid.getGridParam("selarrrow");
+            var index = selectedIDs + 1; // zero-based index of row so it means the 3rd row
+            var rowId = jQuery('#jqGrid09 tr:eq(' + selectedIDs + ')').attr('id');
+            //(here I suppose that the <table> element of your jqGrid has id="list"). After you know the id of the row you can get the row data with respect of getRowData method or the data from one cell only with respect of getCell method:
+            var dataFromTheRow = jQuery('#jqGrid09').jqGrid('getRowData', rowId);
+            //alert(dataFromTheRow.hirarchy_id);
+            // var dataFromCellByColumnIndex = jQuery('#jqGrid').jqGrid('getCell', rowId, 7);
+            // var dataFromCellByColumnName = jQuery('#jqGrid').jqGrid('getCell', rowId, 'Tax');
+            var result = "";
+            for (var i = 0; i < selectedIDs.length; i++) {
+                result += selectedIDs[0];
+            }
+            //PIP_DATE: $('#txtupPipdate').val(),
+
+            //REASON: $('#txtupReason').val(),
+            //PERIOD: $('#ddlupPeriod').val(),
+            //PIPCREATEDBY: $('#txtupPIPceatedby').val(),
+            //PIPCLOSEDBY: $('#txtupPIPclosedby').val(),
+            //PIPCLOSEDDATE: $('#txtupPIPcloseddate').val(),
+            //REMARKS: $('#txtuppipRemarks').val(),
+            var PIP_DATE1 = grid.jqGrid('getCell', result, 'PIP_DATE');
+            var REASON1 = grid.jqGrid('getCell', result, 'REASON');
+            var PERIOD1 = grid.jqGrid('getCell', result, 'PERIOD');
+            var PIPCREATEDBY1 = grid.jqGrid('getCell', result, 'PIPCREATEDBY');
+            var PIPCLOSEDBY1 = grid.jqGrid('getCell', result, 'PIPCLOSEDBY');
+            var PIPCLOSEDDATE1 = grid.jqGrid('getCell', result, 'PIPCLOSEDDATE');
+            var REMARKS1 = grid.jqGrid('getCell', result, 'REMARKS');
+            $('#txtupPipdate').val(PIP_DATE1);
+            $('#txtuppipReason').val(REASON1);
+            //$('#ddlupPeriod').val(PERIOD1);
+            $('#ddlupPeriod').prop('selectedIndex', PERIOD1);
+            $('#txtupPIPceatedby').val(PIPCREATEDBY1);
+            $('#txtupPIPclosedby').val(PIPCLOSEDBY1);
+            $('#txtupPIPcloseddate').val(PIPCLOSEDDATE1);
+            $('#txtuppipRemarks').val(REMARKS1);
+            //$("#edit_project_name").val(Project_Name1);
+            $("#rowid3").val(result);
+            $("#PIPEditpopup").modal("show");
+            //$("#employmentuppopup").show();
+
+        }
+
+    });
+    function HideModal() {
+        $('.modal-backdrop').remove();
+        //location.reload();
+    }
+    $("#btnPipupdate").click(function () {
+        //var test = $('#fn').val();
+        // alert(test);
+        $('#PIPEditpopup').modal("hide");
+        HideModal();
+        var ID1 = $("#rowid3").val();
+        $.ajax({
+            url: '/EmployeeDetails/PIPtedit/' + ID1,
+
+            data: {
+                PERIOD: $('#ddlupPeriod').val(),
+                PIPCREATEDBY: $('#txtupPIPceatedby').val(),
+                PIPCLOSEDBY: $('#txtupPIPclosedby').val(),
+                CLOSEDATE: $('#txtupPIPcloseddate').val(),
+                REMARKS: $('#txtuppipRemarks').val(),
+            },
+            //Passes the content of an input up
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#emppip').html(data);
+                new PNotify({
+                    title: ' Message',
+                    text: 'Data Updated successfully',
+                    type: "success",
+                    styling: 'bootstrap3'
+                });
+            }
+        });
+    });
+    $("#ddlupPeriod").attr("disabled", "disabled");
+    });
+    $(function () {
+        $('#datetimepicker9').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+
+    });
+    $(function () {
+        $('#datetimepicker8').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+
+    });
+</script>
+            <div class="form-group">
+                <div class="col-md-6 col-sm-8 col-xs-12 ">
+                    <button type="submit" class="btn btn-success" data-toggle="modal" data-target=".ps-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>PIP CREATE</button>
+                    <button id="btnPIPEdit" type="submit" class="btn btn-success" ><i class="fa fa-edit "></i>PIP CLOSE</button>
+                    @*<button id="btnPIPDel" type="submit" class="btn btn-success"><i class="fa fa-remove "></i>DELETE</button>*@
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12 ">
+                    <table id="jqGrid09"></table>
+                    <div id="jqGridPager09"></div>
+                </div>
+            </div>
+
+            @*<button type="submit" class="btn btn-success" data-toggle="modal" data-target=".ks-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>*@
+            <div class="modal fade ps-example-modal-md" tabindex="-1" role="dialog" id="PIPpopup" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel2">PIP Details</h4>
+                        </div>
+                        @*@using (Html.BeginForm("create", "Home", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+                        {*@
+                        <div class="form-horizontal form-label-left">
+                            <div class="modal-body">
+
+
+
+
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">PIP Date:</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <div class='input-group date' id='datetimepicker8'>
+                                            <input type='text' id="txtPipdate" name="txtPipdate" class="form-control dp" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Reason</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtpipReason" name="txtpipReason" class="form-control" placeholder="Reason">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Period</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <select id="ddlPeriod" name="ddlPeriod" class="form-control"></select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">PIP Created By</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtPIPceatedby" name="txtPIPceatedby" class="form-control" placeholder="Created By">
+                                    </div>
+
+                                </div>
+                                @*<div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">PIP Closer Date</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <div class='input-group date' id='datetimepicker9'>
+                                            <input type='text' id="txtPIPcloseddate" name="txtPIPcloseddate" class="form-control dp" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>*@
+
+                                @*<div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">PIP Closed By</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtPIPclosedby" name="txtPIPclosedby" class="form-control" placeholder="Closed By">
+                                    </div>
+
+                                </div>*@
+                                @*<div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Remarks</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtpipRemarks" name="txtpipRemarks" class="form-control" placeholder="Remarks">
+                                    </div>
+
+                                </div>*@
+                                @*</form>*@
+
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnPIPClear" type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                <button id="btnPIPSave" type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                            </div>
+                        </div>
+                            @*}*@
+                        </div>
+                </div>
+            </div>
+            <div class="modal fade eps-example-modal-md" tabindex="-1" role="dialog" id="PIPEditpopup" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel2">PIP Details</h4>
+                        </div>
+                        @*@using (Html.BeginForm("create", "Home", FormMethod.Post, new
+            {
+                @class = "form-horizontal form-label-left",
+                enctype = "multipart/form-data"
+            }))
+                                    {*@
+                        <div class="form-horizontal form-label-left">
+                            <div class="modal-body">
+
+
+
+
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">PIP Date:</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <div class='input-group date' id='datetimepicker8'>
+                                            <input type='text' id="txtupPipdate" name="txtupPipdate" readonly="readonly" class="form-control dp" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Reason</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtuppipReason" name="txtuppipReason" readonly="readonly" class="form-control" placeholder="Reason">
+                                        <input type="hidden" name="rowid3" id="rowid3">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Period</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <select id="ddlupPeriod" class="form-control"></select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">PIP Created By</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtupPIPceatedby" name="txtPIPceatedby" readonly="readonly" class="form-control" placeholder="Created By">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">PIP Closer Date</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <div class='input-group date' id='datetimepicker9'>
+                                            <input type='text' id="txtupPIPcloseddate" name="txtPIPcloseddate" class="form-control dp" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">PIP Closed By</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtupPIPclosedby" name="txtPIPclosedby" class="form-control" placeholder="Closed By">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Remarks</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" id="txtuppipRemarks" name="txtuppipRemarks" class="form-control" placeholder="Remarks">
+                                    </div>
+
+                                </div>
+                                @*</form>*@
+
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btnPipupclear" type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                <button id="btnPipupdate" type="submit" class="btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>Update</button>
+                            </div>
+                            @*}*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+

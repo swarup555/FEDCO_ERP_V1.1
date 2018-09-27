@@ -1,0 +1,481 @@
+﻿
+<script>
+    $(document).ready(function () {
+        @*$('#txtPaddress').val("@ViewBag.Paddress");*@
+        @*var test = $('#txtPaddress').val(@ViewBag.Paddress);
+           alert(test);*@
+        $("#btncomSaveclr").click(function () {
+            $('#txtPaddress').val("");
+            $('#txtPCity').val("");
+            $('#ddlPState').val("");
+            $('#txtPPin').val("");
+            $('#txtMaddress').val("");
+            $('#txtMCity').val("");
+            $('#ddlMSate').val("");
+            $('#txtMPin').val("");
+            $('#txtPhone').val("");
+            $('#txtmobileno').val("");
+            $('#txtEmergencyno').val("");
+            $('#txtPassprtNo').val("");
+            $('#txtValidity').val("");
+            $('#dlno').val("");
+            $('#txtPanno').val("");
+            $('#txtAdhar').val("");
+            $('#txtPersonalMail').val("");
+            $('#txtOffMailid').val("");
+            $('#txtOfcMobno').val("");
+            $('#txtRelationship').val("");
+        });
+        $("#btncomSave").click(function () {
+        //var test = $('#fn').val();
+            // alert(test);
+            //$(".se-pre-con").fadeIn();
+        $.ajax({
+            url: '@Url.Action("DICreate", "EmployeeDetails")',
+              
+            data: {
+                PERMANENT_ADDRESS: $('#txtPaddress').val(),
+
+                PERMANENT_ADDRESS_CITY: $('#txtPCity').val(),
+                PERMANENT_ADDRESS_STATE: $('#ddlPState').val(),
+                PERMANENT_ADDRESS_PIN: $('#txtPPin').val(),
+                MAILING_ADDRESS: $('#txtMaddress').val(),
+                MAILING_ADDRESS_CITY: $('#txtMCity').val(),
+
+
+                MAILING_ADDRESS_STATE: $('#ddlMSate').val(),
+                MAILING_ADDRESS_PIN: $('#txtMPin').val(),
+                PHONE_NUMBER: $('#txtPhone').val(),
+                MOBILE_NUMBER: $('#txtmobileno').val(),
+                EMERGENCY_CONTACT_NUMBER: $('#txtEmergencyno').val(),
+                RELATIONSHIP: $('#txtRelationship').val(),
+                PASSPORT_NUMBER: $('#txtPassprtNo').val(),
+                VALIDITY: $('#txtValidity').val(),
+
+                DRIVING_LICENCE_NUMBER: $('#dlno').val(),
+                PANCARD_NUMBER: $('#txtPanno').val(),
+                AADHAR_NUMBER: $('#txtAdhar').val(),
+
+                PERSONAL_EMAIL: $('#txtPersonalMail').val(),
+                OFFICIAL_EMAIL: $('#txtOffMailid').val(),
+                OFFICIAL_MOBILE_NUMBER: $('#txtOfcMobno').val(),
+               
+            },
+            //Passes the content of an input up
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $('#comdtls').html(data);
+                //new PNotify({
+                //    title: 'Message',
+                //    text: 'Data Saved successfully',
+                //    type: "success",
+                //    styling: 'bootstrap3'
+                //});
+            }
+        });
+            $("body").scrollTop(0);
+            new PNotify({
+                title: 'Message',
+                text: 'Data Saved successfully',
+                type: "success",
+                styling: 'bootstrap3'
+            });
+            //$(".se-pre-con").fadeOut("slow");
+    });
+        $.ajax({
+       @*@Url.Action("Action","Controller")*@
+        url:" @Url.Action("state", "EmployeeDetails")",
+
+        type: "GET",
+        datatype: "Json",
+
+        success:
+        function (result) {
+            $('#ddlPState').empty();
+            $('#ddlPState').append($('<option></option>').val("0").html("SELECT State"));
+            $('#ddlMSate').empty();
+            $('#ddlMSate').append($('<option></option>').val("0").html("SELECT State"));
+            $.each(result, function (i) {
+                $('#ddlPState').append($('<option></option>').val(result[i].ID).html(result[i].STATE_NAME));
+            });
+            $.each(result, function (j) {
+                $('#ddlMSate').append($('<option></option>').val(result[j].ID).html(result[j].STATE_NAME));
+            });
+        }
+        });
+        $.ajax({
+      @*@Url.Action("Action","Controller")*@
+        url:" @Url.Action("Country", "EmployeeDetails")",
+
+        type: "GET",
+        datatype: "Json",
+
+        success:
+        function (result) {
+            $.each(result, function (i) {
+                $('#ddlPCountry').append($('<option></option>').val(result[i].ID).html(result[i].COUNTRY_NAME));
+            });
+            $.each(result, function (j) {
+                $('#ddlMCountry').append($('<option></option>').val(result[j].ID).html(result[j].COUNTRY_NAME));
+            });
+        }
+        });
+        $.ajax({
+      @*@Url.Action("Action","Controller")*@
+        url:" @Url.Action("comunicationdtls", "EmployeeDetails")",
+
+        type: "GET",
+        datatype: "Json",
+
+        success:
+        function (result) {
+           
+            $.each(result, function (i) {
+                $('#txtPaddress').val(result[i].PERMANENT_ADDRESS);
+                $('#txtPCity').val(result[i].PERMANENT_ADDRESS_CITY);
+                $('#txtPPin').val(result[i].PERMANENT_ADDRESS_PIN);
+                $('#txtMaddress').val(result[i].MAILING_ADDRESS);
+                $('#txtMCity').val(result[i].MAILING_ADDRESS_CITY);
+                $('#txtMPin').val(result[i].MAILING_ADDRESS_PIN);
+                $('#txtPhone').val(result[i].PHONE_NUMBER);
+                $('#txtmobileno').val(result[i].MOBILE_NUMBER);
+                $('#txtEmergencyno').val(result[i].EMERGENCY_CONTACT_NUMBER);
+                $('#txtPassprtNo').val(result[i].PASSPORT_NUMBER);
+                $('#txtValidity').val(result[i].VALIDITY);
+                $('#dlno').val(result[i].DRIVING_LICENCE_NUMBER);
+                $('#txtPanno').val(result[i].PANCARD_NUMBER);
+                $('#txtAdhar').val(result[i].AADHAR_NUMBER);
+                $('#txtPersonalMail').val(result[i].PERSONAL_EMAIL);
+                $('#txtOffMailid').val(result[i].OFFICIAL_EMAIL);
+                $('#txtRelationship').val(result[i].RELATIONSHIP);
+                $('#txtOfcMobno').val(result[i].OFFICIAL_MOBILE_NUMBER);
+                $('#ddlPCountry option[value="1"]').prop("selected", true);
+                $('#ddlMCountry option[value="1"]').prop("selected", true);
+                $('#ddlPState').prop('selectedIndex', result[i].PERMANENT_ADDRESS_STATE);
+                $('#ddlMSate').prop('selectedIndex', result[i].MAILING_ADDRESS_STATE);
+                //PERMANENT_ADDRESS_CITY: $('#txtPCity').val(),
+                //PERMANENT_ADDRESS_STATE: $('#ddlPState').val(),
+                //PERMANENT_ADDRESS_PIN: $('#txtPPin').val(),
+                //MAILING_ADDRESS: $('#txtMaddress').val(),
+                //MAILING_ADDRESS_CITY: $('#txtMCity').val(),
+
+
+                //MAILING_ADDRESS_STATE: $('#ddlMSate').val(),
+                //MAILING_ADDRESS_PIN: $('#txtMPin').val(),
+                //PHONE_NUMBER: $('#txtPhone').val(),
+                //MOBILE_NUMBER: $('#txtmobileno').val(),
+                //EMERGENCY_CONTACT_NUMBER: $('#txtEmergencyno').val(),
+
+                //PASSPORT_NUMBER: $('#txtPassprtNo').val(),
+                //PASSPORT_VALIDITY: $('#txtValidity').val(),
+
+                //DRIVING_LICENCE_NUMBER: $('#dlno').val(),
+                //PANCARD_NUMBER: $('#txtPanno').val(),
+                //AADHAR_NUMBER: $('#txtAdhar').val(),
+
+                //PERSONAL_EMAIL: $('#txtPersonalMail').val(),
+                //OFFICIAL_EMAIL: $('#txtOffMailid').val(),
+                //OFFICIAL_MOBILE_NUMBER: $('#txtOfcMobno').val(),
+               
+            });
+           
+        }
+        });
+        //$('#check').change(function () {
+        //    if ($(this).attr('checked')) {
+        //        //$('#txtPPin').val(result[i].PERMANENT_ADDRESS_PIN);
+        //        $('#txtMaddress').val($('#txtPaddress').val());
+        //        $('#txtMCity').val($('#txtPCity').val());
+        //        $('#txtMPin').val($('#txtPPin').val());
+        //        $("#txtMaddress").attr("disabled", "disabled");
+        //        $("#txtMCity").attr("disabled", "disabled");
+        //        $("#txtMPin").attr("disabled", "disabled");
+        //        $("#ddlMSate").attr("disabled", "disabled");
+        //        $("#ddlMCountry").attr("disabled", "disabled");
+        //    } else {
+        //        $("#txtMaddress").removeAttr("disabled");
+        //        $("#txtMCity").removeAttr("disabled");
+        //        $("#txtMPin").removeAttr("disabled");
+        //        $("#ddlMSate").removeAttr("disabled");
+        //        $("#ddlMCountry").removeAttr("disabled");
+        //    }
+        //});
+        //$(document).on("click", ".check", function () {
+        //    alert('span check');
+        //});
+        //$('.check').click(function () {
+        //    //$('#txtPaddress').val(result[i].PERMANENT_ADDRESS);
+        //    //$('#txtPCity').val(result[i].PERMANENT_ADDRESS_CITY);
+        //    //$('#txtPPin').val(result[i].PERMANENT_ADDRESS_PIN);
+        //    $('#txtMaddress').val( $('#txtPaddress').val());
+        //    $('#txtMCity').val($('#txtPCity').val());
+        //    $('#txtMPin').val($('#txtPPin').val());
+        //})
+        //$('input[type="checkbox"][name="userAccessNeeded"]').iCheck('check', function () {
+        //    alert('Well done, Sir');
+        //});
+        $('input[type="checkbox"][name = "userAccessNeeded"]').on('ifChanged', function (event) {
+            if ($(this).prop('checked')) {
+                //alert('checked');
+                    $('#txtMaddress').val($('#txtPaddress').val());
+                    $('#txtMCity').val($('#txtPCity').val());
+                    $('#txtMPin').val($('#txtPPin').val());
+                    $("#txtMaddress").attr("disabled", "disabled");
+                    $("#txtMCity").attr("disabled", "disabled");
+                    $("#txtMPin").attr("disabled", "disabled");
+                    $("#ddlMSate").attr("disabled", "disabled");
+                    $("#ddlMCountry").attr("disabled", "disabled");
+                    $('#ddlMCountry option[value="1"]').prop("selected", true);
+                    var val = $('#ddlPState').val();
+                    //alert(val);
+                    $('#ddlMSate').prop('selectedIndex', val);
+            } else {
+                //alert('unchecked');
+                $('#txtMaddress').val("");
+                $('#txtMCity').val("");
+                $('#txtMPin').val("");
+                    $("#txtMaddress").removeAttr("disabled");
+                    $("#txtMCity").removeAttr("disabled");
+                    $("#txtMPin").removeAttr("disabled");
+                    $("#ddlMSate").removeAttr("disabled");
+                    $("#ddlMCountry").removeAttr("disabled");
+            }
+            //$(this).trigger("change", e);
+            //alert("test");
+            //if ($(this).attr('checked')) {
+            //    alert("test");
+            //    //$('#txtPPin').val(result[i].PERMANENT_ADDRESS_PIN);
+            //    $('#txtMaddress').val($('#txtPaddress').val());
+            //    $('#txtMCity').val($('#txtPCity').val());
+            //    $('#txtMPin').val($('#txtPPin').val());
+            //    $("#txtMaddress").attr("disabled", "disabled");
+            //    $("#txtMCity").attr("disabled", "disabled");
+            //    $("#txtMPin").attr("disabled", "disabled");
+            //    $("#ddlMSate").attr("disabled", "disabled");
+            //    $("#ddlMCountry").attr("disabled", "disabled");
+            //} else {
+            //    $("#txtMaddress").removeAttr("disabled");
+            //    $("#txtMCity").removeAttr("disabled");
+            //    $("#txtMPin").removeAttr("disabled");
+            //    $("#ddlMSate").removeAttr("disabled");
+            //    $("#ddlMCountry").removeAttr("disabled");
+            //}
+        });
+    });
+    $(function () {
+        $('#datetimepicker51').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              }
+            );
+
+    });
+</script>
+
+            @*@using (Html.BeginForm("create", "Home", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+            {*@
+
+                <div class="form-horizontal form-label-left">
+                                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Permanent Address :</label>
+                    </div>
+                    <div class="col-md-10 col-sm-6 col-xs-12">
+                        <textarea id="txtPaddress" class="form-control" name="txtPaddress"
+                                  placeholder="Enter Permanent Address " ></textarea>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">City</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtPCity" name="txtPCity" class="form-control" placeholder="City Name">
+                    </div>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">State</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <select id="ddlPState" class="form-control">
+                            
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Country</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <select id="ddlPCountry" class="form-control">
+                            
+
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Pin</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" name="txtPPin" id="txtPPin" class="form-control" placeholder="Pin">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;"></label>
+                    </div>
+                    <div class="col-md-10 col-sm-6 col-xs-12">
+                        <input type="checkbox" class="flat check" name="userAccessNeeded" id="check"> Same As Permanent
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Mailing Address :</label>
+                    </div>
+                    <div class="col-md-10 col-sm-6 col-xs-12">
+                        <textarea id="txtMaddress" class="form-control" name="txtMaddress"
+                                  placeholder="Enter Mailing Address "></textarea>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">City</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtMCity" name="txtMCity" class="form-control" placeholder="City Name">
+                    </div>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">State</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <select id="ddlMSate" class="form-control">
+                          
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Country</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <select id="ddlMCountry" class="form-control">
+                           
+
+                        </select>
+                    </div>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Pin</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtMPin" name="txtMPin" class="form-control" placeholder="Pin">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Phone No.</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtPhone" name="txtPhone" class="form-control" placeholder="Phone No.">
+                    </div>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Mobile No.</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtmobileno" name="txtmobileno" class="form-control" placeholder="Mobile No.">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Emergency Contact No.</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtEmergencyno" name="txtEmergencyno"  class="form-control" placeholder="Emergency Contact No.">
+                    </div>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Relationship</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtRelationship" name="txtRelationship" class="form-control" placeholder="Relationship">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Passport No.</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtPassprtNo" name="txtPassprtNo" class="form-control" placeholder="Passport No.">
+                    </div>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Validity</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        @*<input type="text" id="txtValidity" name="txtValidity" class="form-control" placeholder="Validity">*@
+                        <div class='input-group date' id='datetimepicker51'>
+                            <input id="txtValidity" name="txtValidity" type='text' class="form-control dp" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Driving License No.</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="dlno" name="dlno" class="form-control" placeholder="Driving License No.">
+                    </div>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">PAN No.</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtPanno" name="txtPanno" class="form-control" placeholder="PAN No.">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">ADHAAR No.</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtAdhar" name="txtAdhar" class="form-control" placeholder="ADHAAR No.">
+                    </div>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Personal Email ID</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtPersonalMail" name="txtPersonalMail"  class="form-control" placeholder="Personal Email ID">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Official Email ID</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtOffMailid" name="txtOffMailid" class="form-control" placeholder="Official Email ID">
+                    </div>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <label style=" margin-top: 5px;">Official Mobile No.</label>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <input type="text" id="txtOfcMobno" name="txtOfcMobno" class="form-control" placeholder="Official Mobile No.">
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2">
+                        <button type="submit" id="btncomSaveclr" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                        <button type="submit" id="btncomSave" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                    </div>
+                </div>
+                </div>
+            @*}*@
+
+      

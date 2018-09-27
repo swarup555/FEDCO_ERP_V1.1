@@ -1,0 +1,474 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .fa {
+        padding: 5px;
+    }
+</style>
+@*<link href="~/Content/JQGridReq/ui.jqgrid.css" rel="stylesheet" />*@
+@*<link href="~/Content/jqGrid-master/css/ui.jqgrid.min.css" rel="stylesheet" />*@
+<link href="~/Content/jqGrid-master/dist/css/ui.jqgrid.css" rel="stylesheet" />
+@*<link href="~/Content/jqGrid-master/dist/css/ui.jqgrid.min.css" rel="stylesheet" />*@
+<link href="~/Content/JQGridReq/styles/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+<script src="~/Content/jqGrid-master/dist/jquery.jqgrid.min.js"></script>
+@*<script src="~/Content/JQGridReq/jquery.jqGrid.min.js"></script>*@
+@*<script src="~/Content/JQGridReq/grid.locale-en.js"></script>*@
+<script src="~/Content/jqGrid-master/dist/i18n/grid.locale-en.min.js"></script>
+<script src="~/Scripts/jqGridExportToExcel.js"></script>
+<div id="mainpage" class="">
+    @*<div class="page-title">
+            <div class="title_left">
+                <h3>All Employee Details</h3>
+            </div>
+            <div class="title_right">
+
+            </div>
+        </div>*@
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h3>Employee(s) Report</h3>
+                </div>
+
+                <div class="x_content">
+                    <div class="form-horizontal form-label-left">
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label style=" margin-top: 5px;">Work Location</label>
+                                <select id="WORKLOCATION" name="WORKLOCATION" class="form-control"></select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label style=" margin-top: 5px;">Division</label>
+                                <select class="form-control" id="division" name="division" disabled="disabled"></select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label style=" margin-top: 5px;">Sub Division</label>
+                                <select class="form-control" id="subdivision" name="subdivision" disabled="disabled"></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label style=" margin-top: 5px;">Section</label>
+                                <select class="form-control" id="section" name="section" disabled="disabled"></select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label style=" margin-top: 5px;">Department</label>
+                                <select class="form-control" id="department" name="DEPARTMENT"></select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label style=" margin-top: 5px;">Designation</label>
+                                <select class="form-control" id="designation" name="designation"></select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label style=" margin-top: 5px;">Grade</label>
+                                <select class="form-control" id="grades" name="GRADES"></select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label style=" margin-top: 5px;">Blood Group</label>
+                                <select class="form-control" id="bloodgroup" name="BLOOD_GROUP"></select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group pull-right">
+                                <button id="btn_view" name="viewlist" class="btn btn-md btn-success"><i class="fa fa-eye"></i> View</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="overflow-x:scroll">
+                            <div id="content">
+                                <table id="jqGridReport"></table>
+                                <div id="jqGridPagerReport"></div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+<script>
+
+    $(document).ready(function () {
+        
+        var lastSel;
+        $("#btn_view").click(function () {
+
+
+
+            var WORKLOCATION = "0";
+
+            if ($('#WORKLOCATION').val() != null) { WORKLOCATION = $('#WORKLOCATION').val(); }
+
+            var division = "0";
+            if ($('#division').val() != null) { division = $('#division').val(); }
+
+
+
+            var subdivision = "0";
+            if ($('#subdivision').val() != null) { subdivision = $('#subdivision').val(); }
+
+            var section = "0";
+            if ($('#section').val() != null) { section = $('#section').val(); }
+
+
+
+            var department = "0";
+            if ($('#department').val() != null) { department = $('#department').val(); }
+
+
+            var designation = "0";
+            if ($('#designation').val() != null) { designation = $('#designation').val(); }
+            var grades = "0";
+            if ($('#grades').val() != null) { grades = $('#grades').val(); }
+
+            var bloodgroup = "0";
+            if ($('#bloodgroup').val() != null) { bloodgroup = $('#bloodgroup').val(); }
+            //alert(WORKLOCATION + "==" + division + "==" + subdivision + "==" + section + "==" + department);
+            //alert(grades);
+
+
+            $('#jqGridReport').jqGrid('GridUnload');
+            jQuery("#jqGridReport").jqGrid({
+                url: " @Url.Action("GetEmployeeReport", "Report")/" + WORKLOCATION + "/" + division + "/" + subdivision + "/" + section + "/" + department + "/" + designation + "/" + grades + "/" + bloodgroup,
+            type: "GET",
+        datatype: "Json",
+        height: 200,
+        colModel: [
+
+        { name: 'ID', index: 'ID', key: true, hidden: true },
+        { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+        { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 200 },
+        { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+        { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+         { name: 'locationname', index: 'locationname', label: 'LOCATION NAME' },
+        { name: 'DIVISIONNAME', index: 'DIVISIONNAME', label: 'DIVISION NAME' },
+         { name: 'SUB_DIVISIONNAME', index: 'SUB_DIVISIONNAME', label: 'SUB_DIVISION NAME' },
+        { name: 'SECTIONNAME', index: 'SECTIONNAME', label: 'SECTION NAME' },
+          { name: 'gradename', index: 'gradename', label: 'GRADE' },
+        { name: 'REFERENCE', index: 'REFERENCE', label: 'BLOOD GROUP' },
+        { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+                { name: 'OFFICIAL_EMAIL', index: 'OFFICIAL_EMAIL', label: 'OFFICIAL EMAIL' },
+                { name: 'EMERGENCY_CONTACT_NUMBER', index: 'EMERGENCY_CONTACT_NUMBER', label: 'EMERGENCY CONTACT NO' },
+                { name: 'OFFICIAL_MOBILE_NUMBER', index: 'OFFICIAL_MOBILE_NUMBER', label: 'OFFICIAL MOBILE NO.' },
+                { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+        {
+            name: 'ADDITIONAL INFORMATION', formatter: function (cellvalue, options, rowObject) {
+                var x = '@Html.ActionLink("Click Here", "Index", "EmployeeDetails", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                    return x.replace("myid", rowObject['ID']);
+                }, align: 'center', search: false
+            }
+
+            ],
+
+            loadonce: true,
+            viewrecords: true,
+            width: 1190,
+            rowNum: 10,
+            rowList: [20, 30, 50],
+
+            rownumWidth: 25,
+            multiselect: true,
+            multiPageSelection: true,
+            pager: "#jqGridPagerReport",
+            jsonReader: {
+                repeatitems: false,
+                id: "ID",
+                root: function (obj) { return obj; },
+                page: function (obj) { return 1; },
+                total: function (obj) { return 1; },
+                records: function (obj) { return obj.length; }
+            },
+            ondblClickRow: function (rowid) {
+                //jQuery(this).jqGrid('editGridRow', rowid);
+                var x = '@Url.Action("Index","EmployeeDetails")/Index/' + rowid;
+                window.location = x;
+                //$('#SMSModal').modal('show');
+            },
+            onSelectRow: function (rowId, status, e) {
+                if (rowId == lastSel) {
+                    $(this).jqGrid("resetSelection");
+                    lastSel = undefined;
+                    status = false;
+                } else {
+                    lastSel = rowId;
+                }
+            },
+            beforeSelectRow: function (rowId, e) {
+                $(this).jqGrid("resetSelection");
+                return true;
+            }
+        });
+            $("#cb_jqGridReport").hide();
+        function imageFormatter(cellvalue, options, rowObject) {
+            //$("cellvalue").val(cellvalue);
+            if (cellvalue == null) {
+                return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+            }
+            else {
+                return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+            }
+
+        };
+        //jQuery("#jqGridactiveemp").jqGrid('navGrid', '#jqGridPageractiveemp', { add: false, edit: false, del: false, search: false, refresh: false });
+        $('#jqGridReport').navGrid('#jqGridPagerReport', { search: false, edit: false, add: false, del: false, refresh: false }, {}, {}, {}, { closeOnEscape: true, multipleSearch: true, closeAfterSearch: true }).navButtonAdd('#jqGridPagerReport', {
+            caption: "Export to Excel",
+            buttonicon: "ui-icon-disk",
+            onClickButton: function () {
+                ExportDataToExcel("#jqGridReport");
+            },
+            position: "last"
+        });
+        jQuery("#jqGridReport").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+        $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $("#btn_view").click();
+
+        //if (history.length) {
+        //    window.location.reload();
+        //}
+        $.ajax({
+        url: " @Url.Action("BloodGroups", "EmployeeDetails")",
+        async: false,
+        type: "GET",
+        datatype: "Json",
+        success:
+        function (result) {
+            $('#bloodgroup').empty();
+            $('#bloodgroup').append($('<option></option>').val("0").html("SELECT BLOODGROUP"));
+            $.each(result, function (i) {
+                $('#bloodgroup').append($('<option></option>').val(result[i].ID).html(result[i].BLOODGROUP_NAME));
+            });
+        }
+    });
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Transferlocation", "EmployeeDetails")",
+            async: false,
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#WORKLOCATION').empty();
+                $('#WORKLOCATION').append($('<option></option>').val(0).html("SELECT Location"));
+                $.each(result, function (i) {
+                    $('#WORKLOCATION').append($('<option></option>').val(result[i].ID).html(result[i].LOCATION_NAME));
+                });
+            }
+        });
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Divisions", "EmployeeDetails")",
+            async: false,
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+
+                $('#division').append($('<option></option>').val(0).html("SELECT DIVISION"));
+                $('#subdivision').append($('<option></option>').val(0).html("SUB-DIVISION"));
+                $('#section').append($('<option></option>').val(0).html("SECTION"));
+                $.each(result, function (i) {
+                    $('#division').append($('<option></option>').val(result[i].DIVISION_CODE).html(result[i].DIV_NAME));
+                });
+            }
+        });
+        $('#division').on('change', function () {
+            var divisionid = $('#division').val();
+            $.ajax({
+
+                url: " @Url.Action("SubDivisions", "EmployeeDetails")/" + divisionid,
+                async: false,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+                    $('#subdivision').empty();
+                    $('#section').empty();
+                    $('#subdivision').append($('<option></option>').val(0).html("SUB-DIVISION"));
+                    $('#section').append($('<option></option>').val(0).html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#subdivision').append($('<option></option>').val(result[i].SUB_DIV_CODE).html(result[i].SUB_DIV_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                    });
+                }
+            });
+        });
+        $('#subdivision').on('change', function () {
+            var subdivisionid = $('#subdivision').val();
+            $.ajax({
+                url: " @Url.Action("Sections", "EmployeeDetails")/" + subdivisionid,
+                async: false,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+
+                    $('#section').empty();
+
+                    $('#section').append($('<option></option>').val(0).html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#section').append($('<option></option>').val(result[i].SEC_CODE).html(result[i].SEC_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                    });
+                }
+            });
+        });
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Departments", "EmployeeDetails")",
+            async: false,
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+                $('#department').empty();
+                $('#department').append($('<option></option>').val(0).html("SELECT DEPARTMENT"));
+                $.each(result, function (i) {
+                    $('#department').append($('<option></option>').val(result[i].ID).html(result[i].DEPARTMENT_NAME));
+                });
+            }
+        });
+        $.ajax({
+           @*@Url.Action("Action","Controller")*@
+        url: " @Url.Action("Designations", "EmployeeDetails")",
+        async: false,
+        type: "GET",
+        datatype: "Json",
+
+        success:
+        function (result) {
+            $('#designation').empty();
+            $('#designation').append($('<option></option>').val(0).html("SELECT DESIGNATION"));
+            $.each(result, function (i) {
+                $('#designation').append($('<option></option>').val(result[i].ID).html(result[i].DESIGNATION_NAME));
+            });
+        }
+    });
+    $.ajax({
+        url: " @Url.Action("Grades", "EmployeeDetails")",
+        async: false,
+    type: "GET",
+    datatype: "Json",
+    success:
+    function (result) {
+        $('#grades').empty();
+        $('#grades').append($('<option></option>').val("0").html("SELECT GRADE"));
+        $.each(result, function (i) {
+            $('#grades').append($('<option></option>').val(result[i].ID).html(result[i].GRADE_NAME));
+        });
+    }
+    });
+        $('#WORKLOCATION').change(
+      function () {
+          //var val1 = $('#pick option:selected').val();
+          var val2 = $('#WORKLOCATION option:selected').val();
+          if (val2 == 1 || val2 == 0 || val2 == 5 || val2 == 6 || val2 == 7 || val2 == 8 || val2 == 9 || val2 == 10 || val2 == 11 || val2 == 12 || val2 == 13 || val2 == 14 || val2 == 15) {
+              $("#division").attr("disabled", "disabled");
+              $("#division").val(0);
+              $("#subdivision").attr("disabled", "disabled");
+              $("#subdivision").val(0);
+              $("#section").attr("disabled", "disabled");
+              $("#section").val(0);
+          }
+          if (val2 == 2) {
+              $("#division").removeAttr("disabled");
+              $("#subdivision").removeAttr("disabled");
+              $("#section").removeAttr("disabled");
+              $("#subdivision").attr("disabled", "disabled");
+              $("#section").attr("disabled", "disabled");
+              $("#subdivision").val(0);
+              $("#section").val(0);
+          }
+          if (val2 == 3) {
+              $("#division").removeAttr("disabled");
+              $("#subdivision").removeAttr("disabled");
+              $("#section").removeAttr("disabled");
+              $("#section").attr("disabled", "disabled");
+              $("#section").val(0);
+          }
+          if (val2 == 4) {
+              $("#division").removeAttr("disabled");
+              $("#subdivision").removeAttr("disabled");
+              $("#section").removeAttr("disabled");
+          }
+          // Do something with val1 and val2 ...
+      }
+     );
+
+        });
+</script>
+
+<script type="text/javascript">
+    function ExportDataToExcel(tableCtrl) {
+        //  Export the data from our jqGrid into a "real" Excel 2007 file
+        ExportJQGridDataToExcel(tableCtrl, "Employee data.xlsx");
+    }
+</script>
+
+<script src="~/Scripts/moment-with-locales.js"></script>
+
+<script src="~/Scripts/bootstrap-datepicker.js"></script>

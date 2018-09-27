@@ -1,0 +1,103 @@
+﻿
+<div class="panel">
+    <a class="panel-heading collapsed" role="tab" id="headingfour" data-toggle="collapse" data-parent="#accordion" href="#collapsefour" aria-expanded="false" aria-controls="collapsefour">
+        <h4 class="panel-title"><i class="fa fa-group"></i>Relationship Details</h4>
+    </a>
+    <div id="collapsefour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingfour">
+        <div class="panel-body" style="overflow-x:scroll">
+            <div class="form-group">
+                <div class="col-md-6 col-sm-8 col-xs-12 ">
+                    <button type="submit" class="btn btn-success" data-toggle="modal" data-target=".ns-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+                    <button id="upload_btn" type="submit" class="btn btn-success"><i class="fa fa-edit "></i>EDIT</button>
+                    <button id="upload_btn" type="submit" class="btn btn-success"><i class="fa fa-remove "></i>DELETE</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12 ">
+                    <table id="jqGrid03"></table>
+                    <div id="jqGridPager03"></div>
+                </div>
+            </div>
+            @*<button type="submit" class="btn btn-success" data-toggle="modal" data-target=".ns-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>*@
+            <div class="modal fade ns-example-modal-md" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel2">Relationship Details</h4>
+                        </div>
+                        @using (Html.BeginForm("create", "Home", FormMethod.Post, new
+{
+    @class = "form-horizontal form-label-left",
+    enctype = "multipart/form-data"
+}))
+                        {
+                            <div class="modal-body">
+
+
+                                @*<form class="form-horizontal form-label-left">*@
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Relationship</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Relationship">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Name</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Name">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Date Of Birth</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="date" class="form-control">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Occupation</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Occupation">
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
+                                        <label style=" margin-top: 5px;">Dependent (Y/N)</label>
+                                    </div>
+                                    <div class="col-md-9 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control" placeholder="Dependent (Y/N)">
+
+                                    </div>
+
+                                </div>
+
+
+                                @*</form>*@
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,588 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layoutadmin.cshtml";
+}
+
+<style>
+    .fa {
+        padding: 5px;
+    }
+
+    .btn {
+        width: 100px;
+    }
+
+    .ui-menu-item {
+        padding: 10px;
+        height: 30px;
+        font-size: 14px;
+        display: block;
+        border-right: 3px solid #1ABB9C;
+    }
+
+    .ui-jqgrid tr.ui-row-ltr td {
+        text-align: -webkit-center !important;
+    }
+
+    /*.img-circle {
+        border: 4px solid #e4f2fb !important;
+    }*/
+
+    .ui-widget {
+        font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+        font-size: 13px !important;
+    }
+    /*#gbox_jqGrid01 {
+        width: 100% !important;
+    }
+    #gview_jqGrid01 {
+        width: 100% !important;
+    }
+    #jqGridPager01 {
+        width: 100% !important;
+    }*/
+</style>
+
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="~/Content/JQGridReq/ui.jqgrid.css" rel="stylesheet" />
+<link href="~/Content/JQGridReq/styles/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+<script src="~/Content/JQGridReq/jquery.jqGrid.min.js"></script>
+<script src="~/Content/JQGridReq/grid.locale-en.js"></script>
+<div id="mainpage" class="">
+    <div class="page-title">
+        <div class="title_left">
+            <h3> Employee Details</h3>
+        </div>
+        <div class="title_right">
+            @*<div class="col-md-6 col-sm-6 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" id="txtName" name="txtName" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>*@
+            @if (TempData["msg"] != null)
+            {
+                <button type="submit" id="btnSuccessmsg" class="btn btn-success" onclick="new PNotify({
+                                  title: 'Message',
+                                  text: 'Data Saved successfully',
+                                  type: 'success',
+                                  styling: 'bootstrap3'
+                                  });" style="visibility:hidden">
+                    <i class=" fa fa-upload" aria-hidden="true">
+                    </i>UPLOAD
+                </button>
+            }
+            @if (TempData["errmsg"] != null)
+            {
+                <button type="submit" id="btnErrormsg" class="btn btn-success" onclick="new PNotify({
+                                  title: 'Alert',
+                                  text: 'please upload a valid excel',
+                                  type: 'error',
+                                  styling: 'bootstrap3'
+                                  });" style="visibility:hidden">
+                    <i class=" fa fa-upload" aria-hidden="true">
+                    </i>UPLOAD
+                </button>
+            }
+            @if (TempData["warnmsg"] != null)
+            {
+                <button type="submit" id="btnWarnmsg" class="btn btn-success" onclick="new PNotify({
+                                  title: 'Warnig',
+                                  text: 'Please Upload an Excel',
+                                  styling: 'bootstrap3'
+                                  });" style="visibility:hidden">
+                    <i class=" fa fa-upload" aria-hidden="true">
+                    </i>UPLOAD
+                </button>
+            }
+            @if (TempData["sucmsg"] != null)
+            {
+                <button type="submit" id="sucmsg" class="btn btn-success" onclick="new PNotify({
+                                  title: 'Message',
+                                  text: 'Data Saved successfully',
+                                  type: 'success',
+                                  styling: 'bootstrap3'
+                                  });" style="visibility:hidden">
+                    <i class=" fa fa-upload" aria-hidden="true">
+                    </i>UPLOAD
+                </button>
+            }
+
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+               
+
+                <div class="x_content" style="overflow-x:scroll">
+                    @*<div class="row" style="margin:1%">
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <button id="upload_btn" type="submit" class="btn btn-success"><i class="fa fa-list "></i>GRID</button>
+                                </li>
+                                <li>
+                                    <button id="upload_btn" type="submit" class="btn btn-success"><i class="fa fa-th-large "></i>TILES</button>
+                                </li>
+                            </ul>
+                        </div>*@
+                    <div id="content">
+                        <table id="jqGrid01"></table>
+                        <div id="jqGridPager01"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        //if (history.length) {
+        //    window.location.reload();
+        //}
+
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Transferlocation", "EmployeeDetails")",
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#WORKLOCATION').empty();
+                $('#WORKLOCATION').append($('<option></option>').val("").html("SELECT Location"));
+                $.each(result, function (i) {
+                    $('#WORKLOCATION').append($('<option></option>').val(result[i].ID).html(result[i].LOCATION_NAME));
+                });
+            }
+        });
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Divisions", "EmployeeDetails")",
+
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+
+                $('#division').append($('<option></option>').val("").html("SELECT DIVISION"));
+                $('#subdivision').append($('<option></option>').val("").html("SUB-DIVISION"));
+                $('#section').append($('<option></option>').val("").html("SECTION"));
+                $.each(result, function (i) {
+                    $('#division').append($('<option></option>').val(result[i].DIVISION_CODE).html(result[i].DIV_NAME));
+                });
+            }
+        });
+        $('#division').on('change', function () {
+            var divisionid = $('#division').val();
+            $.ajax({
+
+                url: " @Url.Action("SubDivisions", "EmployeeDetails")/" + divisionid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+                    $('#subdivision').empty();
+                    $('#section').empty();
+                    $('#subdivision').append($('<option></option>').val("").html("SUB-DIVISION"));
+                    $('#section').append($('<option></option>').val("").html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#subdivision').append($('<option></option>').val(result[i].SUB_DIV_CODE).html(result[i].SUB_DIV_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                    });
+                }
+            });
+        });
+        $('#subdivision').on('change', function () {
+            var subdivisionid = $('#subdivision').val();
+            $.ajax({
+                url: " @Url.Action("Sections", "EmployeeDetails")/" + subdivisionid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+
+                    $('#section').empty();
+
+                    $('#section').append($('<option></option>').val("").html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#section').append($('<option></option>').val(result[i].SEC_CODE).html(result[i].SEC_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                    });
+                }
+            });
+        });
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Departments", "EmployeeDetails")",
+
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+                $('#department').empty();
+                $('#department').append($('<option></option>').val("").html("SELECT DEPARTMENT"));
+                //$('#reportingto').append($('<option></option>').val("").html("SELECT REPOTING TO"));
+                $.each(result, function (i) {
+                    $('#department').append($('<option></option>').val(result[i].ID).html(result[i].DEPARTMENT_NAME));
+                });
+            }
+        });
+
+
+        @*$('#department').on('change', function () {
+            $('#reportingto').empty();
+            var deptid = $('#department').val();
+            $.ajax({
+
+                url: " @Url.Action("ReporingTo", "EmployeeDetails")/" + deptid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+                    $('#reportingto').empty();
+                    $('#reportingto').append($('<option></option>').val("").html("SELECT REPOTING TO"));
+                    $.each(result, function (i) {
+                        $('#reportingto').append($('<option></option>').val(result[i].ID).html(result[i].REPORTING_PERSON_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+                    });
+                }
+            });
+        });*@
+
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Designations", "EmployeeDetails")",
+
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+                $('#designation').empty();
+                $('#designation').append($('<option></option>').val("").html("SELECT DESIGNATION"));
+                $.each(result, function (i) {
+                    $('#designation').append($('<option></option>').val(result[i].ID).html(result[i].DESIGNATION_NAME));
+                });
+            }
+        });
+        $('#WORKLOCATION').change(
+      function () {
+          //var val1 = $('#pick option:selected').val();
+          var val2 = $('#WORKLOCATION option:selected').val();
+          if (val2 == 1 || val2 == 0 || val2 == null || val2 == "" || val2 == 5 || val2 == 6 || val2 == 7 || val2 == 8 || val2 == 9 || val2 == 10 || val2 == 11 || val2 == 12) {
+              $("#division").attr("disabled", "disabled");
+              $("#subdivision").attr("disabled", "disabled");
+              $("#section").attr("disabled", "disabled");
+              $("#division").val("");
+              $("#subdivision").val("");
+              $("#section").val("");
+          }
+          if (val2 == 2) {
+              $("#division").removeAttr("disabled");
+              $("#subdivision").removeAttr("disabled");
+              $("#section").removeAttr("disabled");
+              $("#subdivision").attr("disabled", "disabled");
+              $("#section").attr("disabled", "disabled");
+              $("#subdivision").val("");
+              $("#section").val("");
+          }
+          if (val2 == 3) {
+              $("#division").removeAttr("disabled");
+              $("#subdivision").removeAttr("disabled");
+              $("#section").removeAttr("disabled");
+              $("#section").attr("disabled", "disabled");
+              $("#section").val("");
+          }
+          if (val2 == 4) {
+              $("#division").removeAttr("disabled");
+              $("#subdivision").removeAttr("disabled");
+              $("#section").removeAttr("disabled");
+          }
+          // Do something with val1 and val2 ...
+      }
+     );
+        $("#btnClr").click(function () {
+            $('#EMPLOYEE_FIRSTNAME').val("");
+            $('#EMPLOYEE_CODE').val("");
+            $('#EMPLOYEE_MIDDLENAME').val("");
+            $('#EMPLOYEE_LASTNAME').val("");
+            $('#JOININGDATE').val("");
+            $('#designation').val("");
+            $('#WORKLOCATION').val("");
+            $('#department').val("");
+            $('#REPORTING_TO').val("");
+            $('#division').val("");
+            $('#subdivision').val("");
+            $('#section').val("");
+            return false;
+        });
+        $("#btnBasicinfosave").click(function () {
+            //var test = $('#EMPLOYEE_FIRSTNAME').val();
+            // alert(test);
+            $.ajax({
+                url: '@Url.Action("EmployeeCreate", "Home")',
+
+                data: {
+                    EMPLOYEE_FIRSTNAME: $('#EMPLOYEE_FIRSTNAME').val(),
+                    EMPLOYEE_CODE: $('#EMPLOYEE_CODE').val(),
+                    EMPLOYEE_MIDDLENAME: $('#EMPLOYEE_MIDDLENAME').val(),
+                    EMPLOYEE_LASTNAME: $('#EMPLOYEE_LASTNAME').val(),
+                    JOININGDATE: $('#JOININGDATE').val(),
+                    DESIGNATION: $('#designation').val(),
+                    WORKLOCATION: $('#WORKLOCATION').val(),
+                    DEPARTMENT: $('#department').val(),
+                    REPORTING_TO: $('#reportingto').val(),
+
+                    DIVISION: $('#division').val(),
+                    SUBDIVISION: $('#subdivision').val(),
+                    SECTION: $('#section').val(),
+                },
+                //Passes the content of an input up
+                //mainpage
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    location.reload();
+                    //$('#mainpage').html(data);
+                    new PNotify({
+                        title: 'Suceess Message',
+                        text: 'Data Saved successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    }).delay(2000);
+
+                }
+            });
+        });
+        $('#txtName').autocomplete({
+            source: function (request, response) {
+                var fname = $('#txtName').val();
+                var autocompleteUrl = " @Url.Action("BasicInfosearch", "EmployeeDetails")/" + fname;
+                $.ajax({
+                    //url: autocompleteUrl,
+                    //type: 'GET',
+                    //cache: false,
+                    //dataType: 'json',
+                    //success: function (json) {
+                    //    response($.map(json, function (data, id) {
+                    //        return {
+                    //            label: data.EMPLOYEE_FULLNAME,
+                    //            value: data.ID
+                    //        };
+                    //    }));
+                    //},
+                    //error: function (xmlHttpRequest, textStatus, errorThrown) {
+                    //    console.log('some error occured', textStatus, errorThrown);
+                    //}
+                    url: autocompleteUrl,
+                    type: "GET",
+                    datatype: "Json",
+                    success:
+                    function (result) {
+                        response($.map(result, function (data, id) {
+                            return {
+                                label: data.EMPLOYEE_FULLNAME,
+                                value: data.ID
+                            };
+                        }));
+                    }
+                });
+
+            },
+            minLength: 1,
+            select: function (event, ui) {
+                //alert(ui.item.value);
+                //alert(ui.item.label);
+                //lblMessage.innerText = "Your Selected Name :";
+                //lblSelectedVal.innerText = ui.item.value;
+                $('#txtName').val(ui.item.label);
+                return false;
+            }
+        });
+    });
+</script>
+<script>
+
+    $(document).ready(function () {
+        //$("#menu_toggle").click();
+        $("#btnExelupload").click(function () {
+            $('#img').show();
+        }
+   );
+        var lastSel;
+        // Set data
+        //var mydata = [
+        //    { id: "1",  name: "Swarup Mohanty", department: "R&D", designation: "Software Engg.", email: "swrpmohanty3@gmail.com" ,mobileno:"9853386031"},
+        //    { id: "2", name: "Swarup Mohanty", department: "R&D", designation: "Software Engg.", email: "swrpmohanty3@gmail.com", mobileno: "9853386031" }
+        //];
+
+
+        //demogrid start
+        //start
+
+
+
+        //end
+
+        jQuery("#jqGrid01").jqGrid({
+
+            url: " @Url.Action("BasicInfos", "EmployeeDetails")",
+            //url: 'http://localhost:56783/api/basicinformation',
+            type: "GET",
+            datatype: "Json",
+            height: 350,
+            colModel: [
+
+            { name: 'ID', index: 'ID', key: true, hidden: true },
+            { name: 'EMPLOYEE_CODE', index: 'EMPLOYEE_CODE', label: 'EMPLOYEE CODE', width: 120 },
+            { name: 'EMPLOYEE_FULLNAME', index: 'EMPLOYEE_FULLNAME', label: 'EMPLOYEE NAME', width: 250 },
+            { name: 'departmentname', index: 'departmentname', label: 'DEPARTMENT' },
+            { name: 'designationname', index: 'designationname', label: 'DESIGNATION' },
+
+            { name: 'PERSONAL_EMAIL', index: 'PERSONAL_EMAIL', label: 'EMAIL ID' },
+            { name: 'OFFICIAL_EMAIL', index: 'OFFICIAL_EMAIL', label: 'OFFICIAL EMAIL' },
+            { name: 'EMERGENCY_CONTACT_NUMBER', index: 'EMERGENCY_CONTACT_NUMBER', label: 'EMERGENCY CONTACT NO' },
+            { name: 'OFFICIAL_MOBILE_NUMBER', index: 'OFFICIAL_MOBILE_NUMBER', label: 'OFFICIAL MOBILE NO.' },
+            { name: 'MOBILE_NUMBER', index: 'MOBILE_NUMBER', label: 'MOBILE NO.' },
+
+            {
+                name: 'ISSUE ASSET', formatter: function (cellvalue, options, rowObject) {
+                    var x = '@Html.ActionLink("Click Here", "Index", "Assetissue", new { id = "myid" }, new { @style = "color:#7fa5d8;font-weight:bold;" })';
+                    return x.replace("myid", rowObject['ID']);
+                }, align: 'center', search: false
+            }
+
+            ],
+
+            loadonce: true,
+            viewrecords: true,
+            width: 1190,
+            rowNum: 20,
+            rowList: [20, 30, 50],
+
+            rownumWidth: 25,
+            multiselect: true,
+            pager: "#jqGridPager01",
+            //loadComplete: function () {
+            //    if ($("#jqGrid01").getGridParam("records") == 0) {
+            //        $("#jqGrid01").addRowData(
+            //        $("#jqGrid01")
+            //            .empty()
+            //            .append('<tr><td></td><td><h3>No data Available to Display</h3></td></tr>')
+            //         );
+            //    }
+            //},
+            jsonReader: {
+                repeatitems: false,
+                id: "ID",
+                root: function (obj) { return obj; },
+                page: function (obj) { return 1; },
+                total: function (obj) { return 1; },
+                records: function (obj) { return obj.length; }
+            },
+            ondblClickRow: function (rowid) {
+                //jQuery(this).jqGrid('editGridRow', rowid);
+                var x = '@Url.Action("Index", "Assetissue")/Index/' + rowid;
+                window.location= x;
+            },
+            @*ondblClickRow: function (cellvalue, options, rowObject) {
+                //jQuery(this).jqGrid('editGridRow', rowid);
+                var x = '@Url.Action("Index", "EmployeeDetails", new { id = "myid" })';
+                return x.replace("myid", rowObject['ID']);
+                //window.location = 'EmployeeDetails/Index/' + rowid;
+            },*@
+            onSelectRow: function (rowId, status, e) {
+                if (rowId == lastSel) {
+                    $(this).jqGrid("resetSelection");
+                    lastSel = undefined;
+                    status = false;
+                } else {
+                    lastSel = rowId;
+                }
+            },
+            beforeSelectRow: function (rowId, e) {
+                $(this).jqGrid("resetSelection");
+                return true;
+            }
+        });
+        $("#cb_jqGrid01").hide();
+        function imageFormatter(cellvalue, options, rowObject) {
+            //$("cellvalue").val(cellvalue);
+            if (cellvalue == null) {
+                return '<img class="img-circle"  src="~/images/user.png" height=50px,width:50px />';
+            }
+            else {
+                return '<img class="img-circle"  src="' + cellvalue + '" height=50px,width:50px />';
+            }
+
+        };
+        jQuery("#jqGrid01").jqGrid('navGrid', '#pjmap', { add: false, edit: false, del: false, search: false, refresh: false });
+        jQuery("#jqGrid01").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, searchOperators: true, defaultSearch: "cn" });
+        $(".ui-jqgrid-sortable").css('white-space', 'normal');
+        $(".ui-jqgrid-sortable").css('height', 'auto');
+        $(".ui-jqgrid tr.jqgrow td").css('white-space', 'normal');
+        $(".ui-jqgrid tr.jqgrow td").css('height', 'auto');
+
+    });
+
+
+
+
+    //Demo grid End
+
+
+
+
+
+</script>
+<script>
+
+
+    $(function () {
+        $('#datetimepicker1').datepicker(
+              { format: "dd/mm/yyyy" }
+            );
+
+    });
+    $('#up_btn2').click(function (e) {
+        e.preventDefault();
+        $('#fileupload2').click();
+
+    }
+ );
+    $('input[name=file2]').change(function (e) {
+        var fileName = e.target.files[0].name;
+        $("label[for='myalue1']").html(fileName);
+    });
+    $(document).ready(function () {
+        $('#datetimepicker1').datepicker({
+            format: "dd/mm/yyyy"
+        });
+
+        $('.dp').on('change', function () {
+            $('.datepicker').hide();
+        });
+        $('#btnSuccessmsg').click();
+        $('#btnWarnmsg').click();
+        $('#btnErrormsg').click();
+        $('#sucmsg').click();
+    });
+    //$(function validateForm(event) {
+    //    alert("success");
+    //});
+</script>
+<script src="~/Scripts/moment-with-locales.js"></script>
+
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+

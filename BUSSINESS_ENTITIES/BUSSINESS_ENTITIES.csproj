@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7D152697-934C-4420-A7D1-37BC6971A6D5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BUSSINESS_ENTITIES</RootNamespace>
+    <AssemblyName>BUSSINESS_ENTITIES</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL" />
+    <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssetDetailsEntities.cs" />
+    <Compile Include="AssetmasterEntities.cs" />
+    <Compile Include="AssetTypeEntities.cs" />
+    <Compile Include="BasicInformaionEntities.cs" />
+    <Compile Include="BloodGroupEntities.cs" />
+    <Compile Include="BoardEntities.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="CommunicationDetailsEntities.cs" />
+    <Compile Include="CountryEntities.cs" />
+    <Compile Include="DegreeTypeEntities.cs" />
+    <Compile Include="DepartmentEntities.cs" />
+    <Compile Include="DesignationEntities.cs" />
+    <Compile Include="DIVISION.cs" />
+    <Compile Include="EmpAcountEntity.cs" />
+    <Compile Include="EmployeeAwardEntities.cs" />
+    <Compile Include="EmployeeCulturalActivityEntities.cs" />
+    <Compile Include="EmployeeHobbiesEntity.cs" />
+    <Compile Include="EmployeePublicationEntities.cs" />
+    <Compile Include="EmployeeSocialActivityEntities.cs" />
+    <Compile Include="EmployeeSportsActivityEntities.cs" />
+    <Compile Include="EmploymentEntities.cs" />
+    <Compile Include="ExcelUploadEntities.cs" />
+    <Compile Include="ExitcatagoryEntities.cs" />
+    <Compile Include="ExitTypeEntities.cs" />
+    <Compile Include="ExtraCurricullarActivityEntity.cs" />
+    <Compile Include="GradeEnities.cs" />
+    <Compile Include="Iempsportsdetails.cs" />
+    <Compile Include="IndivisualEmployeeEntities.cs" />
+    <Compile Include="LocationEntities.cs" />
+    <Compile Include="MyViewModel.cs" />
+    <Compile Include="PIPDeatilsEntities.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QualificationDetailsEntities.cs" />
+    <Compile Include="RelationshipDetailEntities.cs" />
+    <Compile Include="Reportingentities.cs" />
+    <Compile Include="SectionEntities.cs" />
+    <Compile Include="StateEntities.cs" />
+    <Compile Include="SubDivisionEntities.cs" />
+    <Compile Include="TrainingDetailsEntities.cs" />
+    <Compile Include="TransferdetailsEntities.cs" />
+    <Compile Include="UserEntities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<BUSSINESS_ENTITIES.BasicInformaionEntities>
+
+@if (Model != null)
+{
+    foreach (var obj in Model)
+    {
+        <li>
+                <a>
+                    @if (@obj.EMPIMAGE == null)
+                    {
+                        @*<img class="img-circle" src="~/images/user.png" alt="~/images/rotating_card_profile3.png" />*@
+                        <span class="image"><img src="~/images/birthday1.png" /></span>
+                        <span class="image"><img src="~/images/user.png" /></span>
+                    }
+                    else
+                    {
+                        <span class="image"><img src="~/images/birthday1.png" /></span>
+                        <span class="image"><img src=@obj.EMPIMAGE /></span>
+                        @*<img class="image" src=@obj.EMPIMAGE alt="~/images/rotating_card_profile3.png" />*@
+                    }
+
+                    <span>
+                        <span>@obj.EMPLOYEE_FULLNAME</span>
+                    </span>
+                    <span class="message">
+                        @obj.designationname <span>@obj.departmentname</span>
+                    </span>
+                  
+                </a>
+</li>
+    }
+}

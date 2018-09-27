@@ -1,0 +1,80 @@
+﻿@model IEnumerable<BUSSINESS_ENTITIES.TransferdetailsEntities>
+<br />
+<!-- start skills -->
+<h4>Career Progress</h4>
+
+<div class="x_panel">
+                        @*<div class="x_title">
+                            <h2>Career Progress</h2>
+
+                            <div class="clearfix"></div>
+                        </div>*@
+                        <div class="x_content">
+                            <ul class="list-unstyled timeline">
+@if (Model != null)
+{
+    foreach (var obj in Model)
+    {
+                                <li>
+                                    <div class="block_content">
+                                        <h2 class="title"></h2>
+                                        <a class="tag">
+                                            @if (@obj.FROM_DATE != null)
+                                            {
+                                                <span>@obj.FROM_DATE.Value.ToString("dd/MM/yyyy") to @if(@obj.TO_DATE.HasValue){@obj.TO_DATE.Value.ToString("dd/MM/yyyy")}
+                                                                                        else
+                                                                                        {<span> present</span> }
+                                                </span>
+                                            }
+                                            @*<span>@obj.FROM_DATE.Value.Date.Year to 
+                                            @if (@obj.TO_DATE!=null)
+                                            {
+                                                 @obj.TO_DATE
+                                            }
+                                            else
+                                            {
+                                                <p>Present</p>
+                                            }
+                                            </span>*@
+                                        </a>
+
+
+
+                                        @*<h2 class="title"></h2>*@
+                                        <p class="excerpt">
+                                            <i class="fa fa-briefcase user-profile-icon"></i> @obj.DESIGNATIONNAME
+                                        </p>
+                                        <p class="excerpt">
+                                            <i class="fa fa-sitemap user-profile-icon"></i> @obj.DEPARTMENTNAME
+                                        </p>
+                                        <p class="excerpt">
+                                            <i class="fa fa-map-marker user-profile-icon"></i> @obj.WorkLocationname
+                                        </p>
+                                        <p class="excerpt">
+                                            <i class="fa fa-user user-profile-icon"></i>@obj.REPORTING_PERSONNAME
+                                        </p>
+                                    </div>
+
+    </li>
+}
+}
+
+                                @*<li>
+
+
+                                        <div class="block_content">
+
+                                                <a class="tag">
+                                                    <span>25-01-2017 - Present</span>
+                                                </a>
+
+                                            <h2 class="title"></h2>
+                                            <p class="excerpt">
+                                                Film festivals used to be do-or-die moments for movie makers.  <a>Read&nbsp;More</a>
+                                            </p>
+
+                                    </div>
+                                </li>*@
+                            </ul>
+                        </div>
+                    </div>

@@ -1,0 +1,966 @@
+﻿<script>
+    $(document).ready(function () {
+        var lastSel;
+        $("body").removeClass("modal-open");
+        $("body").removeAttr("style");
+        //DIVISIONNAME = GetdivisionName(tr.DIVISION),
+        //                                SUB_DIVISIONNAME = GetsubdivisionName(tr.SUB_DIVISION),
+        //                                SECTIONNAME = GetSectionnName(tr.SECTION),
+        //                                DESIGNATIONNAME = des.DESIGNATION_NAME,
+        //                                DEPARTMENTNAME = dep.DEPARTMENT_NAME,
+        //                                REPORTING_PERSONNAME = re.REPORTING_PERSON_NAME
+        jQuery("#jqGrid06").jqGrid({
+            url: " @Url.Action("TransferDetails", "EmployeeDetails")",
+            type: "GET",
+            datatype: "Json",
+            height: 222,
+            width: 840,
+            rowNum: 10,
+            rowList: [10, 20, 30],
+            colNames: ['Employee Code', 'DESIGNATIONid', 'DESIGNATION', 'WORK LOCATION', 'DIVISIONid', 'DIVISION', 'SUB DIVISIONid', 'SUB DIVISION', 'SECTIONid', 'SECTION', 'DEPARTMENTid', 'DEPARTMENT', 'REPORTING PERSON id', 'REPORTING PERSON', 'FROM', 'TO', 'STATUS'],
+            colModel: [
+                { name: 'ID', index: 'ID', editable: true, sorttype: "int", search: true, key: true, hidden: true },
+                 { name: 'DESIGNATION_ID', index: 'DESIGNATION_ID', editable: true, hidden: true },
+                   { name: 'DESIGNATIONNAME', index: 'DESIGNATIONNAME', editable: true },
+                { name: 'WORK_LOCATION', index: 'WORK_LOCATION', editable: true, hidden: true },
+                 { name: 'DIVISION', index: 'DIVISION', editable: true, hidden: true },
+                  { name: 'DIVISIONNAME', index: 'DIVISIONNAME', editable: true },
+                  { name: 'SUB_DIVISION', index: 'SUB_DIVISION', editable: true, hidden: true },
+                   { name: 'SUB_DIVISIONNAME', index: 'SUB_DIVISIONNAME', editable: true },
+                   { name: 'SECTION', index: 'SECTION', editable: true, hidden: true },
+                     { name: 'SECTIONNAME', index: 'SECTIONNAME', editable: true },
+                    { name: 'DEPARTMENT', index: 'DEPARTMENT', editable: true, hidden: true },
+                      { name: 'DEPARTMENTNAME', index: 'DEPARTMENTNAME', editable: true },
+                     { name: 'REPORTING_PERSON', index: 'REPORTING_PERSON', editable: true, hidden: true },
+                       { name: 'REPORTING_PERSONNAME', index: 'REPORTING_PERSONNAME', editable: true },
+                { name: 'FROM_DATE', index: 'FROM_DATE', editable: true, formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
+                 { name: 'TO_DATE', index: 'TO_DATE', editable: true, formatter: 'date', formatoptions: { newformat: 'd/m/Y' } },
+                 { name: 'STATUS', index: 'STATUS', editable: true }
+
+            ],
+
+
+            pager: "#jqGridPager06",
+            viewrecords: true,
+            multiselect: true,
+
+            hidegrid: false,
+            jsonReader: {
+                repeatitems: false,
+                id: "Id",
+                root: function (obj) { return obj; },
+                page: function (obj) { return 1; },
+                total: function (obj) { return 1; },
+                records: function (obj) { return obj.length; }
+            },
+            onSelectRow: function (rowId, status, e) {
+                if (rowId == lastSel) {
+                    $(this).jqGrid("resetSelection");
+                    lastSel = undefined;
+                    status = false;
+                } else {
+                    lastSel = rowId;
+                }
+            },
+            beforeSelectRow: function (rowId, e) {
+                $(this).jqGrid("resetSelection");
+                return true;
+            }
+        });
+        $("#cb_jqGrid06").hide();
+        // Setup buttons
+
+        // Setup filters
+        //jQuery("#jqGrid01").jqGrid('filterToolbar', { defaultSearch: true, stringResult: true });
+        jQuery("#jqGrid06").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+
+
+
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Divisions", "EmployeeDetails")",
+
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+
+                $('#ddltrDivision').append($('<option></option>').val("").html("SELECT DIVISION"));
+                $('#ddltrSubDivision').append($('<option></option>').val("").html("SUB-DIVISION"));
+                $('#ddltrSection').append($('<option></option>').val("").html("SECTION"));
+                $('#ddluptrDivision').append($('<option></option>').val("").html("SELECT DIVISION"));
+                $('#ddluptrSubDivision').append($('<option></option>').val("").html("SUB-DIVISION"));
+                $('#ddluptrSection').append($('<option></option>').val("").html("SECTION"));
+                $.each(result, function (i) {
+                    $('#ddltrDivision').append($('<option></option>').val(result[i].DIVISION_CODE).html(result[i].DIV_NAME));
+                });
+                $.each(result, function (j) {
+                    $('#ddluptrDivision').append($('<option></option>').val(result[j].DIVISION_CODE).html(result[j].DIV_NAME));
+                });
+            }
+        });
+        $('#ddltrDivision').on('change', function () {
+            var divisionid = $('#ddltrDivision').val();
+            $.ajax({
+
+                url: " @Url.Action("SubDivisions", "EmployeeDetails")/" + divisionid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+                    $('#ddltrSubDivision').empty();
+                    $('#ddltrSection').empty();
+                    $('#ddltrSubDivision').append($('<option></option>').val("").html("SUB-DIVISION"));
+                    $('#ddltrSection').append($('<option></option>').val("").html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#ddltrSubDivision').append($('<option></option>').val(result[i].SUB_DIV_CODE).html(result[i].SUB_DIV_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                    });
+                }
+            });
+        });
+        $('#ddltrupDivision').on('change', function () {
+            var divisionid = $('#ddltrupDivision').val();
+            $.ajax({
+
+                url: " @Url.Action("SubDivisions", "EmployeeDetails")/" + divisionid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+                    $('#ddluptrSubDivision').empty();
+                    $('#ddluptrSection').empty();
+                    $('#ddluptrSubDivision').append($('<option></option>').val("").html("SUB-DIVISION"));
+                    $('#ddluptrSection').append($('<option></option>').val("").html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#ddluptrSubDivision').append($('<option></option>').val(result[i].SUB_DIV_CODE).html(result[i].SUB_DIV_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                    });
+                }
+            });
+        });
+        $('#ddltrSubDivision').on('change', function () {
+            var subdivisionid = $('#ddltrSubDivision').val();
+            $.ajax({
+                url: " @Url.Action("Sections", "EmployeeDetails")/" + subdivisionid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+
+                    $('#ddltrSection').empty();
+
+                    $('#ddltrSection').append($('<option></option>').val("").html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#ddltrSection').append($('<option></option>').val(result[i].SEC_CODE).html(result[i].SEC_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                    });
+                }
+            });
+        });
+        $('#ddluptrSubDivision').on('change', function () {
+            var subdivisionid = $('#ddluptrSubDivision').val();
+            $.ajax({
+                url: " @Url.Action("Sections", "EmployeeDetails")/" + subdivisionid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+
+                    $('#ddluptrSection').empty();
+
+                    $('#ddluptrSection').append($('<option></option>').val("").html("SECTION"));
+                    $.each(result, function (i) {
+                        $('#ddluptrSection').append($('<option></option>').val(result[i].SEC_CODE).html(result[i].SEC_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                    });
+                }
+            });
+        });
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Departments", "EmployeeDetails")",
+
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+                $('#ddltrDept').empty();
+                $('#ddltrDept').append($('<option></option>').val("").html("SELECT DEPARTMENT"));
+                //$('#ddltrRpperson').empty();
+                //$('#ddltrRpperson').append($('<option></option>').val("").html("SELECT REPOTING TO"));
+                $('#ddluptrDept').empty();
+                $('#ddluptrDept').append($('<option></option>').val("").html("SELECT DEPARTMENT"));
+                $('#ddluptrRpperson').empty();
+                $('#ddluptrRpperson').append($('<option></option>').val("").html("SELECT REPOTING TO"));
+                $.each(result, function (i) {
+                    $('#ddltrDept').append($('<option></option>').val(result[i].ID).html(result[i].DEPARTMENT_NAME));
+                });
+                $.each(result, function (j) {
+                    $('#ddluptrDept').append($('<option></option>').val(result[j].ID).html(result[j].DEPARTMENT_NAME));
+                });
+            }
+        });
+
+
+        @*$('#ddltrDept').on('change', function () {
+        $('#ddltrRpperson').empty();
+        var deptid = $('#ddltrDept').val();
+        $.ajax({
+
+            url: " @Url.Action("ReporingTo", "EmployeeDetails")/" + deptid,
+            type: "GET",
+        datatype: "Json",
+        success:
+        function (result) {
+            $('#ddltrRpperson').empty();
+            $('#ddltrRpperson').append($('<option></option>').html("SELECT REPOTING TO"));
+            $.each(result, function (i) {
+                $('#ddltrRpperson').append($('<option></option>').val(result[i].ID).html(result[i].REPORTING_PERSON_NAME));
+                //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+            });
+        }
+    });
+    });*@
+        @*$('#ddluptrDept').on('change', function () {
+            var deptid = $('#ddluptrDept').val();
+            $.ajax({
+
+                url: " @Url.Action("ReporingTo", "EmployeeDetails")/" + deptid,
+                type: "GET",
+                datatype: "Json",
+                success:
+                function (result) {
+                    $('#ddluptrRpperson').empty();
+                    $('#ddluptrRpperson').append($('<option></option>').val("").html("SELECT REPOTING TO"));
+                    $.each(result, function (i) {
+                        $('#ddluptrRpperson').append($('<option></option>').val(result[i].ID).html(result[i].REPORTING_PERSON_NAME));
+                        //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+                    });
+                }
+            });
+        });*@
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Designations", "EmployeeDetails")",
+
+            type: "GET",
+            datatype: "Json",
+
+            success:
+            function (result) {
+                $('#ddltrDesignation').empty();
+                $('#ddltrDesignation').append($('<option></option>').val("").html("SELECT DESIGNATION"));
+                $('#ddluptrDesignation').empty();
+                $('#ddluptrDesignation').append($('<option></option>').val("").html("SELECT DESIGNATION"));
+                $.each(result, function (i) {
+                    $('#ddltrDesignation').append($('<option></option>').val(result[i].ID).html(result[i].DESIGNATION_NAME));
+                });
+                $.each(result, function (j) {
+                    $('#ddluptrDesignation').append($('<option></option>').val(result[j].ID).html(result[j].DESIGNATION_NAME));
+                });
+            }
+        });
+
+
+        $.ajax({
+            @*@Url.Action("Action","Controller")*@
+            url: " @Url.Action("Transferlocation", "EmployeeDetails")",
+            type: "GET",
+            datatype: "Json",
+            success:
+            function (result) {
+                $('#ddltrWorklocation').empty();
+                $('#ddltrWorklocation').append($('<option></option>').val("").html("SELECT Location"));
+                $('#ddluptrWorklocation').empty();
+                $('#ddluptrWorklocation').append($('<option></option>').val("").html("SELECT Location"));
+                $.each(result, function (i) {
+                    $('#ddltrWorklocation').append($('<option></option>').val(result[i].ID).html(result[i].LOCATION_NAME));
+                });
+                $.each(result, function (j) {
+                    $('#ddluptrWorklocation').append($('<option></option>').val(result[j].ID).html(result[j].LOCATION_NAME));
+                });
+            }
+        });
+        $("#btnTransfersave").click(function () {
+            //var test = $('#fn').val();
+            // alert(test);
+            $('#transferpopup').modal("hide");
+            HideModal();
+            $.ajax({
+                url: '@Url.Action("Transfercreate", "EmployeeDetails")',
+
+                data: {
+                    DESIGNATION_ID: $('#ddltrDesignation').val(),
+                    WORK_LOCATION: $('#ddltrWorklocation').val(),
+                    DIVISION: $('#ddltrDivision').val(),
+                    SUB_DIVISION: $('#ddltrSubDivision').val(),
+                    SECTION: $('#ddltrSection').val(),
+                    DEPARTMENT: $('#ddltrDept').val(),
+                    REPORTING_PERSON: $('#ddltrRpperson').val(),
+                    SDATE: $('#txttrStartingPeriod').val(),
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#Emptransfer').html(data);
+                    new PNotify({
+                        title: 'Successes',
+                        text: 'Data Saved successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+
+                    $.ajax({
+                        url: '/EmployeeDetails/_carrerprogress',
+                        dataType: 'html',
+                        success: function (data) {
+                            $('#myPartialContainer').html(data);
+                        }
+                    });
+                }
+            });
+        });
+        $("#btnTrnasferedit").click(function () {
+            var grid = $("#jqGrid06");
+            var rowKey = grid.getGridParam("selrow");
+
+            if (!rowKey)
+                new PNotify({
+                    title: 'Warning',
+                    text: 'Please select a row to Update',
+
+                    styling: 'bootstrap3'
+                });
+            else {
+                var selectedIDs = grid.getGridParam("selarrrow");
+                var index = selectedIDs + 1; // zero-based index of row so it means the 3rd row
+                var rowId = jQuery('#jqGrid06 tr:eq(' + selectedIDs + ')').attr('id');
+                //(here I suppose that the <table> element of your jqGrid has id="list"). After you know the id of the row you can get the row data with respect of getRowData method or the data from one cell only with respect of getCell method:
+                var dataFromTheRow = jQuery('#jqGrid06').jqGrid('getRowData', rowId);
+                //alert(dataFromTheRow.hirarchy_id);
+                // var dataFromCellByColumnIndex = jQuery('#jqGrid').jqGrid('getCell', rowId, 7);
+                // var dataFromCellByColumnName = jQuery('#jqGrid').jqGrid('getCell', rowId, 'Tax');
+                var result = "";
+                for (var i = 0; i < selectedIDs.length; i++) {
+                    result += selectedIDs[0];
+                }
+                //DESIGNATION_ID: $('#ddltrDesignation').val(),
+                //WORK_LOCATION: $('#ddltrWorklocation').val(),
+                //DIVISION: $('#ddltrDivision').val(),
+                //SUB_DIVISION: $('#ddltrSubDivision').val(),
+                //SECTION: $('#ddltrSection').val(),
+                //DEPARTMENT: $('#ddltrDept').val(),
+                //REPORTING_PERSON: $('#ddltrRpperson').val(),
+                //FROM_DATE: $('#txttrStartingPeriod').val(),
+                //TO_DATE: $('#txtrelDependent').val(),
+                //STATUS: $('#ddltrStatus').val(),
+                var DESIGNATION_ID1 = grid.jqGrid('getCell', result, 'DESIGNATION_ID');
+                var WORK_LOCATION1 = grid.jqGrid('getCell', result, 'WORK_LOCATION');
+                var DIVISION1 = grid.jqGrid('getCell', result, 'DIVISION');
+                var SUB_DIVISION1 = grid.jqGrid('getCell', result, 'SUB_DIVISION');
+                var SECTION1 = grid.jqGrid('getCell', result, 'SECTION');
+                var DEPARTMENT1 = grid.jqGrid('getCell', result, 'DEPARTMENT');
+                var REPORTING_PERSON1 = grid.jqGrid('getCell', result, 'REPORTING_PERSON');
+                var FROM_DATE1 = grid.jqGrid('getCell', result, 'FROM_DATE');
+                var TO_DATE1 = grid.jqGrid('getCell', result, 'TO_DATE');
+                var STATUS1 = grid.jqGrid('getCell', result, 'STATUS');
+
+                if (DIVISION1 != null) {
+                    $.ajax({
+
+                        url: " @Url.Action("SubDivisions", "EmployeeDetails")/" + DIVISION1,
+                        type: "GET",
+                        datatype: "Json",
+                        success:
+                        function (result) {
+                            $('#ddluptrSubDivision').empty();
+                            $('#ddluptrSection').empty();
+                            $('#ddluptrSubDivision').append($('<option></option>').val("").html("SUB-DIVISION"));
+                            $('#ddluptrSection').append($('<option></option>').val("").html("SECTION"));
+                            $.each(result, function (i) {
+                                $('#ddluptrSubDivision').append($('<option></option>').val(result[i].SUB_DIV_CODE).html(result[i].SUB_DIV_NAME));
+                                //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+
+                            });
+                            if (SUB_DIVISION1 != null) {
+                                $("#ddluptrSubDivision").val(SUB_DIVISION1);
+                            }
+
+                        }
+                    });
+                }
+
+                // alert(SUB_DIVISION1);
+                if (SUB_DIVISION1 != null) {
+                    $.ajax({
+                        url: " @Url.Action("Sections", "EmployeeDetails")/" + SUB_DIVISION1,
+                        type: "GET",
+                        datatype: "Json",
+                        success:
+                        function (result) {
+
+                            $('#ddluptrSection').empty();
+
+                            $('#ddluptrSection').append($('<option></option>').val("").html("SECTION"));
+                            $.each(result, function (i) {
+                                $('#ddluptrSection').append($('<option></option>').val(result[i].SEC_CODE).html(result[i].SEC_NAME));
+                                //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+                                //alert(SECTION1);
+                                //$('#ddluptrSection').prop('selectedIndex', SECTION1);
+                            });
+                            //$('#ddluptrSection').prop('selectedIndex', SECTION1);
+                            if (SECTION1 != null) {
+                                $("#ddluptrSection").val(SECTION1);
+                            }
+                        }
+                    });
+                }
+                @*if (DEPARTMENT1 != null) {
+                    $.ajax({
+                        url: " @Url.Action("ReporingTo", "EmployeeDetails")/" + DEPARTMENT1,
+                        type: "GET",
+                        datatype: "Json",
+                        success:
+                        function (result) {
+                            $('#ddluptrRpperson').empty();
+                            $('#ddluptrRpperson').append($('<option></option>').val("").html("SELECT REPOTING TO"));
+                            $.each(result, function (i) {
+                                $('#ddluptrRpperson').append($('<option></option>').val(result[i].ID).html(result[i].REPORTING_PERSON_NAME));
+                                //$('#dropdownDivUpdate').append($('<option></option>').val(result[i].id).html(result[i].Levelname));
+                            });
+                            if (REPORTING_PERSON1 != null) {
+                                $("#ddluptrRpperson").val(REPORTING_PERSON1);
+                            }
+
+                        }
+                    });
+                }*@
+
+                //wait(5000);
+                if (DESIGNATION_ID1 != null) {
+                    $("#ddluptrDesignation").val(DESIGNATION_ID1);
+                    //$('#ddluptrDesignation').prop('selectedIndex', DESIGNATION_ID1);
+                }
+                if (WORK_LOCATION1 != null) {
+                    $("#ddluptrWorklocation").val(WORK_LOCATION1);
+                    //$('#ddluptrWorklocation').prop('selectedIndex', WORK_LOCATION1);
+                }
+                if (DIVISION1 != null) {
+                    $("#ddluptrDivision").val(DIVISION1);
+                    //$('#ddluptrDivision').prop('selectedIndex', DIVISION1);
+                }
+                if (DEPARTMENT1 != null) {
+                    $("#ddluptrDept").val(DEPARTMENT1);
+                    //$('#ddluptrDept').prop('selectedIndex', DEPARTMENT1);
+                }
+
+                //$('#ddluptrStatus').prop('selectedIndex', STATUS1);
+                $('#txtuptrStartingPeriod').val(FROM_DATE1);
+                //$('#txtuptrEndingPeriod').val(TO_DATE1);
+                //setTimeout(function () {
+                //    alert(SUB_DIVISION1);
+                //    $('#ddluptrSubDivision').prop('selectedIndex', '000045');
+                //}, 3000);
+                //setTimeout(function () {
+                //    alert(SECTION1);
+                //    $('#ddluptrSection').prop('selectedIndex', '000045');
+                //}, 2000);
+                //$('#ddluptrSubDivision').prop('selectedIndex', SUB_DIVISION1);
+                //$('#ddluptrSection').prop('selectedIndex', SECTION1);
+                //$('#ddluptrStatus option').map(function () {
+                //    if ($(this).text() == STATUS1) return this;
+                //}).attr('selected', 'selected');
+                //$('#ddlMSate').prop('selectedIndex', val);
+                //$("#edit_project_name").val(Project_Name1);
+                $("#ddluptrRpperson").val(REPORTING_PERSON1);
+                $("#rowid5").val(result);
+                $("#transfereditpopup").modal("show");
+                //$("#employmentuppopup").show();
+
+            }
+
+        });
+        function HideModal() {
+            $('.modal-backdrop').remove();
+            //location.reload();
+        }
+        $("#btnTransferupdate").click(function () {
+            //var test = $('#fn').val();
+            // alert(test);
+            $('#transfereditpopup').modal("hide");
+            HideModal();
+            var ID5 = $("#rowid5").val();
+            $.ajax({
+                url: '/EmployeeDetails/Transferedit/' + ID5,
+
+                data: {
+                    DESIGNATION_ID: $('#ddluptrDesignation').val(),
+                    WORK_LOCATION: $('#ddluptrWorklocation').val(),
+                    DIVISION: $('#ddluptrDivision').val(),
+                    SUB_DIVISION: $('#ddluptrSubDivision').val(),
+                    SECTION: $('#ddluptrSection').val(),
+                    DEPARTMENT: $('#ddluptrDept').val(),
+                    REPORTING_PERSON: $('#ddluptrRpperson').val(),
+                    SDATE: $('#txtuptrStartingPeriod').val(),
+                },
+                //Passes the content of an input up
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $('#Emptransfer').html(data);
+                    new PNotify({
+                        title: 'Upadte Message',
+                        text: 'Data Upadated successfully',
+                        type: "success",
+                        styling: 'bootstrap3'
+                    });
+                }
+            });
+            $("#btnTransferclear").click(function () {
+                $('#ddltrDesignation').val("");
+                $('#ddltrWorklocation').val("");
+                $('#ddltrDivision').val("");
+                $('#ddltrSubDivision').val("");
+                $('#ddltrSection').val("");
+                $('#ddltrDept').val("");
+                $('#ddltrRpperson').val("");
+                $('#txttrStartingPeriod').val("")
+            });
+            $("#btnTransferupdateclear").click(function () {
+                $('#ddluptrDesignation').val("");
+                $('#ddluptrWorklocation').val("");
+                $('#ddluptrDivision').val("");
+                $('#ddluptrSubDivision').val("");
+                $('#ddluptrSection').val("");
+                $('#ddluptrDept').val("");
+                $('#ddluptrRpperson').val("");
+                $('#txtuptrStartingPeriod').val("")
+            });
+        });
+        $('#ddltrWorklocation').change(
+function () {
+    //var val1 = $('#pick option:selected').val();
+    var val2 = $('#ddltrWorklocation option:selected').val();
+    if (val2 == 1 || val2 == 0 || val2 == null || val2 == "" || val2 == 5 || val2 == 6 || val2 == 7 || val2 == 8 || val2 == 9 || val2 == 10 || val2 == 11 || val2 == 12) {
+        $("#ddltrDivision").attr("disabled", "disabled");
+        $("#ddltrSubDivision").attr("disabled", "disabled");
+        $("#ddltrSection").attr("disabled", "disabled");
+        $("#ddltrDivision").val("");
+        $("#ddltrSubDivision").val("");
+        $("#ddltrSection").val("");
+    }
+    if (val2 == 2) {
+        $("#ddltrDivision").removeAttr("disabled");
+        $("#ddltrSubDivision").removeAttr("disabled");
+        $("#ddltrSection").removeAttr("disabled");
+        $("#ddltrSubDivision").attr("disabled", "disabled");
+        $("#ddltrSection").attr("disabled", "disabled");
+        $("#ddltrSubDivision").val("");
+        $("#ddltrSection").val("");
+    }
+    if (val2 == 3) {
+        $("#ddltrDivision").removeAttr("disabled");
+        $("#ddltrSubDivision").removeAttr("disabled");
+        $("#ddltrSection").removeAttr("disabled");
+        $("#ddltrSection").attr("disabled", "disabled");
+        $("#ddltrSection").val("");
+    }
+    if (val2 == 4) {
+        $("#ddltrDivision").removeAttr("disabled");
+        $("#ddltrSubDivision").removeAttr("disabled");
+        $("#ddltrSection").removeAttr("disabled");
+    }
+    // Do something with val1 and val2 ...
+}
+);
+        $('#ddluptrWorklocation').change(
+function () {
+    //var val1 = $('#pick option:selected').val();
+    var val2 = $('#ddluptrWorklocation option:selected').val();
+    if (val2 == 1 || val2 == 0 || val2 == 5 || val2 == 6 || val2 == 7 || val2 == 8 || val2 == 9 || val2 == 10 || val2 == 11 || val2 == 12) {
+        $("#ddluptrDivision").attr("disabled", "disabled");
+        $("#ddluptrSubDivision").attr("disabled", "disabled");
+        $("#ddluptrSection").attr("disabled", "disabled");
+        $("#ddluptrDivision").val("");
+        $("#ddluptrSubDivision").val("");
+        $("#ddluptrSection").val("");
+    }
+    if (val2 == 2) {
+        $("#ddluptrDivision").removeAttr("disabled");
+        $("#ddluptrSubDivision").removeAttr("disabled");
+        $("#ddluptrSection").removeAttr("disabled");
+        $("#ddltrSubDivision").attr("disabled", "disabled");
+        $("#ddltrSection").attr("disabled", "disabled");
+        $("#ddluptrSubDivision").val("");
+        $("#ddluptrSection").val("");
+    }
+    if (val2 == 3) {
+        $("#ddluptrDivision").removeAttr("disabled");
+        $("#ddluptrSubDivision").removeAttr("disabled");
+        $("#ddluptrSection").removeAttr("disabled");
+        $("#ddltrSection").attr("disabled", "disabled");
+        $("#ddluptrSection").val("");
+    }
+    if (val2 == 4) {
+        $("#ddluptrDivision").removeAttr("disabled");
+        $("#ddluptrSubDivision").removeAttr("disabled");
+        $("#ddluptrSection").removeAttr("disabled");
+    }
+    // Do something with val1 and val2 ...
+}
+);
+    });
+    $(function () {
+        $('#datetimepicker31').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+
+    $(function () {
+        $('#datetimepicker32').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+    $(function () {
+        $('#datetimepicker33').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+
+    $(function () {
+        $('#datetimepicker34').datepicker(
+              {
+                  autoclose: true,
+                  format: 'dd/mm/yyyy',
+              });
+
+    });
+</script>
+<div class="form-group">
+    <div class="col-md-6 col-sm-8 col-xs-12 ">
+        <button id="btnTrnasferadd" type="submit" class="btn btn-success" data-toggle="modal" data-target=".ts-example-modal-md"><i class="fa fa-plus" aria-hidden="true"></i>ADD</button>
+        <button id="btnTrnasferedit" type="submit" class="btn btn-success act_edit" data-toggle="modal"><i class="fa fa-edit "></i>EDIT</button>
+        @*<button id="btnTrnasferdelete" type="submit" class="btn btn-success act_remv"><i class="fa fa-remove "></i>DELETE</button>*@
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-12 col-sm-12 col-xs-12 ">
+        <table id="jqGrid06"></table>
+        <div id="jqGridPager06"></div>
+    </div>
+</div>
+
+<div class="modal fade ts-example-modal-md" tabindex="-1" role="dialog" id="transferpopup" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Transfer Details</h4>
+            </div>
+            @*@using (Html.BeginForm("create", "Home", FormMethod.Post, new
+                {
+                    @class = "form-horizontal form-label-left",
+                    enctype = "multipart/form-data"
+                }))
+                                        {*@
+            <div class="form-horizontal form-label-left">
+                <div class="modal-body">
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Designation</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <select id="ddltrDesignation" name="ddltrDesignation" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Work Location</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <select id="ddltrWorklocation" name="ddltrWorklocation" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            @*<label style=" margin-top: 5px;">Type</label>*@
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            @*<input type="text" id="txtType" name="txtType" class="form-control" placeholder="Type">*@
+                            <select id="ddltrDivision" name="ddltrDivision" class="form-control" disabled="disabled"></select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            @*<label style=" margin-top: 5px;">Starting Date</label>*@
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <select id="ddltrSubDivision" name="ddltrSubDivision" class="form-control" disabled="disabled"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            @*<label style=" margin-top: 5px;">Completion Date</label>*@
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <select id="ddltrSection" name="ddltrSection" class="form-control" disabled="disabled"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Department</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <select id="ddltrDept" name="ddltrDept" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Reporting Person</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            @*<select id="ddltrRpperson" name="ddltrRpperson" class="form-control"></select>*@
+                            <input type="text" id="ddltrRpperson" name="ddltrRpperson" class="form-control" placeholder="Reporting Person">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">EFFECTIVE Date</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <div class='input-group date' id='datetimepicker31'>
+                                <input type='text' id="txttrStartingPeriod" name="txttrStartingPeriod" class="form-control dp" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    @*<div class="form-group">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <label style=" margin-top: 5px;">Ending Period</label>
+                            </div>
+                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                <div class='input-group date' id='datetimepicker32'>
+                                    <input type='text' id="txttrEndingPeriod" name="txttrEndingPeriod" class="form-control dp" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+
+                            </div>
+
+                        </div>*@
+                    @*<div class="form-group">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <label style=" margin-top: 5px;">Status</label>
+                            </div>
+                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                <select id="ddltrStatus" name="ddltrStatus" class="form-control"></select>
+
+                            </div>
+
+                        </div>*@
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Remarks</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <textarea id="txttrRemarks" class="form-control" name="txttrRemarks"
+                                      placeholder="Enter Remark"></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button id="btnTransferclear" type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                    <button id="btnTransfersave" type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>Save</button>
+                </div>
+            </div>
+            @*}*@
+        </div>
+    </div>
+</div>
+<div class="modal fade ets-example-modal-md" tabindex="-1" id="transfereditpopup" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Transfer Details</h4>
+            </div>
+            @*@using (Html.BeginForm("create", "Home", FormMethod.Post, new
+                {
+                    @class = "form-horizontal form-label-left",
+                    enctype = "multipart/form-data"
+                }))
+                                        {*@
+            <div class="form-horizontal form-label-left">
+                <div class="modal-body">
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Designation</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <select id="ddluptrDesignation" name="ddluptrDesignation" class="form-control"></select>
+                            <input type="hidden" name="rowid5" id="rowid5">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Work Location</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <select id="ddluptrWorklocation" name="ddluptrWorklocation" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            @*<label style=" margin-top: 5px;">Type</label>*@
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            @*<input type="text" id="txtType" name="txtType" class="form-control" placeholder="Type">*@
+                            <select id="ddluptrDivision" name="ddluptrDivision" class="form-control"></select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            @*<label style=" margin-top: 5px;">Starting Date</label>*@
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <select id="ddluptrSubDivision" name="ddluptrSubDivision" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            @*<label style=" margin-top: 5px;">Completion Date</label>*@
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <select id="ddluptrSection" name="ddluptrSection" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Department</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <select id="ddluptrDept" name="ddluptrDept" class="form-control"></select>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Reporting Person</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            @*<select id="ddluptrRpperson" name="ddluptrRpperson" class="form-control"></select>*@
+                            <input type="text" id="ddluptrRpperson" name="ddluptrRpperson" class="form-control" placeholder="Reporting Person">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Starting Period</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <div class='input-group date' id='datetimepicker33'>
+                                <input type='text' id="txtuptrStartingPeriod" name="txtuptrStartingPeriod" class="form-control dp" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    @*<div class="form-group">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <label style=" margin-top: 5px;">Ending Period</label>
+                            </div>
+                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                <div class='input-group date' id='datetimepicker34'>
+                                    <input type='text' id="txtuptrEndingPeriod" name="txtuptrEndingPeriod" class="form-control dp" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+
+                            </div>
+
+                        </div>*@
+                    @*<div class="form-group">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <label style=" margin-top: 5px;">Status</label>
+                            </div>
+                            <div class="col-md-9 col-sm-6 col-xs-12">
+                                <select id="ddluptrStatus" name="ddluptrStatus" class="form-control"></select>
+
+                            </div>
+
+                        </div>*@
+                    <div class="form-group">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <label style=" margin-top: 5px;">Remarks</label>
+                        </div>
+                        <div class="col-md-9 col-sm-6 col-xs-12">
+                            <textarea id="txtuptrRemarks" class="form-control" name="txtuptrRemarks"
+                                      placeholder="Enter Remark"></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button id="btnTransferupdateclear" type="submit" class="btn btn-primary"><i class="fa fa-undo" aria-hidden="true"></i>Clear</button>
+                    <button id="btnTransferupdate" type="submit" class="btn btn-success"><i class="fa fa-edit" aria-hidden="true"></i>UPDATE</button>
+                </div>
+                @*}*@
+            </div>
+        </div>
+    </div>
+</div>
